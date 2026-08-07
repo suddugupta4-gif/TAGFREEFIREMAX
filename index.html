@@ -202,7 +202,7 @@
 
   </main>
 
-  <!-- History Archive Modal -->
+  <!-- History Archive List Modal -->
   <div id="history-modal" class="fixed inset-0 bg-black/80 backdrop-blur-md hidden flex items-center justify-center z-50 p-4">
     <div class="ff-card rounded-2xl max-w-2xl w-full p-6 border border-slate-700 relative animate-modal shadow-2xl max-h-[85vh] overflow-y-auto">
       <button onclick="toggleHistoryModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white transition-colors">
@@ -212,11 +212,21 @@
       <h3 class="text-xl font-bold text-white mb-1 flex items-center gap-2 font-teko text-2xl uppercase tracking-wider">
         <i class="fa-solid fa-clock-rotate-left text-yellow-500"></i> Past Tournament Archives
       </h3>
-      <p class="text-xs text-slate-400 mb-4">Select any past completed 6-match tournament to view full details.</p>
+      <p class="text-xs text-slate-400 mb-4">Select any past completed 6-match tournament to view details.</p>
 
       <div id="history-list" class="space-y-3">
         <!-- Saved Tournaments Listed Here -->
       </div>
+    </div>
+  </div>
+
+  <!-- Dedicated History Detail Popup Modal (Does NOT alter main site) -->
+  <div id="history-detail-modal" class="fixed inset-0 bg-black/85 backdrop-blur-md hidden flex items-center justify-center z-50 p-4">
+    <div class="ff-card rounded-2xl max-w-2xl w-full p-6 border border-slate-700 relative animate-modal shadow-2xl max-h-[90vh] overflow-y-auto">
+      <button onclick="closeHistoryDetailModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white transition-colors">
+        <i class="fa-solid fa-xmark text-lg"></i>
+      </button>
+      <div id="history-detail-content"></div>
     </div>
   </div>
 
@@ -344,6 +354,12 @@
     // Free Fire Official Placement Points Matrix (1 Kill = 1 Point)
     const placementMatrix = { 1: 12, 2: 9, 3: 8, 4: 7, 5: 6, 6: 5, 7: 4, 8: 3, 9: 2, 10: 1, 11: 0, 12: 0 };
 
+    // Helper for dynamic K/D calculation (Kills / Played Matches)
+    function calculateKD(totalKills, playedMatchesCount) {
+      if (!playedMatchesCount || playedMatchesCount === 0) return '0.0';
+      return (totalKills / playedMatchesCount).toFixed(1);
+    }
+
     // Default Fresh Setup
     const createEmptyTournament = (title) => ({
       tournamentName: title,
@@ -357,11 +373,11 @@
         { matchNum: 6, map: 'Bermuda', rank: 0, playerKills: [0, 0, 0, 0, 0], played: false }
       ],
       players: [
-        { name: 'TAG-KD', role: 'sniper/igl', damage: '3,850', kd: '3.0' },
-        { name: 'TAG SAHIL', role: 'rusher', damage: '3,400', kd: '2.8' },
-        { name: 'TAG SHOTO', role: 'rusher', damage: '2,600', kd: '2.0' },
-        { name: 'TAG WOLVIN', role: 'rusher', damage: '2,100', kd: '1.4' },
-        { name: 'TAG LOUIS', role: 'rusher', damage: '0', kd: '0.0' }
+        { name: 'TAG-KD', role: 'sniper/igl', damage: '3,850' },
+        { name: 'TAG SAHIL', role: 'rusher', damage: '3,400' },
+        { name: 'TAG SHOTO', role: 'rusher', damage: '2,600' },
+        { name: 'TAG WOLVIN', role: 'rusher', damage: '2,100' },
+        { name: 'TAG LOUIS', role: 'rusher', damage: '0' }
       ]
     });
 
@@ -379,11 +395,11 @@
           { matchNum: 6, map: 'Bermuda', rank: 2, playerKills: [3, 2, 2, 1, 0], played: true }
         ],
         players: [
-          { name: 'TAG-KD', role: 'sniper/igl', damage: '3,850', kd: '3.0' },
-          { name: 'TAG SAHIL', role: 'rusher', damage: '3,400', kd: '2.8' },
-          { name: 'TAG SHOTO', role: 'rusher', damage: '2,600', kd: '2.0' },
-          { name: 'TAG WOLVIN', role: 'rusher', damage: '2,100', kd: '1.4' },
-          { name: 'TAG LOUIS', role: 'rusher', damage: '0', kd: '0.0' }
+          { name: 'TAG-KD', role: 'sniper/igl', damage: '3,850' },
+          { name: 'TAG SAHIL', role: 'rusher', damage: '3,400' },
+          { name: 'TAG SHOTO', role: 'rusher', damage: '2,600' },
+          { name: 'TAG WOLVIN', role: 'rusher', damage: '2,100' },
+          { name: 'TAG LOUIS', role: 'rusher', damage: '0' }
         ]
       },
       unofficial: {
@@ -398,11 +414,11 @@
           { matchNum: 6, map: 'Bermuda', rank: 1, playerKills: [4, 3, 2, 2, 0], played: true }
         ],
         players: [
-          { name: 'TAG-KD', role: 'sniper/igl', damage: '4,500', kd: '3.6' },
-          { name: 'TAG SAHIL', role: 'rusher', damage: '4,100', kd: '3.2' },
-          { name: 'TAG SHOTO', role: 'rusher', damage: '2,900', kd: '2.2' },
-          { name: 'TAG WOLVIN', role: 'rusher', damage: '2,300', kd: '1.8' },
-          { name: 'TAG LOUIS', role: 'rusher', damage: '0', kd: '0.0' }
+          { name: 'TAG-KD', role: 'sniper/igl', damage: '4,500' },
+          { name: 'TAG SAHIL', role: 'rusher', damage: '4,100' },
+          { name: 'TAG SHOTO', role: 'rusher', damage: '2,900' },
+          { name: 'TAG WOLVIN', role: 'rusher', damage: '2,300' },
+          { name: 'TAG LOUIS', role: 'rusher', damage: '0' }
         ]
       }
     };
@@ -549,12 +565,13 @@
         });
       }
 
-      // Render 5 Player Roster Cards
+      // Render 5 Player Roster Cards with Correct Dynamic K/D Formula
       const playersGrid = document.getElementById('players-grid');
       playersGrid.innerHTML = '';
 
       currentData.players.forEach((p, pIdx) => {
         const totalPlayerKills = accumulatedPlayerKills[pIdx];
+        const dynamicKD = calculateKD(totalPlayerKills, playedMatches.length);
 
         const card = document.createElement('div');
         card.className = 'ff-card rounded-2xl p-4 animate-row hover-lift border border-slate-800';
@@ -573,7 +590,7 @@
             </div>
             <div>
               <p class="text-[9px] text-slate-400 uppercase">K/D Ratio</p>
-              <p class="text-lg font-bold text-emerald-400 font-teko">${p.kd}</p>
+              <p class="text-lg font-bold text-emerald-400 font-teko">${dynamicKD}</p>
             </div>
           </div>
 
@@ -612,7 +629,7 @@
       renderDashboard();
     }
 
-    // Toggle History Modal
+    // Toggle History Archive List Modal
     function toggleHistoryModal() {
       const modal = document.getElementById('history-modal');
       modal.classList.toggle('hidden');
@@ -621,7 +638,7 @@
       }
     }
 
-    // Render Past Archived Tournaments
+    // Render Past Archived Tournaments List
     function renderHistoryList() {
       const list = document.getElementById('history-list');
       list.innerHTML = '';
@@ -642,7 +659,9 @@
       allHistory.forEach((item, idx) => {
         const card = document.createElement('div');
         card.className = 'bg-slate-900 border border-slate-800 rounded-xl p-4 hover:border-orange-500/50 transition-all cursor-pointer flex items-center justify-between gap-4';
-        card.onclick = () => loadArchivedTournament(item);
+        
+        // Open Dedicated History Modal (does NOT affect main site)
+        card.onclick = () => openHistoryDetailModal(item);
 
         card.innerHTML = `
           <div>
@@ -663,12 +682,111 @@
       });
     }
 
-    // Load an Archived Tournament into Dashboard View
-    function loadArchivedTournament(archivedItem) {
-      activeCategory = archivedItem.category;
-      datasets[activeCategory] = JSON.parse(JSON.stringify(archivedItem.data));
-      switchCategory(activeCategory);
-      toggleHistoryModal();
+    // Dedicated History Detail Modal (Popup view without changing main page)
+    function openHistoryDetailModal(item) {
+      const modal = document.getElementById('history-detail-modal');
+      const content = document.getElementById('history-detail-content');
+
+      let totalPP = 0;
+      let totalKP = 0;
+      let booyahs = 0;
+      let playerKillsAcc = [0, 0, 0, 0, 0];
+
+      item.data.matches.forEach(m => {
+        if (m.played) {
+          totalPP += placementMatrix[m.rank] || 0;
+          let mk = m.playerKills.reduce((a, b) => a + b, 0);
+          totalKP += mk;
+          m.playerKills.forEach((pk, idx) => playerKillsAcc[idx] += pk);
+          if (m.rank === 1) booyahs++;
+        }
+      });
+
+      const playedCount = item.data.matches.filter(m => m.played).length;
+
+      content.innerHTML = `
+        <div class="mb-4">
+          <div class="flex items-center gap-2 mb-1">
+            <span class="text-[9px] px-2.5 py-0.5 rounded font-bold uppercase ${item.category === 'official' ? 'bg-orange-500/20 text-orange-400 border border-orange-500/30' : 'bg-cyan-500/20 text-cyan-400 border border-cyan-500/30'}">
+              ${item.category} TOURNAMENT
+            </span>
+            <span class="text-xs text-slate-400"><i class="fa-solid fa-calendar mr-1"></i>${item.date}</span>
+          </div>
+          <h3 class="text-xl font-extrabold text-white">${item.tournamentName}</h3>
+        </div>
+
+        <!-- Aggregate Points Summary -->
+        <div class="grid grid-cols-4 gap-2 mb-6 bg-slate-950 p-3 rounded-xl border border-slate-800 text-center">
+          <div>
+            <p class="text-[9px] text-slate-400 uppercase">Total PT</p>
+            <p class="text-xl font-bold text-orange-400 font-teko">${totalPP + totalKP}</p>
+          </div>
+          <div>
+            <p class="text-[9px] text-slate-400 uppercase">Placement PT</p>
+            <p class="text-xl font-bold text-yellow-400 font-teko">${totalPP}</p>
+          </div>
+          <div>
+            <p class="text-[9px] text-slate-400 uppercase">Kill PT</p>
+            <p class="text-xl font-bold text-emerald-400 font-teko">${totalKP}</p>
+          </div>
+          <div>
+            <p class="text-[9px] text-slate-400 uppercase">Booyahs</p>
+            <p class="text-xl font-bold text-yellow-500 font-teko">${booyahs}</p>
+          </div>
+        </div>
+
+        <!-- Match 1-6 Details Breakdown -->
+        <h4 class="font-bold text-sm text-white mb-2 font-teko text-xl uppercase tracking-wider flex items-center gap-2">
+          <i class="fa-solid fa-gamepad text-orange-500"></i> Match 1-6 Breakdown
+        </h4>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-6">
+          ${item.data.matches.map(m => {
+            if (!m.played) return '';
+            const pp = placementMatrix[m.rank] || 0;
+            const kp = m.playerKills.reduce((a, b) => a + b, 0);
+            return `
+              <div class="bg-slate-900 border border-slate-800 rounded-xl p-3">
+                <div class="flex justify-between items-center mb-1">
+                  <span class="text-xs font-bold text-slate-300">Match ${m.matchNum} (${m.map})</span>
+                  <span class="text-[10px] font-bold ${m.rank === 1 ? 'text-yellow-400 gold-glow' : 'text-slate-400'}">Rank #${m.rank} ${m.rank === 1 ? '👑' : ''}</span>
+                </div>
+                <div class="flex justify-between text-[11px] text-slate-400 border-t border-slate-800/80 pt-1.5 mt-1">
+                  <span>P.P: <strong class="text-white">${pp}</strong></span>
+                  <span>K.P: <strong class="text-emerald-400">${kp}</strong></span>
+                  <span>Total: <strong class="text-orange-400">${pp + kp}</strong></span>
+                </div>
+              </div>
+            `;
+          }).join('')}
+        </div>
+
+        <!-- Individual Player Kills & K/D Breakdown -->
+        <h4 class="font-bold text-sm text-white mb-2 font-teko text-xl uppercase tracking-wider flex items-center gap-2">
+          <i class="fa-solid fa-users text-orange-500"></i> Player Kills & K/D Details
+        </h4>
+        <div class="grid grid-cols-2 sm:grid-cols-5 gap-2">
+          ${item.data.players.map((p, idx) => {
+            const pk = playerKillsAcc[idx];
+            const kd = calculateKD(pk, playedCount);
+            return `
+              <div class="bg-slate-900 border border-slate-800 rounded-xl p-2.5 text-center">
+                <p class="text-xs font-bold text-white truncate">${p.name}</p>
+                <p class="text-[9px] text-slate-400 uppercase">${p.role}</p>
+                <div class="mt-2 text-xs bg-slate-950 p-1.5 rounded-lg border border-slate-800">
+                  <p class="text-orange-400 font-bold">${pk} Kills</p>
+                  <p class="text-emerald-400 text-[10px]">K/D: ${kd}</p>
+                </div>
+              </div>
+            `;
+          }).join('')}
+        </div>
+      `;
+
+      modal.classList.remove('hidden');
+    }
+
+    function closeHistoryDetailModal() {
+      document.getElementById('history-detail-modal').classList.add('hidden');
     }
 
     // Toggle Admin Modal
