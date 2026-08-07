@@ -79,6 +79,12 @@
       <!-- Mode & Admin Actions -->
       <div class="flex items-center gap-3">
         
+        <!-- Live Stream Button (Visible when link exists) -->
+        <a id="header-live-btn" href="#" target="_blank" class="hidden bg-red-600/20 hover:bg-red-600/30 text-red-400 border border-red-500/40 px-3 py-1.5 rounded-xl text-xs font-bold items-center gap-2 transition-all">
+          <span class="w-2 h-2 rounded-full bg-red-500 animate-ping"></span>
+          <i class="fa-brands fa-youtube text-red-500 text-sm"></i> Watch Live
+        </a>
+
         <!-- Official / Unofficial Segment Toggle -->
         <div class="relative bg-slate-900 p-1 rounded-xl border border-slate-800 flex items-center text-xs font-bold">
           <div id="segment-pill" class="absolute top-1 bottom-1 left-1 w-[80px] ff-gradient rounded-lg transition-all duration-300 ease-out"></div>
@@ -115,17 +121,23 @@
             <span id="badge-category" class="px-3 py-0.5 bg-orange-500/20 text-orange-400 border border-orange-500/30 text-[10px] font-bold uppercase tracking-wider rounded-md">
               OFFICIAL LEAGUE
             </span>
-            <span class="flex items-center gap-1 text-[10px] text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-2 py-0.5 rounded-md font-semibold">
-              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span> TEAM STATS ACTIVE
+            <span id="badge-live-stream" class="hidden items-center gap-1.5 text-[10px] text-red-400 bg-red-500/10 border border-red-500/30 px-2.5 py-0.5 rounded-md font-bold">
+              <span class="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse"></span> TOURNAMENT LIVE NOW
             </span>
           </div>
           <h2 id="tourney-title" class="text-2xl sm:text-3xl font-extrabold text-white tracking-wide">
             TAGFREEFIREMAX - RECENT TOURNAMENT STATS
           </h2>
-          <p class="text-xs text-slate-400 mt-1 flex items-center gap-2">
+          <p class="text-xs text-slate-400 mt-1 flex items-center gap-2 flex-wrap">
             <span><i class="fa-solid fa-shield-halved text-orange-400 mr-1"></i> Roster: TAG Esports</span>
             <span>•</span>
             <span><i class="fa-solid fa-list-ol text-orange-400 mr-1"></i> Standard 6 Matches Breakdown</span>
+            <span id="live-stream-link-container" class="hidden">
+              <span>•</span>
+              <a id="banner-live-link" href="#" target="_blank" class="text-red-400 hover:text-red-300 underline font-semibold flex items-center gap-1">
+                <i class="fa-brands fa-youtube text-red-500"></i> Watch Stream
+              </a>
+            </span>
           </p>
         </div>
 
@@ -155,7 +167,7 @@
     <div class="mb-8">
       <div class="flex items-center justify-between mb-4">
         <h3 class="text-lg font-bold text-white flex items-center gap-2 font-teko tracking-wider uppercase text-xl">
-          <i class="fa-solid fa-gamepad text-orange-500"></i> Match-By-Match Points Breakdown (6 Matches)
+          <i class="fa-solid fa-gamepad text-orange-500"></i> Recent Match Breakdown (6 Matches)
         </h3>
         <span class="text-xs text-slate-400">Team TAGFREEFIREMAX Performance</span>
       </div>
@@ -165,17 +177,17 @@
       </div>
     </div>
 
-    <!-- Team TAG Roster Player Performance Section -->
+    <!-- Team TAG Roster Player Performance Section (5 Players) -->
     <div>
       <div class="flex items-center justify-between mb-4">
         <h3 class="text-lg font-bold text-white flex items-center gap-2 font-teko tracking-wider uppercase text-xl">
-          <i class="fa-solid fa-users text-orange-500"></i> Team Roster Player Statistics
+          <i class="fa-solid fa-users text-orange-500"></i> Team Roster Player Statistics (5 Players)
         </h3>
-        <span class="text-xs text-slate-400">Player Kill & Damage Contributions</span>
+        <span class="text-xs text-slate-400">Player Kill & Stats Contributions</span>
       </div>
 
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4" id="players-grid">
-        <!-- Player Cards Injected Here -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4" id="players-grid">
+        <!-- 5 Player Cards Injected Here -->
       </div>
     </div>
 
@@ -183,7 +195,7 @@
 
   <!-- Admin Access Modal -->
   <div id="admin-modal" class="fixed inset-0 bg-black/80 backdrop-blur-md hidden flex items-center justify-center z-50 p-4">
-    <div class="ff-card rounded-2xl max-w-md w-full p-6 border border-slate-700 relative animate-modal shadow-2xl">
+    <div class="ff-card rounded-2xl max-w-lg w-full p-6 border border-slate-700 relative animate-modal shadow-2xl max-h-[90vh] overflow-y-auto">
       <button onclick="toggleAdminModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white transition-colors">
         <i class="fa-solid fa-xmark text-lg"></i>
       </button>
@@ -193,7 +205,7 @@
         <h3 class="text-lg font-bold text-white mb-1 flex items-center gap-2">
           <i class="fa-solid fa-shield-halved text-orange-500"></i> Admin Verification
         </h3>
-        <p class="text-xs text-slate-400 mb-4">Enter security password to update match stats.</p>
+        <p class="text-xs text-slate-400 mb-4">Enter security password to update tournament & player stats.</p>
 
         <input type="password" id="admin-pin" placeholder="Enter Admin Password" class="w-full bg-slate-900 border border-slate-700 rounded-xl p-3 text-sm mb-4 text-white focus:outline-none focus:border-orange-500 transition-colors"/>
         
@@ -205,14 +217,39 @@
       <!-- Step 2: Submit Match Result Form -->
       <div id="admin-panel-step" class="hidden">
         <h3 class="text-lg font-bold text-white mb-1 flex items-center gap-2">
-          <i class="fa-solid fa-pen-to-square text-orange-500"></i> Update TAG Match Stats
+          <i class="fa-solid fa-pen-to-square text-orange-500"></i> Update Tournament & Match Stats
         </h3>
-        <p class="text-xs text-slate-400 mb-4">Update Match rank & kills for Team TAGFREEFIREMAX.</p>
+        <p class="text-xs text-slate-400 mb-4">Configure match results, individual player kills, and live link.</p>
 
-        <form id="score-form" onsubmit="handleScoreSubmit(event)" class="space-y-3">
-          <div class="grid grid-cols-2 gap-2">
+        <form id="score-form" onsubmit="handleScoreSubmit(event)" class="space-y-4">
+          
+          <!-- Category Select (Official vs Unofficial) -->
+          <div>
+            <label class="block text-xs font-semibold text-slate-300 mb-1">Target Category</label>
+            <select id="form-category" class="w-full bg-slate-900 border border-slate-700 rounded-xl p-2.5 text-xs text-white focus:outline-none focus:border-orange-500 font-bold">
+              <option value="official">OFFICIAL TOURNAMENT</option>
+              <option value="unofficial">UNOFFICIAL SCRIMS</option>
+            </select>
+          </div>
+
+          <!-- Live Stream URL Input -->
+          <div>
+            <label class="block text-xs font-semibold text-slate-300 mb-1">Tournament Live Stream Link (YouTube / Live URL)</label>
+            <input type="url" id="form-live-url" placeholder="https://youtube.com/live/..." class="w-full bg-slate-900 border border-slate-700 rounded-xl p-2.5 text-xs text-white focus:outline-none focus:border-orange-500"/>
+          </div>
+
+          <!-- Tournament Title Input -->
+          <div>
+            <label class="block text-xs font-semibold text-slate-300 mb-1">Tournament Title / Match Details Header</label>
+            <input type="text" id="form-title" placeholder="e.g. FFMAX INVITATIONAL 2026 - GRAND FINALS" class="w-full bg-slate-900 border border-slate-700 rounded-xl p-2.5 text-xs text-white focus:outline-none focus:border-orange-500"/>
+          </div>
+
+          <hr class="border-slate-800"/>
+
+          <!-- Match Number & Placement Rank -->
+          <div class="grid grid-cols-2 gap-3">
             <div>
-              <label class="block text-xs text-slate-400 mb-1">Match Number</label>
+              <label class="block text-xs font-semibold text-slate-300 mb-1">Match Slot</label>
               <select id="form-match" class="w-full bg-slate-900 border border-slate-700 rounded-xl p-2.5 text-xs text-white">
                 <option value="1">Match 1 (Bermuda)</option>
                 <option value="2">Match 2 (Kalahari)</option>
@@ -223,18 +260,45 @@
               </select>
             </div>
             <div>
-              <label class="block text-xs text-slate-400 mb-1">Placement Rank</label>
-              <input type="number" id="form-rank" min="1" max="12" required placeholder="e.g. 1 for Booyah" class="w-full bg-slate-900 border border-slate-700 rounded-xl p-2.5 text-xs text-white focus:outline-none focus:border-orange-500"/>
+              <label class="block text-xs font-semibold text-slate-300 mb-1">Placement Rank (#1 - #12)</label>
+              <input type="number" id="form-rank" min="1" max="12" required placeholder="1 for Booyah" class="w-full bg-slate-900 border border-slate-700 rounded-xl p-2.5 text-xs text-white focus:outline-none focus:border-orange-500"/>
             </div>
           </div>
 
+          <!-- Individual Player Kills Input (All 5 Players) -->
           <div>
-            <label class="block text-xs text-slate-400 mb-1">Total Team Kills</label>
-            <input type="number" id="form-kills" min="0" required placeholder="Team Kills in Match" class="w-full bg-slate-900 border border-slate-700 rounded-xl p-2.5 text-xs text-white focus:outline-none focus:border-orange-500"/>
+            <label class="block text-xs font-semibold text-slate-300 mb-2">Individual Player Kills (5 Players)</label>
+            <div class="space-y-2 bg-slate-950 p-3 rounded-xl border border-slate-800">
+              <div class="flex items-center justify-between gap-2">
+                <span class="text-xs text-slate-300 font-bold truncate">1. TAG-KD <span class="text-[10px] text-slate-500 font-normal">(sniper/igl)</span></span>
+                <input type="number" id="pk-0" min="0" value="0" oninput="recalcTotalKills()" class="w-20 bg-slate-900 border border-slate-700 rounded-lg p-1.5 text-xs text-center text-white"/>
+              </div>
+              <div class="flex items-center justify-between gap-2">
+                <span class="text-xs text-slate-300 font-bold truncate">2. TAG SAHIL <span class="text-[10px] text-slate-500 font-normal">(rusher)</span></span>
+                <input type="number" id="pk-1" min="0" value="0" oninput="recalcTotalKills()" class="w-20 bg-slate-900 border border-slate-700 rounded-lg p-1.5 text-xs text-center text-white"/>
+              </div>
+              <div class="flex items-center justify-between gap-2">
+                <span class="text-xs text-slate-300 font-bold truncate">3. TAG SHOTO <span class="text-[10px] text-slate-500 font-normal">(rusher)</span></span>
+                <input type="number" id="pk-2" min="0" value="0" oninput="recalcTotalKills()" class="w-20 bg-slate-900 border border-slate-700 rounded-lg p-1.5 text-xs text-center text-white"/>
+              </div>
+              <div class="flex items-center justify-between gap-2">
+                <span class="text-xs text-slate-300 font-bold truncate">4. WOLVIN <span class="text-[10px] text-slate-500 font-normal">(rusher)</span></span>
+                <input type="number" id="pk-3" min="0" value="0" oninput="recalcTotalKills()" class="w-20 bg-slate-900 border border-slate-700 rounded-lg p-1.5 text-xs text-center text-white"/>
+              </div>
+              <div class="flex items-center justify-between gap-2">
+                <span class="text-xs text-slate-300 font-bold truncate">5. LOUIS <span class="text-[10px] text-slate-500 font-normal">(rusher)</span></span>
+                <input type="number" id="pk-4" min="0" value="0" oninput="recalcTotalKills()" class="w-20 bg-slate-900 border border-slate-700 rounded-lg p-1.5 text-xs text-center text-white"/>
+              </div>
+
+              <div class="flex justify-between items-center pt-2 border-t border-slate-800 text-xs font-bold text-orange-400">
+                <span>Calculated Total Team Kills:</span>
+                <span id="calculated-total-kills">0</span>
+              </div>
+            </div>
           </div>
 
           <button type="submit" class="w-full ff-gradient ff-gradient-hover py-3 rounded-xl text-white font-bold text-xs uppercase tracking-wider shadow-lg mt-4 transition-all">
-            Save & Update Team Stats
+            Save & Update Tournament Stats
           </button>
         </form>
       </div>
@@ -245,59 +309,109 @@
     // Free Fire Official Placement Points Matrix (1 Kill = 1 Point)
     const placementMatrix = { 1: 12, 2: 9, 3: 8, 4: 7, 5: 6, 6: 5, 7: 4, 8: 3, 9: 2, 10: 1, 11: 0, 12: 0 };
 
-    // TEAM TAGFREEFIREMAX Data Stores (Official Tournaments vs Unofficial Scrims)
+    // TEAM TAGFREEFIREMAX Data Stores with 5 Players & Live Links
     const datasets = {
       official: {
         tournamentName: "FFMAX INVITATIONAL 2026 - OFFICIAL FINALS",
+        liveUrl: "",
         matches: [
-          { matchNum: 1, map: 'Bermuda', rank: 1, kills: 10 },
-          { matchNum: 2, map: 'Kalahari', rank: 2, kills: 6 },
-          { matchNum: 3, map: 'Alpine', rank: 4, kills: 4 },
-          { matchNum: 4, map: 'Purgatory', rank: 1, kills: 11 },
-          { matchNum: 5, map: 'Nexterra', rank: 3, kills: 7 },
-          { matchNum: 6, map: 'Bermuda', rank: 2, kills: 8 }
+          { matchNum: 1, map: 'Bermuda', rank: 1, playerKills: [3, 4, 2, 1, 0] },
+          { matchNum: 2, map: 'Kalahari', rank: 2, playerKills: [2, 2, 1, 1, 0] },
+          { matchNum: 3, map: 'Alpine', rank: 4, playerKills: [1, 1, 1, 1, 0] },
+          { matchNum: 4, map: 'Purgatory', rank: 1, playerKills: [4, 3, 2, 2, 0] },
+          { matchNum: 5, map: 'Nexterra', rank: 3, playerKills: [2, 2, 2, 1, 0] },
+          { matchNum: 6, map: 'Bermuda', rank: 2, playerKills: [3, 2, 2, 1, 0] }
         ],
         players: [
-          { name: 'TAG FozyAjay', role: 'Rusher / Captain', kills: 18, damage: '4,250', kd: '3.6', avgDmg: '708' },
-          { name: 'TAG Scout', role: 'Assaulter', kills: 14, damage: '3,890', kd: '2.8', avgDmg: '648' },
-          { name: 'TAG Vasi', role: 'Sniper / Support', kills: 8, damage: '2,910', kd: '1.8', avgDmg: '485' },
-          { name: 'TAG Shadow', role: 'IGL', kills: 6, damage: '2,400', kd: '1.4', avgDmg: '400' }
+          { name: 'TAG-KD', role: 'sniper/igl', damage: '3,850', kd: '3.0' },
+          { name: 'TAG SAHIL', role: 'rusher', damage: '3,400', kd: '2.8' },
+          { name: 'TAG SHOTO', role: 'rusher', damage: '2,600', kd: '2.0' },
+          { name: 'WOLVIN', role: 'rusher', damage: '2,100', kd: '1.4' },
+          { name: 'LOUIS', role: 'rusher', damage: '0', kd: '0.0' }
         ]
       },
       unofficial: {
         tournamentName: "COMMUNITY SCRIMS - NIGHT BATTLES #42",
+        liveUrl: "",
         matches: [
-          { matchNum: 1, map: 'Bermuda', rank: 1, kills: 14 },
-          { matchNum: 2, map: 'Kalahari', rank: 3, kills: 7 },
-          { matchNum: 3, map: 'Alpine', rank: 1, kills: 12 },
-          { matchNum: 4, map: 'Purgatory', rank: 2, kills: 8 },
-          { matchNum: 5, map: 'Nexterra', rank: 5, kills: 4 },
-          { matchNum: 6, map: 'Bermuda', rank: 1, kills: 11 }
+          { matchNum: 1, map: 'Bermuda', rank: 1, playerKills: [4, 5, 3, 2, 0] },
+          { matchNum: 2, map: 'Kalahari', rank: 3, playerKills: [2, 3, 1, 1, 0] },
+          { matchNum: 3, map: 'Alpine', rank: 1, playerKills: [4, 4, 2, 2, 0] },
+          { matchNum: 4, map: 'Purgatory', rank: 2, playerKills: [3, 2, 2, 1, 0] },
+          { matchNum: 5, map: 'Nexterra', rank: 5, playerKills: [1, 1, 1, 1, 0] },
+          { matchNum: 6, map: 'Bermuda', rank: 1, playerKills: [4, 3, 2, 2, 0] }
         ],
         players: [
-          { name: 'TAG FozyAjay', role: 'Rusher / Captain', kills: 22, damage: '5,100', kd: '4.4', avgDmg: '850' },
-          { name: 'TAG Scout', role: 'Assaulter', kills: 16, damage: '4,150', kd: '3.2', avgDmg: '691' },
-          { name: 'TAG Vasi', role: 'Sniper / Support', kills: 10, damage: '3,200', kd: '2.0', avgDmg: '533' },
-          { name: 'TAG Shadow', role: 'IGL', kills: 8, damage: '2,800', kd: '1.6', avgDmg: '466' }
+          { name: 'TAG-KD', role: 'sniper/igl', damage: '4,500', kd: '3.6' },
+          { name: 'TAG SAHIL', role: 'rusher', damage: '4,100', kd: '3.2' },
+          { name: 'TAG SHOTO', role: 'rusher', damage: '2,900', kd: '2.2' },
+          { name: 'WOLVIN', role: 'rusher', damage: '2,300', kd: '1.8' },
+          { name: 'LOUIS', role: 'rusher', damage: '0', kd: '0.0' }
         ]
       }
     };
 
     let activeCategory = 'official';
 
+    // Recalculate Admin Form Total Kills Live
+    function recalcTotalKills() {
+      let sum = 0;
+      for (let i = 0; i < 5; i++) {
+        const val = parseInt(document.getElementById(`pk-${i}`).value) || 0;
+        sum += val;
+      }
+      document.getElementById('calculated-total-kills').innerText = sum;
+    }
+
     // Render Dashboard Stats & Matches
     function renderDashboard() {
       const currentData = datasets[activeCategory];
       document.getElementById('tourney-title').innerText = currentData.tournamentName;
 
-      // Calculate Aggregate Points
+      // Handle Live Stream Buttons
+      const headerLiveBtn = document.getElementById('header-live-btn');
+      const badgeLiveStream = document.getElementById('badge-live-stream');
+      const liveStreamLinkContainer = document.getElementById('live-stream-link-container');
+      const bannerLiveLink = document.getElementById('banner-live-link');
+
+      if (currentData.liveUrl && currentData.liveUrl.trim() !== "") {
+        headerLiveBtn.href = currentData.liveUrl;
+        headerLiveBtn.classList.remove('hidden');
+        headerLiveBtn.classList.add('flex');
+
+        badgeLiveStream.classList.remove('hidden');
+        badgeLiveStream.classList.add('flex');
+
+        bannerLiveLink.href = currentData.liveUrl;
+        liveStreamLinkContainer.classList.remove('hidden');
+      } else {
+        headerLiveBtn.classList.add('hidden');
+        headerLiveBtn.classList.remove('flex');
+
+        badgeLiveStream.classList.add('hidden');
+        badgeLiveStream.classList.remove('flex');
+
+        liveStreamLinkContainer.classList.add('hidden');
+      }
+
+      // Calculate Aggregate Points & Individual Player Kills
       let totalPlacementPts = 0;
       let totalKillPts = 0;
       let totalBooyahs = 0;
 
+      // Array to store accumulated kills per player
+      let accumulatedPlayerKills = [0, 0, 0, 0, 0];
+
       currentData.matches.forEach(m => {
         totalPlacementPts += placementMatrix[m.rank] || 0;
-        totalKillPts += m.kills;
+        
+        let matchKills = 0;
+        m.playerKills.forEach((pk, pIdx) => {
+          matchKills += pk;
+          accumulatedPlayerKills[pIdx] += pk;
+        });
+
+        totalKillPts += matchKills;
         if (m.rank === 1) totalBooyahs++;
       });
 
@@ -314,7 +428,8 @@
 
       currentData.matches.forEach((m, idx) => {
         const placementPts = placementMatrix[m.rank] || 0;
-        const matchTotalPts = placementPts + m.kills;
+        const matchKills = m.playerKills.reduce((a, b) => a + b, 0);
+        const matchTotalPts = placementPts + matchKills;
         const isBooyah = m.rank === 1;
 
         const card = document.createElement('div');
@@ -336,7 +451,7 @@
             </div>
             <div>
               <p class="text-[9px] text-slate-400 uppercase">Kill PT</p>
-              <p class="text-sm font-bold text-emerald-400 font-teko">${m.kills}</p>
+              <p class="text-sm font-bold text-emerald-400 font-teko">${matchKills}</p>
             </div>
             <div>
               <p class="text-[9px] text-slate-400 uppercase">Total PT</p>
@@ -347,14 +462,16 @@
         matchesGrid.appendChild(card);
       });
 
-      // Render Player Roster Cards
+      // Render 5 Player Roster Cards
       const playersGrid = document.getElementById('players-grid');
       playersGrid.innerHTML = '';
 
-      currentData.players.forEach((p, idx) => {
+      currentData.players.forEach((p, pIdx) => {
+        const totalPlayerKills = accumulatedPlayerKills[pIdx];
+
         const card = document.createElement('div');
         card.className = 'ff-card rounded-2xl p-4 animate-row hover-lift border border-slate-800';
-        card.style.animationDelay = `${idx * 0.06}s`;
+        card.style.animationDelay = `${pIdx * 0.05}s`;
 
         card.innerHTML = `
           <div class="flex items-center justify-between mb-2">
@@ -365,7 +482,7 @@
           <div class="grid grid-cols-2 gap-2 mt-3 bg-slate-950/60 p-2.5 rounded-xl text-center border border-slate-800/60">
             <div>
               <p class="text-[9px] text-slate-400 uppercase">Total Kills</p>
-              <p class="text-lg font-bold text-orange-400 font-teko">${p.kills}</p>
+              <p class="text-lg font-bold text-orange-400 font-teko">${totalPlayerKills}</p>
             </div>
             <div>
               <p class="text-[9px] text-slate-400 uppercase">K/D Ratio</p>
@@ -375,7 +492,6 @@
 
           <div class="mt-2 text-[10px] text-slate-400 flex justify-between px-1">
             <span>Damage: <strong class="text-slate-200">${p.damage}</strong></span>
-            <span>Avg Dmg: <strong class="text-slate-200">${p.avgDmg}</strong></span>
           </div>
         `;
         playersGrid.appendChild(card);
@@ -412,6 +528,11 @@
     // Toggle Admin Modal
     function toggleAdminModal() {
       document.getElementById('admin-modal').classList.toggle('hidden');
+      if (!document.getElementById('admin-modal').classList.contains('hidden')) {
+        document.getElementById('form-category').value = activeCategory;
+        document.getElementById('form-title').value = datasets[activeCategory].tournamentName;
+        document.getElementById('form-live-url').value = datasets[activeCategory].liveUrl || '';
+      }
     }
 
     // Verify Admin Password (taglevelonbro190-)
@@ -427,17 +548,32 @@
       }
     }
 
-    // Handle Admin Score Update
+    // Handle Admin Score & Live Stream Update
     function handleScoreSubmit(e) {
       e.preventDefault();
+      const targetCategory = document.getElementById('form-category').value;
+      const title = document.getElementById('form-title').value;
+      const liveUrl = document.getElementById('form-live-url').value;
       const matchSlot = parseInt(document.getElementById('form-match').value) - 1;
       const rank = parseInt(document.getElementById('form-rank').value);
-      const kills = parseInt(document.getElementById('form-kills').value);
 
-      datasets[activeCategory].matches[matchSlot].rank = rank;
-      datasets[activeCategory].matches[matchSlot].kills = kills;
+      // Extract individual player kills
+      const playerKills = [];
+      for (let i = 0; i < 5; i++) {
+        playerKills.push(parseInt(document.getElementById(`pk-${i}`).value) || 0);
+      }
 
-      renderDashboard();
+      // Apply updates to target dataset
+      if (title && title.trim() !== '') {
+        datasets[targetCategory].tournamentName = title;
+      }
+      datasets[targetCategory].liveUrl = liveUrl;
+
+      datasets[targetCategory].matches[matchSlot].rank = rank;
+      datasets[targetCategory].matches[matchSlot].playerKills = playerKills;
+
+      activeCategory = targetCategory;
+      switchCategory(targetCategory);
       toggleAdminModal();
     }
 
