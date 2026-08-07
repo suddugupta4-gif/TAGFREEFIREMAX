@@ -115,12 +115,9 @@
   <!-- Main Container -->
   <main class="max-w-7xl mx-auto px-4 sm:px-6 mt-6">
     
-    <!-- Hero Team Dashboard Card -->
-    <div class="ff-card rounded-2xl p-6 mb-6 border-l-4 border-l-orange-500 relative overflow-hidden hover-lift">
-      <div class="absolute -right-12 -bottom-12 text-slate-800/20 text-9xl font-black font-teko select-none pointer-events-none">
-        TEAM TAG
-      </div>
-
+    <!-- Hero Team Dashboard Card with Team Background Image Cover -->
+    <div id="hero-banner-card" class="ff-card rounded-2xl p-6 mb-6 border-l-4 border-l-orange-500 relative overflow-hidden hover-lift transition-all shadow-2xl" style="background: linear-gradient(to right, rgba(15,21,34,0.88) 20%, rgba(15,21,34,0.60) 60%, rgba(15,21,34,0.88) 100%), url('team_banner.jpg') no-repeat center top / cover;">
+      
       <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-6 relative z-10">
         <div>
           <div class="flex items-center gap-2 mb-2 flex-wrap">
@@ -134,10 +131,10 @@
               <i class="fa-solid fa-circle-check"></i> TOURNAMENT COMPLETED & SAVED
             </span>
           </div>
-          <h2 id="tourney-title" class="text-2xl sm:text-3xl font-extrabold text-white tracking-wide">
+          <h2 id="tourney-title" class="text-2xl sm:text-3xl font-extrabold text-white tracking-wide drop-shadow-md">
             TAGFREEFIREMAX - RECENT TOURNAMENT STATS
           </h2>
-          <p class="text-xs text-slate-400 mt-1 flex items-center gap-2 flex-wrap">
+          <p class="text-xs text-slate-300 mt-1 flex items-center gap-2 flex-wrap drop-shadow">
             <span><i class="fa-solid fa-shield-halved text-orange-400 mr-1"></i> Roster: TAG Esports</span>
             <span>•</span>
             <span><i class="fa-solid fa-list-ol text-orange-400 mr-1"></i> Standard 6 Matches Breakdown</span>
@@ -152,19 +149,19 @@
 
         <!-- Team Points Aggregate Grid -->
         <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
-          <div class="bg-slate-900/90 px-4 py-2.5 rounded-xl border border-slate-800/80 text-center">
+          <div class="bg-slate-950/85 backdrop-blur-sm px-4 py-2.5 rounded-xl border border-slate-800/80 text-center shadow-lg">
             <p class="text-[10px] text-slate-400 uppercase tracking-wider">Total Points (T.P)</p>
             <p id="stat-total-pts" class="text-2xl font-bold text-orange-400 font-teko tracking-wide">0</p>
           </div>
-          <div class="bg-slate-900/90 px-4 py-2.5 rounded-xl border border-slate-800/80 text-center">
+          <div class="bg-slate-950/85 backdrop-blur-sm px-4 py-2.5 rounded-xl border border-slate-800/80 text-center shadow-lg">
             <p class="text-[10px] text-slate-400 uppercase tracking-wider">Placement PT (P.P)</p>
             <p id="stat-placement-pts" class="text-2xl font-bold text-yellow-400 font-teko tracking-wide">0</p>
           </div>
-          <div class="bg-slate-900/90 px-4 py-2.5 rounded-xl border border-slate-800/80 text-center">
+          <div class="bg-slate-950/85 backdrop-blur-sm px-4 py-2.5 rounded-xl border border-slate-800/80 text-center shadow-lg">
             <p class="text-[10px] text-slate-400 uppercase tracking-wider">Kill Points (K.P)</p>
             <p id="stat-kill-pts" class="text-2xl font-bold text-emerald-400 font-teko tracking-wide">0</p>
           </div>
-          <div class="bg-slate-900/90 px-4 py-2.5 rounded-xl border border-slate-800/80 text-center">
+          <div class="bg-slate-950/85 backdrop-blur-sm px-4 py-2.5 rounded-xl border border-slate-800/80 text-center shadow-lg">
             <p class="text-[10px] text-slate-400 uppercase tracking-wider">Booyahs Won</p>
             <p id="stat-booyahs" class="text-2xl font-bold text-yellow-500 font-teko tracking-wide gold-glow">0</p>
           </div>
@@ -277,6 +274,12 @@
             </select>
           </div>
 
+          <!-- Banner Background Image URL Input -->
+          <div>
+            <label class="block text-xs font-semibold text-slate-300 mb-1">Banner Background Image URL (Team Photo)</label>
+            <input type="url" id="form-bg-url" placeholder="https://example.com/team_photo.jpg" class="w-full bg-slate-900 border border-slate-700 rounded-xl p-2.5 text-xs text-white focus:outline-none focus:border-orange-500"/>
+          </div>
+
           <!-- Live Stream URL Input -->
           <div>
             <label class="block text-xs font-semibold text-slate-300 mb-1">Tournament Live Stream Link (YouTube / Live URL)</label>
@@ -354,7 +357,7 @@
     // Free Fire Official Placement Points Matrix (1 Kill = 1 Point)
     const placementMatrix = { 1: 12, 2: 9, 3: 8, 4: 7, 5: 6, 6: 5, 7: 4, 8: 3, 9: 2, 10: 1, 11: 0, 12: 0 };
 
-    // Helper for dynamic K/D calculation (Kills / Played Matches)
+    // Helper for dynamic K/D calculation
     function calculateKD(totalKills, playedMatchesCount) {
       if (!playedMatchesCount || playedMatchesCount === 0) return '0.0';
       return (totalKills / playedMatchesCount).toFixed(1);
@@ -364,6 +367,7 @@
     const createEmptyTournament = (title) => ({
       tournamentName: title,
       liveUrl: "",
+      bgUrl: "",
       matches: [
         { matchNum: 1, map: 'Bermuda', rank: 0, playerKills: [0, 0, 0, 0, 0], played: false },
         { matchNum: 2, map: 'Kalahari', rank: 0, playerKills: [0, 0, 0, 0, 0], played: false },
@@ -386,6 +390,7 @@
       official: {
         tournamentName: "FFMAX INVITATIONAL 2026 - OFFICIAL FINALS",
         liveUrl: "",
+        bgUrl: "",
         matches: [
           { matchNum: 1, map: 'Bermuda', rank: 1, playerKills: [3, 4, 2, 1, 0], played: true },
           { matchNum: 2, map: 'Kalahari', rank: 2, playerKills: [2, 2, 1, 1, 0], played: true },
@@ -405,6 +410,7 @@
       unofficial: {
         tournamentName: "COMMUNITY SCRIMS - NIGHT BATTLES #42",
         liveUrl: "",
+        bgUrl: "",
         matches: [
           { matchNum: 1, map: 'Bermuda', rank: 1, playerKills: [4, 5, 3, 2, 0], played: true },
           { matchNum: 2, map: 'Kalahari', rank: 3, playerKills: [2, 3, 1, 1, 0], played: true },
@@ -448,6 +454,14 @@
     function renderDashboard() {
       const currentData = datasets[activeCategory];
       document.getElementById('tourney-title').innerText = currentData.tournamentName;
+
+      // Handle Hero Banner Card Background Image
+      const heroCard = document.getElementById('hero-banner-card');
+      if (currentData.bgUrl && currentData.bgUrl.trim() !== "") {
+        heroCard.style.background = `linear-gradient(to right, rgba(15,21,34,0.88) 20%, rgba(15,21,34,0.60) 60%, rgba(15,21,34,0.88) 100%), url('${currentData.bgUrl}') no-repeat center top / cover`;
+      } else {
+        heroCard.style.background = `linear-gradient(to right, rgba(15,21,34,0.88) 20%, rgba(15,21,34,0.60) 60%, rgba(15,21,34,0.88) 100%), url('team_banner.jpg') no-repeat center top / cover`;
+      }
 
       // Handle Live Stream Buttons
       const headerLiveBtn = document.getElementById('header-live-btn');
@@ -796,6 +810,7 @@
         document.getElementById('form-category').value = activeCategory;
         document.getElementById('form-title').value = datasets[activeCategory].tournamentName;
         document.getElementById('form-live-url').value = datasets[activeCategory].liveUrl || '';
+        document.getElementById('form-bg-url').value = datasets[activeCategory].bgUrl || '';
       }
     }
 
@@ -833,6 +848,7 @@
       const targetCategory = document.getElementById('form-category').value;
       const title = document.getElementById('form-title').value;
       const liveUrl = document.getElementById('form-live-url').value;
+      const bgUrl = document.getElementById('form-bg-url').value;
       const matchSlot = parseInt(document.getElementById('form-match').value) - 1;
       const rank = parseInt(document.getElementById('form-rank').value);
 
@@ -847,6 +863,7 @@
         datasets[targetCategory].tournamentName = title;
       }
       datasets[targetCategory].liveUrl = liveUrl;
+      datasets[targetCategory].bgUrl = bgUrl;
 
       // Update match
       datasets[targetCategory].matches[matchSlot].rank = rank;
