@@ -76,23 +76,29 @@
         </div>
       </div>
 
-      <!-- Mode & Admin Actions -->
-      <div class="flex items-center gap-3">
+      <!-- Mode & Actions -->
+      <div class="flex items-center gap-2 sm:gap-3">
         
         <!-- Live Stream Button (Visible when link exists) -->
         <a id="header-live-btn" href="#" target="_blank" class="hidden bg-red-600/20 hover:bg-red-600/30 text-red-400 border border-red-500/40 px-3 py-1.5 rounded-xl text-xs font-bold items-center gap-2 transition-all">
           <span class="w-2 h-2 rounded-full bg-red-500 animate-ping"></span>
-          <i class="fa-brands fa-youtube text-red-500 text-sm"></i> Watch Live
+          <i class="fa-brands fa-youtube text-red-500 text-sm"></i> <span class="hidden sm:inline">Watch Live</span>
         </a>
+
+        <!-- Tournament History Archive Button -->
+        <button onclick="toggleHistoryModal()" class="bg-slate-900 hover:bg-slate-800 text-slate-300 px-3 py-2 rounded-xl text-xs font-semibold border border-slate-800 flex items-center gap-1.5 hover-lift transition-all">
+          <i class="fa-solid fa-clock-rotate-left text-yellow-500"></i>
+          <span class="hidden sm:inline">History</span>
+        </button>
 
         <!-- Official / Unofficial Segment Toggle -->
         <div class="relative bg-slate-900 p-1 rounded-xl border border-slate-800 flex items-center text-xs font-bold">
-          <div id="segment-pill" class="absolute top-1 bottom-1 left-1 w-[80px] ff-gradient rounded-lg transition-all duration-300 ease-out"></div>
+          <div id="segment-pill" class="absolute top-1 bottom-1 left-1 w-[75px] sm:w-[80px] ff-gradient rounded-lg transition-all duration-300 ease-out"></div>
           
-          <button id="btn-official" onclick="switchCategory('official')" class="relative z-10 w-[80px] py-1.5 text-center text-white transition-colors duration-200">
+          <button id="btn-official" onclick="switchCategory('official')" class="relative z-10 w-[75px] sm:w-[80px] py-1.5 text-center text-white transition-colors duration-200">
             OFFICIAL
           </button>
-          <button id="btn-unofficial" onclick="switchCategory('unofficial')" class="relative z-10 w-[95px] py-1.5 text-center text-slate-400 hover:text-white transition-colors duration-200">
+          <button id="btn-unofficial" onclick="switchCategory('unofficial')" class="relative z-10 w-[85px] sm:w-[95px] py-1.5 text-center text-slate-400 hover:text-white transition-colors duration-200">
             UNOFFICIAL
           </button>
         </div>
@@ -100,7 +106,7 @@
         <!-- Admin Access Button -->
         <button onclick="toggleAdminModal()" class="bg-slate-900 hover:bg-slate-800 text-slate-200 px-3 py-2 rounded-xl text-xs font-semibold border border-slate-800 flex items-center gap-2 hover-lift transition-all">
           <i id="admin-icon" class="fa-solid fa-lock text-orange-400"></i>
-          <span id="admin-btn-text" class="hidden sm:inline">Admin Access</span>
+          <span id="admin-btn-text" class="hidden md:inline">Admin Access</span>
         </button>
       </div>
     </div>
@@ -117,12 +123,15 @@
 
       <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-6 relative z-10">
         <div>
-          <div class="flex items-center gap-2 mb-2">
+          <div class="flex items-center gap-2 mb-2 flex-wrap">
             <span id="badge-category" class="px-3 py-0.5 bg-orange-500/20 text-orange-400 border border-orange-500/30 text-[10px] font-bold uppercase tracking-wider rounded-md">
               OFFICIAL LEAGUE
             </span>
             <span id="badge-live-stream" class="hidden items-center gap-1.5 text-[10px] text-red-400 bg-red-500/10 border border-red-500/30 px-2.5 py-0.5 rounded-md font-bold">
               <span class="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse"></span> TOURNAMENT LIVE NOW
+            </span>
+            <span id="badge-completed" class="hidden items-center gap-1.5 text-[10px] text-emerald-400 bg-emerald-500/10 border border-emerald-500/30 px-2.5 py-0.5 rounded-md font-bold">
+              <i class="fa-solid fa-circle-check"></i> TOURNAMENT COMPLETED & SAVED
             </span>
           </div>
           <h2 id="tourney-title" class="text-2xl sm:text-3xl font-extrabold text-white tracking-wide">
@@ -163,17 +172,17 @@
       </div>
     </div>
 
-    <!-- Match Breakdown Section (6 Matches Log for Team TAG) -->
+    <!-- Match Breakdown Section (Shows Only Completed/Updated Matches) -->
     <div class="mb-8">
       <div class="flex items-center justify-between mb-4">
         <h3 class="text-lg font-bold text-white flex items-center gap-2 font-teko tracking-wider uppercase text-xl">
-          <i class="fa-solid fa-gamepad text-orange-500"></i> Recent Match Breakdown (6 Matches)
+          <i class="fa-solid fa-gamepad text-orange-500"></i> Recent Match Breakdown (<span id="matches-count-label">0</span>/6 Matches)
         </h3>
         <span class="text-xs text-slate-400">Team TAGFREEFIREMAX Performance</span>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" id="matches-grid">
-        <!-- 6 Match Cards Injected Here -->
+        <!-- Match Cards Injected Dynamically -->
       </div>
     </div>
 
@@ -192,6 +201,24 @@
     </div>
 
   </main>
+
+  <!-- History Archive Modal -->
+  <div id="history-modal" class="fixed inset-0 bg-black/80 backdrop-blur-md hidden flex items-center justify-center z-50 p-4">
+    <div class="ff-card rounded-2xl max-w-2xl w-full p-6 border border-slate-700 relative animate-modal shadow-2xl max-h-[85vh] overflow-y-auto">
+      <button onclick="toggleHistoryModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white transition-colors">
+        <i class="fa-solid fa-xmark text-lg"></i>
+      </button>
+
+      <h3 class="text-xl font-bold text-white mb-1 flex items-center gap-2 font-teko text-2xl uppercase tracking-wider">
+        <i class="fa-solid fa-clock-rotate-left text-yellow-500"></i> Past Tournament Archives
+      </h3>
+      <p class="text-xs text-slate-400 mb-4">Select any past completed 6-match tournament to view full details.</p>
+
+      <div id="history-list" class="space-y-3">
+        <!-- Saved Tournaments Listed Here -->
+      </div>
+    </div>
+  </div>
 
   <!-- Admin Access Modal -->
   <div id="admin-modal" class="fixed inset-0 bg-black/80 backdrop-blur-md hidden flex items-center justify-center z-50 p-4">
@@ -216,10 +243,18 @@
 
       <!-- Step 2: Submit Match Result Form -->
       <div id="admin-panel-step" class="hidden">
-        <h3 class="text-lg font-bold text-white mb-1 flex items-center gap-2">
-          <i class="fa-solid fa-pen-to-square text-orange-500"></i> Update Tournament & Match Stats
-        </h3>
-        <p class="text-xs text-slate-400 mb-4">Configure match results, individual player kills, and live link.</p>
+        <div class="flex items-center justify-between mb-3">
+          <h3 class="text-lg font-bold text-white flex items-center gap-2">
+            <i class="fa-solid fa-pen-to-square text-orange-500"></i> Update Tournament Stats
+          </h3>
+
+          <!-- Clear All / Start New Tournament Button -->
+          <button onclick="startNewTournament()" class="bg-red-600/20 hover:bg-red-600/40 text-red-400 border border-red-500/40 px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5">
+            <i class="fa-solid fa-trash-can"></i> Start New Tournament
+          </button>
+        </div>
+
+        <p class="text-xs text-slate-400 mb-4">Update match rank & player kills. Matches reveal automatically as updated!</p>
 
         <form id="score-form" onsubmit="handleScoreSubmit(event)" class="space-y-4">
           
@@ -309,18 +344,39 @@
     // Free Fire Official Placement Points Matrix (1 Kill = 1 Point)
     const placementMatrix = { 1: 12, 2: 9, 3: 8, 4: 7, 5: 6, 6: 5, 7: 4, 8: 3, 9: 2, 10: 1, 11: 0, 12: 0 };
 
-    // TEAM TAGFREEFIREMAX Data Stores with 5 Players & Live Links
-    const datasets = {
+    // Default Fresh Setup
+    const createEmptyTournament = (title) => ({
+      tournamentName: title,
+      liveUrl: "",
+      matches: [
+        { matchNum: 1, map: 'Bermuda', rank: 0, playerKills: [0, 0, 0, 0, 0], played: false },
+        { matchNum: 2, map: 'Kalahari', rank: 0, playerKills: [0, 0, 0, 0, 0], played: false },
+        { matchNum: 3, map: 'Alpine', rank: 0, playerKills: [0, 0, 0, 0, 0], played: false },
+        { matchNum: 4, map: 'Purgatory', rank: 0, playerKills: [0, 0, 0, 0, 0], played: false },
+        { matchNum: 5, map: 'Nexterra', rank: 0, playerKills: [0, 0, 0, 0, 0], played: false },
+        { matchNum: 6, map: 'Bermuda', rank: 0, playerKills: [0, 0, 0, 0, 0], played: false }
+      ],
+      players: [
+        { name: 'TAG-KD', role: 'sniper/igl', damage: '3,850', kd: '3.0' },
+        { name: 'TAG SAHIL', role: 'rusher', damage: '3,400', kd: '2.8' },
+        { name: 'TAG SHOTO', role: 'rusher', damage: '2,600', kd: '2.0' },
+        { name: 'TAG WOLVIN', role: 'rusher', damage: '2,100', kd: '1.4' },
+        { name: 'TAG LOUIS', role: 'rusher', damage: '0', kd: '0.0' }
+      ]
+    });
+
+    // Sample Datasets Initialized
+    const defaultDatasets = {
       official: {
         tournamentName: "FFMAX INVITATIONAL 2026 - OFFICIAL FINALS",
         liveUrl: "",
         matches: [
-          { matchNum: 1, map: 'Bermuda', rank: 1, playerKills: [3, 4, 2, 1, 0] },
-          { matchNum: 2, map: 'Kalahari', rank: 2, playerKills: [2, 2, 1, 1, 0] },
-          { matchNum: 3, map: 'Alpine', rank: 4, playerKills: [1, 1, 1, 1, 0] },
-          { matchNum: 4, map: 'Purgatory', rank: 1, playerKills: [4, 3, 2, 2, 0] },
-          { matchNum: 5, map: 'Nexterra', rank: 3, playerKills: [2, 2, 2, 1, 0] },
-          { matchNum: 6, map: 'Bermuda', rank: 2, playerKills: [3, 2, 2, 1, 0] }
+          { matchNum: 1, map: 'Bermuda', rank: 1, playerKills: [3, 4, 2, 1, 0], played: true },
+          { matchNum: 2, map: 'Kalahari', rank: 2, playerKills: [2, 2, 1, 1, 0], played: true },
+          { matchNum: 3, map: 'Alpine', rank: 4, playerKills: [1, 1, 1, 1, 0], played: true },
+          { matchNum: 4, map: 'Purgatory', rank: 1, playerKills: [4, 3, 2, 2, 0], played: true },
+          { matchNum: 5, map: 'Nexterra', rank: 3, playerKills: [2, 2, 2, 1, 0], played: true },
+          { matchNum: 6, map: 'Bermuda', rank: 2, playerKills: [3, 2, 2, 1, 0], played: true }
         ],
         players: [
           { name: 'TAG-KD', role: 'sniper/igl', damage: '3,850', kd: '3.0' },
@@ -334,12 +390,12 @@
         tournamentName: "COMMUNITY SCRIMS - NIGHT BATTLES #42",
         liveUrl: "",
         matches: [
-          { matchNum: 1, map: 'Bermuda', rank: 1, playerKills: [4, 5, 3, 2, 0] },
-          { matchNum: 2, map: 'Kalahari', rank: 3, playerKills: [2, 3, 1, 1, 0] },
-          { matchNum: 3, map: 'Alpine', rank: 1, playerKills: [4, 4, 2, 2, 0] },
-          { matchNum: 4, map: 'Purgatory', rank: 2, playerKills: [3, 2, 2, 1, 0] },
-          { matchNum: 5, map: 'Nexterra', rank: 5, playerKills: [1, 1, 1, 1, 0] },
-          { matchNum: 6, map: 'Bermuda', rank: 1, playerKills: [4, 3, 2, 2, 0] }
+          { matchNum: 1, map: 'Bermuda', rank: 1, playerKills: [4, 5, 3, 2, 0], played: true },
+          { matchNum: 2, map: 'Kalahari', rank: 3, playerKills: [2, 3, 1, 1, 0], played: true },
+          { matchNum: 3, map: 'Alpine', rank: 1, playerKills: [4, 4, 2, 2, 0], played: true },
+          { matchNum: 4, map: 'Purgatory', rank: 2, playerKills: [3, 2, 2, 1, 0], played: true },
+          { matchNum: 5, map: 'Nexterra', rank: 5, playerKills: [1, 1, 1, 1, 0], played: true },
+          { matchNum: 6, map: 'Bermuda', rank: 1, playerKills: [4, 3, 2, 2, 0], played: true }
         ],
         players: [
           { name: 'TAG-KD', role: 'sniper/igl', damage: '4,500', kd: '3.6' },
@@ -351,7 +407,16 @@
       }
     };
 
+    // Load from LocalStorage if available
+    let datasets = JSON.parse(localStorage.getItem('tag_datasets')) || defaultDatasets;
+    let tournamentHistory = JSON.parse(localStorage.getItem('tag_history')) || { official: [], unofficial: [] };
+
     let activeCategory = 'official';
+
+    function saveState() {
+      localStorage.setItem('tag_datasets', JSON.stringify(datasets));
+      localStorage.setItem('tag_history', JSON.stringify(tournamentHistory));
+    }
 
     // Recalculate Admin Form Total Kills Live
     function recalcTotalKills() {
@@ -363,7 +428,7 @@
       document.getElementById('calculated-total-kills').innerText = sum;
     }
 
-    // Render Dashboard Stats & Matches
+    // Render Dashboard Stats & Progressive Matches
     function renderDashboard() {
       const currentData = datasets[activeCategory];
       document.getElementById('tourney-title').innerText = currentData.tournamentName;
@@ -371,6 +436,7 @@
       // Handle Live Stream Buttons
       const headerLiveBtn = document.getElementById('header-live-btn');
       const badgeLiveStream = document.getElementById('badge-live-stream');
+      const badgeCompleted = document.getElementById('badge-completed');
       const liveStreamLinkContainer = document.getElementById('live-stream-link-container');
       const bannerLiveLink = document.getElementById('banner-live-link');
 
@@ -394,15 +460,26 @@
         liveStreamLinkContainer.classList.add('hidden');
       }
 
+      // Filter only Played Matches
+      const playedMatches = currentData.matches.filter(m => m.played === true);
+      document.getElementById('matches-count-label').innerText = playedMatches.length;
+
+      // Check if all 6 matches are complete
+      if (playedMatches.length === 6) {
+        badgeCompleted.classList.remove('hidden');
+        badgeCompleted.classList.add('flex');
+      } else {
+        badgeCompleted.classList.add('hidden');
+      }
+
       // Calculate Aggregate Points & Individual Player Kills
       let totalPlacementPts = 0;
       let totalKillPts = 0;
       let totalBooyahs = 0;
 
-      // Array to store accumulated kills per player
       let accumulatedPlayerKills = [0, 0, 0, 0, 0];
 
-      currentData.matches.forEach(m => {
+      playedMatches.forEach(m => {
         totalPlacementPts += placementMatrix[m.rank] || 0;
         
         let matchKills = 0;
@@ -422,45 +499,55 @@
       document.getElementById('stat-kill-pts').innerText = totalKillPts;
       document.getElementById('stat-booyahs').innerText = totalBooyahs;
 
-      // Render 6 Match Cards
+      // Render Played Match Cards Only
       const matchesGrid = document.getElementById('matches-grid');
       matchesGrid.innerHTML = '';
 
-      currentData.matches.forEach((m, idx) => {
-        const placementPts = placementMatrix[m.rank] || 0;
-        const matchKills = m.playerKills.reduce((a, b) => a + b, 0);
-        const matchTotalPts = placementPts + matchKills;
-        const isBooyah = m.rank === 1;
-
-        const card = document.createElement('div');
-        card.className = `ff-card rounded-2xl p-4 relative overflow-hidden animate-row hover-lift ${isBooyah ? 'border-yellow-500/50 bg-slate-900/60' : ''}`;
-        card.style.animationDelay = `${idx * 0.05}s`;
-
-        card.innerHTML = `
-          <div class="flex items-center justify-between mb-3">
-            <span class="text-xs font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1">
-              <i class="fa-solid fa-map-pin text-orange-500"></i> Match ${m.matchNum} (${m.map})
-            </span>
-            ${isBooyah ? '<span class="text-[10px] font-black bg-yellow-500/20 text-yellow-400 border border-yellow-500/40 px-2 py-0.5 rounded-md gold-glow"><i class="fa-solid fa-crown mr-1"></i>BOOYAH!</span>' : `<span class="text-[10px] font-bold bg-slate-800 text-slate-300 px-2 py-0.5 rounded-md">Rank #${m.rank}</span>`}
-          </div>
-
-          <div class="grid grid-cols-3 gap-2 text-center bg-slate-950/60 rounded-xl p-2.5 border border-slate-800/80">
-            <div>
-              <p class="text-[9px] text-slate-400 uppercase">Placement PT</p>
-              <p class="text-sm font-bold text-white font-teko">${placementPts}</p>
-            </div>
-            <div>
-              <p class="text-[9px] text-slate-400 uppercase">Kill PT</p>
-              <p class="text-sm font-bold text-emerald-400 font-teko">${matchKills}</p>
-            </div>
-            <div>
-              <p class="text-[9px] text-slate-400 uppercase">Total PT</p>
-              <p class="text-sm font-black text-orange-400 font-teko text-base">${matchTotalPts}</p>
-            </div>
+      if (playedMatches.length === 0) {
+        matchesGrid.innerHTML = `
+          <div class="col-span-full ff-card rounded-2xl p-8 text-center border border-dashed border-slate-800">
+            <i class="fa-solid fa-gamepad text-3xl text-slate-600 mb-2"></i>
+            <p class="text-sm font-bold text-slate-300">No Matches Recorded Yet</p>
+            <p class="text-xs text-slate-500 mt-1">Match results will appear here as the Admin updates each match (1 through 6).</p>
           </div>
         `;
-        matchesGrid.appendChild(card);
-      });
+      } else {
+        playedMatches.forEach((m, idx) => {
+          const placementPts = placementMatrix[m.rank] || 0;
+          const matchKills = m.playerKills.reduce((a, b) => a + b, 0);
+          const matchTotalPts = placementPts + matchKills;
+          const isBooyah = m.rank === 1;
+
+          const card = document.createElement('div');
+          card.className = `ff-card rounded-2xl p-4 relative overflow-hidden animate-row hover-lift ${isBooyah ? 'border-yellow-500/50 bg-slate-900/60' : ''}`;
+          card.style.animationDelay = `${idx * 0.05}s`;
+
+          card.innerHTML = `
+            <div class="flex items-center justify-between mb-3">
+              <span class="text-xs font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1">
+                <i class="fa-solid fa-map-pin text-orange-500"></i> Match ${m.matchNum} (${m.map})
+              </span>
+              ${isBooyah ? '<span class="text-[10px] font-black bg-yellow-500/20 text-yellow-400 border border-yellow-500/40 px-2 py-0.5 rounded-md gold-glow"><i class="fa-solid fa-crown mr-1"></i>BOOYAH!</span>' : `<span class="text-[10px] font-bold bg-slate-800 text-slate-300 px-2 py-0.5 rounded-md">Rank #${m.rank}</span>`}
+            </div>
+
+            <div class="grid grid-cols-3 gap-2 text-center bg-slate-950/60 rounded-xl p-2.5 border border-slate-800/80">
+              <div>
+                <p class="text-[9px] text-slate-400 uppercase">Placement PT</p>
+                <p class="text-sm font-bold text-white font-teko">${placementPts}</p>
+              </div>
+              <div>
+                <p class="text-[9px] text-slate-400 uppercase">Kill PT</p>
+                <p class="text-sm font-bold text-emerald-400 font-teko">${matchKills}</p>
+              </div>
+              <div>
+                <p class="text-[9px] text-slate-400 uppercase">Total PT</p>
+                <p class="text-sm font-black text-orange-400 font-teko text-base">${matchTotalPts}</p>
+              </div>
+            </div>
+          `;
+          matchesGrid.appendChild(card);
+        });
+      }
 
       // Render 5 Player Roster Cards
       const playersGrid = document.getElementById('players-grid');
@@ -498,7 +585,7 @@
       });
     }
 
-    // Switch Category (Official vs Unofficial) with Sliding Motion
+    // Switch Category (Official vs Unofficial)
     function switchCategory(category) {
       activeCategory = category;
       const pill = document.getElementById('segment-pill');
@@ -509,20 +596,79 @@
       if (category === 'official') {
         pill.style.transform = 'translateX(0px)';
         pill.style.width = '80px';
-        btnOfficial.className = 'relative z-10 w-[80px] py-1.5 text-center text-white transition-colors duration-200';
-        btnUnofficial.className = 'relative z-10 w-[95px] py-1.5 text-center text-slate-400 hover:text-white transition-colors duration-200';
+        btnOfficial.className = 'relative z-10 w-[75px] sm:w-[80px] py-1.5 text-center text-white transition-colors duration-200';
+        btnUnofficial.className = 'relative z-10 w-[85px] sm:w-[95px] py-1.5 text-center text-slate-400 hover:text-white transition-colors duration-200';
         badgeCategory.innerText = 'OFFICIAL LEAGUE';
         badgeCategory.className = 'px-3 py-0.5 bg-orange-500/20 text-orange-400 border border-orange-500/30 text-[10px] font-bold uppercase tracking-wider rounded-md';
       } else {
         pill.style.transform = 'translateX(82px)';
         pill.style.width = '95px';
-        btnOfficial.className = 'relative z-10 w-[80px] py-1.5 text-center text-slate-400 hover:text-white transition-colors duration-200';
-        btnUnofficial.className = 'relative z-10 w-[95px] py-1.5 text-center text-white transition-colors duration-200';
+        btnOfficial.className = 'relative z-10 w-[75px] sm:w-[80px] py-1.5 text-center text-slate-400 hover:text-white transition-colors duration-200';
+        btnUnofficial.className = 'relative z-10 w-[85px] sm:w-[95px] py-1.5 text-center text-white transition-colors duration-200';
         badgeCategory.innerText = 'UNOFFICIAL SCRIMS';
         badgeCategory.className = 'px-3 py-0.5 bg-cyan-500/20 text-cyan-400 border border-cyan-500/30 text-[10px] font-bold uppercase tracking-wider rounded-md';
       }
 
       renderDashboard();
+    }
+
+    // Toggle History Modal
+    function toggleHistoryModal() {
+      const modal = document.getElementById('history-modal');
+      modal.classList.toggle('hidden');
+      if (!modal.classList.contains('hidden')) {
+        renderHistoryList();
+      }
+    }
+
+    // Render Past Archived Tournaments
+    function renderHistoryList() {
+      const list = document.getElementById('history-list');
+      list.innerHTML = '';
+
+      const allHistory = [...tournamentHistory.official, ...tournamentHistory.unofficial];
+
+      if (allHistory.length === 0) {
+        list.innerHTML = `
+          <div class="text-center py-8 text-slate-500 text-xs">
+            <i class="fa-solid fa-box-open text-2xl mb-2"></i>
+            <p>No past tournaments archived yet.</p>
+            <p class="text-[10px] text-slate-600 mt-0.5">Tournaments are automatically saved here once all 6 matches are completed!</p>
+          </div>
+        `;
+        return;
+      }
+
+      allHistory.forEach((item, idx) => {
+        const card = document.createElement('div');
+        card.className = 'bg-slate-900 border border-slate-800 rounded-xl p-4 hover:border-orange-500/50 transition-all cursor-pointer flex items-center justify-between gap-4';
+        card.onclick = () => loadArchivedTournament(item);
+
+        card.innerHTML = `
+          <div>
+            <div class="flex items-center gap-2 mb-1">
+              <span class="text-[9px] px-2 py-0.5 rounded font-bold uppercase ${item.category === 'official' ? 'bg-orange-500/20 text-orange-400 border border-orange-500/30' : 'bg-cyan-500/20 text-cyan-400 border border-cyan-500/30'}">
+                ${item.category}
+              </span>
+              <span class="text-[10px] text-slate-500"><i class="fa-solid fa-calendar text-slate-600 mr-1"></i>${item.date}</span>
+            </div>
+            <h4 class="font-bold text-sm text-white">${item.tournamentName}</h4>
+            <p class="text-xs text-slate-400 mt-1">Total Points: <strong class="text-orange-400">${item.totalPts}</strong> | Booyahs: <strong class="text-yellow-400">${item.booyahs}</strong></p>
+          </div>
+          <button class="bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs px-3 py-1.5 rounded-lg font-bold border border-slate-700 flex items-center gap-1">
+            View <i class="fa-solid fa-chevron-right text-[10px]"></i>
+          </button>
+        `;
+        list.appendChild(card);
+      });
+    }
+
+    // Load an Archived Tournament into Dashboard View
+    function loadArchivedTournament(archivedItem) {
+      activeCategory = archivedItem.category;
+      datasets[activeCategory] = JSON.parse(JSON.stringify(archivedItem.data));
+      switchCategory(activeCategory);
+      toggleHistoryModal();
     }
 
     // Toggle Admin Modal
@@ -548,6 +694,21 @@
       }
     }
 
+    // Start New Tournament / Reset Active Tournament
+    function startNewTournament() {
+      const category = document.getElementById('form-category').value;
+      const title = prompt("Enter Title for New Tournament:", "NEW FFMAX TOURNAMENT 2026");
+
+      if (title !== null && title.trim() !== "") {
+        datasets[category] = createEmptyTournament(title.trim());
+        saveState();
+        activeCategory = category;
+        switchCategory(category);
+        toggleAdminModal();
+        alert(`Started new tournament: "${title.trim()}". All match slots reset!`);
+      }
+    }
+
     // Handle Admin Score & Live Stream Update
     function handleScoreSubmit(e) {
       e.preventDefault();
@@ -569,9 +730,43 @@
       }
       datasets[targetCategory].liveUrl = liveUrl;
 
+      // Update match
       datasets[targetCategory].matches[matchSlot].rank = rank;
       datasets[targetCategory].matches[matchSlot].playerKills = playerKills;
+      datasets[targetCategory].matches[matchSlot].played = true;
 
+      // Auto-Check if 6 matches are complete to save to history
+      const playedCount = datasets[targetCategory].matches.filter(m => m.played === true).length;
+      if (playedCount === 6) {
+        let totalPlacementPts = 0;
+        let totalKillPts = 0;
+        let booyahs = 0;
+
+        datasets[targetCategory].matches.forEach(m => {
+          totalPlacementPts += placementMatrix[m.rank] || 0;
+          let matchKills = m.playerKills.reduce((a, b) => a + b, 0);
+          totalKillPts += matchKills;
+          if (m.rank === 1) booyahs++;
+        });
+
+        const archiveEntry = {
+          id: 'tourney_' + Date.now(),
+          category: targetCategory,
+          tournamentName: datasets[targetCategory].tournamentName,
+          date: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
+          totalPts: totalPlacementPts + totalKillPts,
+          booyahs: booyahs,
+          data: JSON.parse(JSON.stringify(datasets[targetCategory]))
+        };
+
+        // Avoid duplicate entry if same title exists
+        const exists = tournamentHistory[targetCategory].some(h => h.tournamentName === archiveEntry.tournamentName);
+        if (!exists) {
+          tournamentHistory[targetCategory].unshift(archiveEntry);
+        }
+      }
+
+      saveState();
       activeCategory = targetCategory;
       switchCategory(targetCategory);
       toggleAdminModal();
