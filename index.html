@@ -248,7 +248,7 @@
         </button>
       </div>
 
-      <!-- Step 2: Admin Panel with SEPARATE SAVE BUTTONS -->
+      <!-- Step 2: Admin Panel with Independent Forms -->
       <div id="admin-panel-step" class="hidden space-y-6">
         <div class="flex items-center justify-between mb-2">
           <h3 class="text-lg font-bold text-white flex items-center gap-2">
@@ -270,25 +270,15 @@
           </select>
         </div>
 
-        <!-- SECTION 1: MEDIA, PHOTOS & BANNER (INDEPENDENT SAVE BUTTON) -->
+        <!-- SECTION 1: PHOTOS & BANNER INFO -->
         <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-3">
           <h4 class="text-xs font-bold text-orange-400 uppercase tracking-wider flex items-center gap-1.5">
-            <i class="fa-solid fa-image"></i> Photos, Banner & Stream Info
+            <i class="fa-solid fa-image"></i> Team & Player Photos
           </h4>
 
           <div>
             <label class="block text-xs font-semibold text-slate-300 mb-1">Banner Background Image URL (Team Photo)</label>
             <input type="url" id="form-bg-url" placeholder="https://example.com/team_photo.jpg" class="w-full bg-slate-900 border border-slate-700 rounded-xl p-2.5 text-xs text-white focus:outline-none focus:border-orange-500"/>
-          </div>
-
-          <div>
-            <label class="block text-xs font-semibold text-slate-300 mb-1">Tournament Live Stream Link (YouTube / Live URL)</label>
-            <input type="url" id="form-live-url" placeholder="https://youtube.com/live/..." class="w-full bg-slate-900 border border-slate-700 rounded-xl p-2.5 text-xs text-white focus:outline-none focus:border-orange-500"/>
-          </div>
-
-          <div>
-            <label class="block text-xs font-semibold text-slate-300 mb-1">Tournament Title / Header Name</label>
-            <input type="text" id="form-title" placeholder="e.g. FFMAX INVITATIONAL 2026 - GRAND FINALS" class="w-full bg-slate-900 border border-slate-700 rounded-xl p-2.5 text-xs text-white focus:outline-none focus:border-orange-500"/>
           </div>
 
           <!-- Player Photo URLs -->
@@ -304,15 +294,25 @@
           </div>
 
           <button type="button" onclick="saveMediaAndInfo()" class="w-full bg-orange-600 hover:bg-orange-500 py-2.5 rounded-xl text-white font-bold text-xs uppercase tracking-wider shadow-lg transition-all flex items-center justify-center gap-2">
-            <i class="fa-solid fa-floppy-disk"></i> SAVE PHOTOS & MEDIA INFO ONLY
+            <i class="fa-solid fa-floppy-disk"></i> SAVE PHOTOS ONLY
           </button>
         </div>
 
-        <!-- SECTION 2: MATCH SCORE RESULT SUBMISSION -->
+        <!-- SECTION 2: MATCH RESULT, TOURNAMENT NAME & LIVE STREAM SUBMISSION -->
         <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-3">
           <h4 class="text-xs font-bold text-emerald-400 uppercase tracking-wider flex items-center gap-1.5">
-            <i class="fa-solid fa-trophy"></i> Submit Match Result & Kills
+            <i class="fa-solid fa-trophy"></i> Submit Match Result, Tournament Title & Live Link
           </h4>
+
+          <div>
+            <label class="block text-xs font-semibold text-slate-300 mb-1">Tournament Title / Header Name</label>
+            <input type="text" id="form-title" placeholder="e.g. FFMAX INVITATIONAL 2026 - GRAND FINALS" class="w-full bg-slate-900 border border-slate-700 rounded-xl p-2.5 text-xs text-white focus:outline-none focus:border-orange-500"/>
+          </div>
+
+          <div>
+            <label class="block text-xs font-semibold text-slate-300 mb-1">Tournament Live Stream Link (YouTube / Live URL)</label>
+            <input type="url" id="form-live-url" placeholder="https://youtube.com/live/..." class="w-full bg-slate-900 border border-slate-700 rounded-xl p-2.5 text-xs text-white focus:outline-none focus:border-orange-500"/>
+          </div>
 
           <div class="grid grid-cols-2 gap-3">
             <div>
@@ -885,17 +885,11 @@
       }
     }
 
-    // SAVE SECTION 1: Photos & Media Info ONLY (No Match Input Needed!)
+    // SAVE SECTION 1: Photos & Banner Info ONLY
     function saveMediaAndInfo() {
       const category = document.getElementById('form-category').value;
-      const title = document.getElementById('form-title').value;
-      const liveUrl = document.getElementById('form-live-url').value;
       const bgUrl = document.getElementById('form-bg-url').value;
 
-      if (title && title.trim() !== "") {
-        datasets[category].tournamentName = title.trim();
-      }
-      datasets[category].liveUrl = liveUrl.trim();
       datasets[category].bgUrl = bgUrl.trim();
 
       // Save player photo URLs
@@ -910,15 +904,14 @@
       activeCategory = category;
       switchCategory(category);
       toggleAdminModal();
-      alert("Photos, Banner & Media Info updated successfully!");
+      alert("Photos & Banner updated successfully!");
     }
 
-    // SAVE SECTION 2: Match Score Result ONLY
+    // SAVE SECTION 2: Match Score Result, Tournament Title & Live Link
     function saveMatchScore() {
       const category = document.getElementById('form-category').value;
       const title = document.getElementById('form-title').value;
       const liveUrl = document.getElementById('form-live-url').value;
-      const bgUrl = document.getElementById('form-bg-url').value;
       const matchSlot = parseInt(document.getElementById('form-match').value) - 1;
       const rankVal = document.getElementById('form-rank').value;
 
@@ -929,15 +922,12 @@
 
       const rank = parseInt(rankVal);
 
-      // Also update Title, Live URL, and Banner BG URL if provided during match update!
+      // Update Tournament Title & Live Stream Link with Match Result!
       if (title && title.trim() !== '') {
         datasets[category].tournamentName = title.trim();
       }
       if (liveUrl !== undefined) {
         datasets[category].liveUrl = liveUrl.trim();
-      }
-      if (bgUrl && bgUrl.trim() !== '') {
-        datasets[category].bgUrl = bgUrl.trim();
       }
 
       // Extract individual player kills
@@ -985,7 +975,7 @@
       activeCategory = category;
       switchCategory(category);
       toggleAdminModal();
-      alert(`Match ${matchSlot + 1} score & tournament info updated successfully!`);
+      alert(`Match ${matchSlot + 1} score, Tournament Title & Live Link updated successfully!`);
     }
 
     // Initialize Dashboard
