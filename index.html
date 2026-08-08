@@ -547,11 +547,11 @@
     const createEmptyTournament = (title, currentData) => {
       const bg = (currentData && currentData.bgUrl && currentData.bgUrl.trim() !== "") ? currentData.bgUrl : globalDefaultPhotoUrl;
       const currentPlayers = (currentData && currentData.players) ? currentData.players : [
-        { name: 'TAG-KD', role: 'sniper/igl', photo: '', yt: '', ig: '' },
-        { name: 'TAG SAHIL', role: 'rusher', photo: '', yt: '', ig: '' },
-        { name: 'TAG SHOTO', role: 'rusher', photo: '', yt: '', ig: '' },
-        { name: 'TAG WOLVIN', role: 'rusher', photo: '', yt: '', ig: '' },
-        { name: 'TAG LOUIS', role: 'rusher', photo: '', yt: '', ig: '' }
+        { name: 'TAG-KD', role: 'sniper/igl', photo: globalDefaultPhotoUrl, yt: '', ig: '' },
+        { name: 'TAG SAHIL', role: 'rusher', photo: globalDefaultPhotoUrl, yt: '', ig: '' },
+        { name: 'TAG SHOTO', role: 'rusher', photo: globalDefaultPhotoUrl, yt: '', ig: '' },
+        { name: 'TAG WOLVIN', role: 'rusher', photo: globalDefaultPhotoUrl, yt: '', ig: '' },
+        { name: 'TAG LOUIS', role: 'rusher', photo: globalDefaultPhotoUrl, yt: '', ig: '' }
       ];
 
       return {
@@ -569,14 +569,14 @@
         players: currentPlayers.map(p => ({
           name: p.name,
           role: p.role,
-          photo: p.photo || '',
+          photo: p.photo || globalDefaultPhotoUrl,
           yt: p.yt || '',
           ig: p.ig || ''
         }))
       };
     };
 
-    // Clean Default Datasets
+    // Clean Default Datasets with Global Default Photo Fallback
     const defaultDatasets = {
       official: {
         tournamentName: "NEW FFMAX TOURNAMENT 2026",
@@ -591,11 +591,11 @@
           { matchNum: 6, map: 'Bermuda', rank: 0, playerKills: [0, 0, 0, 0, 0], played: false }
         ],
         players: [
-          { name: 'TAG-KD', role: 'sniper/igl', photo: '', yt: '', ig: '' },
-          { name: 'TAG SAHIL', role: 'rusher', photo: '', yt: '', ig: '' },
-          { name: 'TAG SHOTO', role: 'rusher', photo: '', yt: '', ig: '' },
-          { name: 'TAG WOLVIN', role: 'rusher', photo: '', yt: '', ig: '' },
-          { name: 'TAG LOUIS', role: 'rusher', photo: '', yt: '', ig: '' }
+          { name: 'TAG-KD', role: 'sniper/igl', photo: globalDefaultPhotoUrl, yt: '', ig: '' },
+          { name: 'TAG SAHIL', role: 'rusher', photo: globalDefaultPhotoUrl, yt: '', ig: '' },
+          { name: 'TAG SHOTO', role: 'rusher', photo: globalDefaultPhotoUrl, yt: '', ig: '' },
+          { name: 'TAG WOLVIN', role: 'rusher', photo: globalDefaultPhotoUrl, yt: '', ig: '' },
+          { name: 'TAG LOUIS', role: 'rusher', photo: globalDefaultPhotoUrl, yt: '', ig: '' }
         ]
       },
       unofficial: {
@@ -611,11 +611,11 @@
           { matchNum: 6, map: 'Bermuda', rank: 0, playerKills: [0, 0, 0, 0, 0], played: false }
         ],
         players: [
-          { name: 'TAG-KD', role: 'sniper/igl', photo: '', yt: '', ig: '' },
-          { name: 'TAG SAHIL', role: 'rusher', photo: '', yt: '', ig: '' },
-          { name: 'TAG SHOTO', role: 'rusher', photo: '', yt: '', ig: '' },
-          { name: 'TAG WOLVIN', role: 'rusher', photo: '', yt: '', ig: '' },
-          { name: 'TAG LOUIS', role: 'rusher', photo: '', yt: '', ig: '' }
+          { name: 'TAG-KD', role: 'sniper/igl', photo: globalDefaultPhotoUrl, yt: '', ig: '' },
+          { name: 'TAG SAHIL', role: 'rusher', photo: globalDefaultPhotoUrl, yt: '', ig: '' },
+          { name: 'TAG SHOTO', role: 'rusher', photo: globalDefaultPhotoUrl, yt: '', ig: '' },
+          { name: 'TAG WOLVIN', role: 'rusher', photo: globalDefaultPhotoUrl, yt: '', ig: '' },
+          { name: 'TAG LOUIS', role: 'rusher', photo: globalDefaultPhotoUrl, yt: '', ig: '' }
         ]
       }
     };
@@ -811,8 +811,7 @@
       currentData.players.forEach((p, pIdx) => {
         const totalPlayerKills = accumulatedPlayerKills[pIdx];
         const dynamicKD = calculateKD(totalPlayerKills, playedMatches.length);
-        const avatarSrc = (p.photo && p.photo.trim() !== "") ? p.photo : getAvatarSvg(p.name);
-        const fallbackSvg = getAvatarSvg(p.name);
+        const avatarSrc = (p.photo && p.photo.trim() !== "") ? p.photo : globalDefaultPhotoUrl;
 
         const card = document.createElement('div');
         card.className = 'ff-card rounded-2xl p-4 animate-row hover-lift border border-slate-800 flex flex-col items-center text-center';
@@ -821,7 +820,7 @@
         card.innerHTML = `
           <!-- Larger Square Photo Box -->
           <div class="w-32 h-32 sm:w-36 sm:h-36 rounded-2xl bg-slate-900 border-2 border-orange-500/50 overflow-hidden mb-3 relative shadow-xl group">
-            <img src="${avatarSrc}" onerror="this.onerror=null; this.src='${fallbackSvg}';" alt="${p.name}" class="w-full h-full object-cover object-top group-hover:scale-110 transition-transform duration-300"/>
+            <img src="${avatarSrc}" onerror="this.onerror=null; this.src='${globalDefaultPhotoUrl}';" alt="${p.name}" class="w-full h-full object-cover object-top group-hover:scale-110 transition-transform duration-300"/>
             <span class="absolute bottom-1 left-1 right-1 bg-slate-950/85 backdrop-blur-xs text-[10px] font-extrabold text-orange-400 py-1 rounded uppercase tracking-wider">
               ${p.role}
             </span>
