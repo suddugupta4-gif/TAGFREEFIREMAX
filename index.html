@@ -171,15 +171,15 @@
           </p>
         </div>
 
-        <!-- Permanent 4 Overall Analysis Boxes (Never Erased, Adds Up Every Tournament) -->
+        <!-- Permanent 4 Overall Analysis Boxes (Total Booyahs, Matches Played, Kill Points, Overall K/D) -->
         <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3 w-full lg:w-auto">
           <div class="glass-box px-3 py-2.5 rounded-xl text-center shadow-lg">
-            <p class="text-[9px] text-slate-300 uppercase tracking-wider font-extrabold">Total Points (T.P)</p>
-            <p id="stat-total-pts" class="text-xl sm:text-2xl font-bold text-orange-400 font-teko tracking-wide">0</p>
+            <p class="text-[9px] text-slate-300 uppercase tracking-wider font-extrabold">Total Booyahs</p>
+            <p id="stat-total-booyahs" class="text-xl sm:text-2xl font-bold text-yellow-400 font-teko tracking-wide gold-glow">0</p>
           </div>
           <div class="glass-box px-3 py-2.5 rounded-xl text-center shadow-lg">
             <p class="text-[9px] text-slate-300 uppercase tracking-wider font-extrabold">Matches Played</p>
-            <p id="stat-matches-played" class="text-xl sm:text-2xl font-bold text-yellow-400 font-teko tracking-wide">0</p>
+            <p id="stat-matches-played" class="text-xl sm:text-2xl font-bold text-orange-400 font-teko tracking-wide">0</p>
           </div>
           <div class="glass-box px-3 py-2.5 rounded-xl text-center shadow-lg">
             <p class="text-[9px] text-slate-300 uppercase tracking-wider font-extrabold">Kill Points (K.P)</p>
@@ -187,7 +187,7 @@
           </div>
           <div class="glass-box px-3 py-2.5 rounded-xl text-center shadow-lg">
             <p class="text-[9px] text-slate-300 uppercase tracking-wider font-extrabold">Overall K/D Ratio</p>
-            <p id="stat-overall-kd" class="text-xl sm:text-2xl font-bold text-cyan-400 font-teko tracking-wide gold-glow">0.0</p>
+            <p id="stat-overall-kd" class="text-xl sm:text-2xl font-bold text-cyan-400 font-teko tracking-wide">0.0</p>
           </div>
         </div>
       </div>
@@ -769,6 +769,7 @@
       let cumulativeTotalPts = 0;
       let cumulativeKillPts = 0;
       let cumulativeMatchesPlayed = 0;
+      let cumulativeBooyahs = 0;
 
       // 1. Calculate from Past History Archives
       const historyList = tournamentHistory[activeCategory] || [];
@@ -781,6 +782,7 @@
               const kp = m.playerKills ? m.playerKills.reduce((a, b) => a + b, 0) : 0;
               cumulativeKillPts += kp;
               cumulativeTotalPts += (pp + kp);
+              if (m.rank === 1) cumulativeBooyahs++;
             }
           });
         }
@@ -793,13 +795,14 @@
         const kp = m.playerKills.reduce((a, b) => a + b, 0);
         cumulativeKillPts += kp;
         cumulativeTotalPts += (pp + kp);
+        if (m.rank === 1) cumulativeBooyahs++;
       });
 
       // Compute Cumulative Overall K/D
       const cumulativeOverallKD = calculateKD(cumulativeKillPts, cumulativeMatchesPlayed);
 
-      // Render Permanent Overall Analysis 4 Boxes
-      document.getElementById('stat-total-pts').innerText = cumulativeTotalPts;
+      // Render Permanent Overall Analysis 4 Boxes (Total Booyahs, Matches Played, Kill Points, Overall K/D)
+      document.getElementById('stat-total-booyahs').innerText = cumulativeBooyahs;
       document.getElementById('stat-matches-played').innerText = cumulativeMatchesPlayed;
       document.getElementById('stat-kill-pts').innerText = cumulativeKillPts;
       document.getElementById('stat-overall-kd').innerText = cumulativeOverallKD;
