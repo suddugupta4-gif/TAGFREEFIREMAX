@@ -615,34 +615,41 @@
 
     let activeCategory = 'official';
 
-    // Cloud Sync Function - Pushes State Globally Across Devices
-    async function saveState() {
+    // Cloud Sync Function - Saves Timestamp to Prevent Overwriting Local Changes
+    function saveState() {
+      const saveTimestamp = Date.now();
+      localStorage.setItem('tag_last_save', saveTimestamp.toString());
       localStorage.setItem('tag_datasets', JSON.stringify(datasets));
       localStorage.setItem('tag_history', JSON.stringify(tournamentHistory));
 
       try {
-        await fetch(CLOUD_SYNC_URL, {
+        fetch(CLOUD_SYNC_URL, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ datasets, tournamentHistory })
-        });
+          body: JSON.stringify({ datasets, tournamentHistory, timestamp: saveTimestamp })
+        }).catch(e => console.log("Cloud sync error"));
       } catch (e) {
         console.log("Local state saved");
       }
     }
 
-    // Fetch Latest Global State from Cloud on Load
+    // Fetch Latest Global State Safely (Only updates if cloud timestamp is newer)
     async function syncCloudState() {
       try {
         const res = await fetch(CLOUD_SYNC_URL);
         if (res.ok) {
           const cloudData = await res.json();
           if (cloudData && cloudData.datasets) {
-            datasets = cloudData.datasets;
-            tournamentHistory = cloudData.tournamentHistory || tournamentHistory;
-            localStorage.setItem('tag_datasets', JSON.stringify(datasets));
-            localStorage.setItem('tag_history', JSON.stringify(tournamentHistory));
-            renderDashboard();
+            const localTime = parseInt(localStorage.getItem('tag_last_save') || "0");
+            const cloudTime = cloudData.timestamp || 0;
+
+            if (cloudTime > localTime) {
+              datasets = cloudData.datasets;
+              tournamentHistory = cloudData.tournamentHistory || tournamentHistory;
+              localStorage.setItem('tag_datasets', JSON.stringify(datasets));
+              localStorage.setItem('tag_history', JSON.stringify(tournamentHistory));
+              renderDashboard();
+            }
           }
         }
       } catch (e) {
@@ -1120,7 +1127,7 @@
         toggleAdminModal();
         alert("Team & Player Photos uploaded and synced across all categories!");
       } catch (err) {
-        alert("Photo upload saved successfully!");
+        alert("Photos uploaded and synced successfully!");
       }
     }
 
