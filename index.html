@@ -183,7 +183,7 @@
       </div>
     </div>
 
-    <!-- Team TAG Roster Player Performance Section (5 Players) -->
+    <!-- Team TAG Roster Player Performance Section (5 Square Box Cards) -->
     <div>
       <div class="flex items-center justify-between mb-4">
         <h3 class="text-lg font-bold text-white flex items-center gap-2 font-teko tracking-wider uppercase text-xl">
@@ -193,7 +193,7 @@
       </div>
 
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4" id="players-grid">
-        <!-- 5 Player Cards Injected Here -->
+        <!-- 5 Square Photo Box Cards Injected Here -->
       </div>
     </div>
 
@@ -345,6 +345,18 @@
             </div>
           </div>
 
+          <!-- Player Photo/Avatar URL Inputs -->
+          <div>
+            <label class="block text-xs font-semibold text-slate-300 mb-2">Player Square Box Photo URLs (Optional)</label>
+            <div class="space-y-2 bg-slate-950 p-3 rounded-xl border border-slate-800">
+              <input type="url" id="pk-photo-0" placeholder="1. TAG-KD Photo URL" class="w-full bg-slate-900 border border-slate-800 rounded-lg p-2 text-xs text-white"/>
+              <input type="url" id="pk-photo-1" placeholder="2. TAG SAHIL Photo URL" class="w-full bg-slate-900 border border-slate-800 rounded-lg p-2 text-xs text-white"/>
+              <input type="url" id="pk-photo-2" placeholder="3. TAG SHOTO Photo URL" class="w-full bg-slate-900 border border-slate-800 rounded-lg p-2 text-xs text-white"/>
+              <input type="url" id="pk-photo-3" placeholder="4. TAG WOLVIN Photo URL" class="w-full bg-slate-900 border border-slate-800 rounded-lg p-2 text-xs text-white"/>
+              <input type="url" id="pk-photo-4" placeholder="5. TAG LOUIS Photo URL" class="w-full bg-slate-900 border border-slate-800 rounded-lg p-2 text-xs text-white"/>
+            </div>
+          </div>
+
           <button type="submit" class="w-full ff-gradient ff-gradient-hover py-3 rounded-xl text-white font-bold text-xs uppercase tracking-wider shadow-lg mt-4 transition-all">
             Save & Update Tournament Stats
           </button>
@@ -363,6 +375,11 @@
       return (totalKills / playedMatchesCount).toFixed(1);
     }
 
+    // SVG Placeholder Avatar Generator
+    function getAvatarSvg(initials) {
+      return `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200"><rect width="200" height="200" fill="%230f172a"/><circle cx="100" cy="80" r="45" fill="%23334155"/><path d="M 30 180 Q 100 120 170 180" fill="%23334155"/><text x="100" y="185" font-family="sans-serif" font-size="20" font-weight="bold" fill="%23f97316" text-anchor="middle">${initials}</text></svg>`;
+    }
+
     // Default Fresh Setup
     const createEmptyTournament = (title) => ({
       tournamentName: title,
@@ -377,11 +394,11 @@
         { matchNum: 6, map: 'Bermuda', rank: 0, playerKills: [0, 0, 0, 0, 0], played: false }
       ],
       players: [
-        { name: 'TAG-KD', role: 'sniper/igl', damage: '3,850' },
-        { name: 'TAG SAHIL', role: 'rusher', damage: '3,400' },
-        { name: 'TAG SHOTO', role: 'rusher', damage: '2,600' },
-        { name: 'TAG WOLVIN', role: 'rusher', damage: '2,100' },
-        { name: 'TAG LOUIS', role: 'rusher', damage: '0' }
+        { name: 'TAG-KD', role: 'sniper/igl', damage: '3,850', photo: '' },
+        { name: 'TAG SAHIL', role: 'rusher', damage: '3,400', photo: '' },
+        { name: 'TAG SHOTO', role: 'rusher', damage: '2,600', photo: '' },
+        { name: 'TAG WOLVIN', role: 'rusher', damage: '2,100', photo: '' },
+        { name: 'TAG LOUIS', role: 'rusher', damage: '0', photo: '' }
       ]
     });
 
@@ -400,11 +417,11 @@
           { matchNum: 6, map: 'Bermuda', rank: 2, playerKills: [3, 2, 2, 1, 0], played: true }
         ],
         players: [
-          { name: 'TAG-KD', role: 'sniper/igl', damage: '3,850' },
-          { name: 'TAG SAHIL', role: 'rusher', damage: '3,400' },
-          { name: 'TAG SHOTO', role: 'rusher', damage: '2,600' },
-          { name: 'TAG WOLVIN', role: 'rusher', damage: '2,100' },
-          { name: 'TAG LOUIS', role: 'rusher', damage: '0' }
+          { name: 'TAG-KD', role: 'sniper/igl', damage: '3,850', photo: '' },
+          { name: 'TAG SAHIL', role: 'rusher', damage: '3,400', photo: '' },
+          { name: 'TAG SHOTO', role: 'rusher', damage: '2,600', photo: '' },
+          { name: 'TAG WOLVIN', role: 'rusher', damage: '2,100', photo: '' },
+          { name: 'TAG LOUIS', role: 'rusher', damage: '0', photo: '' }
         ]
       },
       unofficial: {
@@ -420,11 +437,11 @@
           { matchNum: 6, map: 'Bermuda', rank: 1, playerKills: [4, 3, 2, 2, 0], played: true }
         ],
         players: [
-          { name: 'TAG-KD', role: 'sniper/igl', damage: '4,500' },
-          { name: 'TAG SAHIL', role: 'rusher', damage: '4,100' },
-          { name: 'TAG SHOTO', role: 'rusher', damage: '2,900' },
-          { name: 'TAG WOLVIN', role: 'rusher', damage: '2,300' },
-          { name: 'TAG LOUIS', role: 'rusher', damage: '0' }
+          { name: 'TAG-KD', role: 'sniper/igl', damage: '4,500', photo: '' },
+          { name: 'TAG SAHIL', role: 'rusher', damage: '4,100', photo: '' },
+          { name: 'TAG SHOTO', role: 'rusher', damage: '2,900', photo: '' },
+          { name: 'TAG WOLVIN', role: 'rusher', damage: '2,300', photo: '' },
+          { name: 'TAG LOUIS', role: 'rusher', damage: '0', photo: '' }
         ]
       }
     };
@@ -579,37 +596,46 @@
         });
       }
 
-      // Render 5 Player Roster Cards with Correct Dynamic K/D Formula
+      // Render 5 Player Roster Cards in Square Box Frame with Photo
       const playersGrid = document.getElementById('players-grid');
       playersGrid.innerHTML = '';
 
       currentData.players.forEach((p, pIdx) => {
         const totalPlayerKills = accumulatedPlayerKills[pIdx];
         const dynamicKD = calculateKD(totalPlayerKills, playedMatches.length);
+        const avatarSrc = (p.photo && p.photo.trim() !== "") ? p.photo : getAvatarSvg(p.name);
 
         const card = document.createElement('div');
-        card.className = 'ff-card rounded-2xl p-4 animate-row hover-lift border border-slate-800';
+        card.className = 'ff-card rounded-2xl p-4 animate-row hover-lift border border-slate-800 flex flex-col items-center text-center';
         card.style.animationDelay = `${pIdx * 0.05}s`;
 
         card.innerHTML = `
-          <div class="flex items-center justify-between mb-2">
-            <h4 class="font-bold text-sm text-white truncate">${p.name}</h4>
-            <span class="text-[9px] bg-slate-800 text-slate-400 px-2 py-0.5 rounded uppercase font-semibold">${p.role}</span>
+          <!-- Square Photo Box -->
+          <div class="w-24 h-24 sm:w-28 sm:h-28 rounded-2xl bg-slate-900 border-2 border-orange-500/50 overflow-hidden mb-3 relative shadow-lg group">
+            <img src="${avatarSrc}" alt="${p.name}" class="w-full h-full object-cover object-top group-hover:scale-110 transition-transform duration-300"/>
+            <span class="absolute bottom-1 left-1 right-1 bg-slate-950/85 backdrop-blur-xs text-[9px] font-extrabold text-orange-400 py-0.5 rounded uppercase tracking-wider">
+              ${p.role}
+            </span>
           </div>
 
-          <div class="grid grid-cols-2 gap-2 mt-3 bg-slate-950/60 p-2.5 rounded-xl text-center border border-slate-800/60">
+          <!-- Player Name -->
+          <h4 class="font-extrabold text-base text-white tracking-wide truncate w-full mb-1">${p.name}</h4>
+
+          <!-- Stats Box -->
+          <div class="w-full grid grid-cols-2 gap-2 mt-2 bg-slate-950/70 p-2.5 rounded-xl border border-slate-800/80">
             <div>
-              <p class="text-[9px] text-slate-400 uppercase">Total Kills</p>
-              <p class="text-lg font-bold text-orange-400 font-teko">${totalPlayerKills}</p>
+              <p class="text-[9px] text-slate-400 uppercase tracking-wider">Total Kills</p>
+              <p class="text-xl font-bold text-orange-400 font-teko">${totalPlayerKills}</p>
             </div>
             <div>
-              <p class="text-[9px] text-slate-400 uppercase">K/D Ratio</p>
-              <p class="text-lg font-bold text-emerald-400 font-teko">${dynamicKD}</p>
+              <p class="text-[9px] text-slate-400 uppercase tracking-wider">K/D Ratio</p>
+              <p class="text-xl font-bold text-emerald-400 font-teko">${dynamicKD}</p>
             </div>
           </div>
 
-          <div class="mt-2 text-[10px] text-slate-400 flex justify-between px-1">
+          <div class="w-full mt-2 text-[10px] text-slate-400 flex justify-between px-1 border-t border-slate-800/60 pt-2">
             <span>Damage: <strong class="text-slate-200">${p.damage}</strong></span>
+            <span>Matches: <strong class="text-slate-200">${playedMatches.length}</strong></span>
           </div>
         `;
         playersGrid.appendChild(card);
@@ -811,6 +837,12 @@
         document.getElementById('form-title').value = datasets[activeCategory].tournamentName;
         document.getElementById('form-live-url').value = datasets[activeCategory].liveUrl || '';
         document.getElementById('form-bg-url').value = datasets[activeCategory].bgUrl || '';
+
+        // Populate photo URLs in admin inputs
+        datasets[activeCategory].players.forEach((p, idx) => {
+          const photoElem = document.getElementById(`pk-photo-${idx}`);
+          if (photoElem) photoElem.value = p.photo || '';
+        });
       }
     }
 
@@ -852,10 +884,15 @@
       const matchSlot = parseInt(document.getElementById('form-match').value) - 1;
       const rank = parseInt(document.getElementById('form-rank').value);
 
-      // Extract individual player kills
+      // Extract individual player kills & photo URLs
       const playerKills = [];
       for (let i = 0; i < 5; i++) {
         playerKills.push(parseInt(document.getElementById(`pk-${i}`).value) || 0);
+
+        const photoVal = document.getElementById(`pk-photo-${i}`).value;
+        if (photoVal !== undefined) {
+          datasets[targetCategory].players[i].photo = photoVal.trim();
+        }
       }
 
       // Apply updates to target dataset
