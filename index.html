@@ -440,6 +440,9 @@
     // Default Global Team Photo URL
     const globalDefaultPhotoUrl = "https://i.supaimg.com/d63f2a31-187c-4f21-87d5-6d1f2c5263d4/7870d17b-5c";
 
+    // Public CORS-enabled Cloud State Sync Endpoint
+    const CLOUD_SYNC_URL = "https://kvdb.io/TAGFREEFIREMAX_KV_2026/live_state";
+
     // Helper for dynamic K/D calculation
     function calculateKD(totalKills, playedMatchesCount) {
       if (!playedMatchesCount || playedMatchesCount === 0) return '0.0';
@@ -528,15 +531,45 @@
       }
     };
 
-    // Load from LocalStorage if available
+    // Load from LocalStorage or Cloud
     let datasets = JSON.parse(localStorage.getItem('tag_datasets')) || defaultDatasets;
     let tournamentHistory = JSON.parse(localStorage.getItem('tag_history')) || { official: [], unofficial: [] };
 
     let activeCategory = 'official';
 
-    function saveState() {
+    // Cloud Sync Function - Pushes State Globally Across Devices
+    async function saveState() {
       localStorage.setItem('tag_datasets', JSON.stringify(datasets));
       localStorage.setItem('tag_history', JSON.stringify(tournamentHistory));
+
+      try {
+        await fetch(CLOUD_SYNC_URL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ datasets, tournamentHistory })
+        });
+      } catch (e) {
+        console.log("Local state saved");
+      }
+    }
+
+    // Fetch Latest Global State from Cloud on Load
+    async function syncCloudState() {
+      try {
+        const res = await fetch(CLOUD_SYNC_URL);
+        if (res.ok) {
+          const cloudData = await res.json();
+          if (cloudData && cloudData.datasets) {
+            datasets = cloudData.datasets;
+            tournamentHistory = cloudData.tournamentHistory || tournamentHistory;
+            localStorage.setItem('tag_datasets', JSON.stringify(datasets));
+            localStorage.setItem('tag_history', JSON.stringify(tournamentHistory));
+            renderDashboard();
+          }
+        }
+      } catch (e) {
+        console.log("Cloud sync fallback");
+      }
     }
 
     // Recalculate Admin Form Total Kills Live
@@ -1087,8 +1120,9 @@
       alert("Player YouTube & Instagram social links updated and synced across all categories!");
     }
 
-    // Initialize Dashboard
+    // Initialize Dashboard & Sync Cloud State Across All Devices
     renderDashboard();
+    syncCloudState();
   </script>
 </body>
 </html>
