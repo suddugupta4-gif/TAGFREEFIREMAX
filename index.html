@@ -116,7 +116,7 @@
   <main class="max-w-7xl mx-auto px-4 sm:px-6 mt-6">
     
     <!-- Hero Team Dashboard Card with Team Background Image Cover -->
-    <div id="hero-banner-card" class="ff-card rounded-2xl p-6 mb-6 border-l-4 border-l-orange-500 relative overflow-hidden hover-lift transition-all shadow-2xl" style="background: linear-gradient(to right, rgba(15,21,34,0.88) 20%, rgba(15,21,34,0.60) 60%, rgba(15,21,34,0.88) 100%), url('team_banner.jpg') no-repeat center top / cover;">
+    <div id="hero-banner-card" class="ff-card rounded-2xl p-6 mb-6 border-l-4 border-l-orange-500 relative overflow-hidden hover-lift transition-all shadow-2xl" style="background: linear-gradient(to right, rgba(15,21,34,0.88) 20%, rgba(15,21,34,0.60) 60%, rgba(15,21,34,0.88) 100%), url('https://i.supaimg.com/d63f2a31-187c-4f21-87d5-6d1f2c5263d4/7870d17b-5c') no-repeat center top / cover;">
       
       <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-6 relative z-10">
         <div>
@@ -248,11 +248,11 @@
         </button>
       </div>
 
-      <!-- Step 2: Submit Match Result Form -->
-      <div id="admin-panel-step" class="hidden">
-        <div class="flex items-center justify-between mb-3">
+      <!-- Step 2: Admin Panel with SEPARATE SAVE BUTTONS -->
+      <div id="admin-panel-step" class="hidden space-y-6">
+        <div class="flex items-center justify-between mb-2">
           <h3 class="text-lg font-bold text-white flex items-center gap-2">
-            <i class="fa-solid fa-pen-to-square text-orange-500"></i> Update Tournament Stats
+            <i class="fa-solid fa-pen-to-square text-orange-500"></i> Admin Management Panel
           </h3>
 
           <!-- Clear All / Start New Tournament Button -->
@@ -261,40 +261,59 @@
           </button>
         </div>
 
-        <p class="text-xs text-slate-400 mb-4">Update match rank & player kills. Matches reveal automatically as updated!</p>
+        <!-- Target Category Selection -->
+        <div>
+          <label class="block text-xs font-semibold text-slate-300 mb-1">Target Category</label>
+          <select id="form-category" onchange="loadAdminFormForCategory()" class="w-full bg-slate-900 border border-slate-700 rounded-xl p-2.5 text-xs text-white focus:outline-none focus:border-orange-500 font-bold">
+            <option value="official">OFFICIAL TOURNAMENT</option>
+            <option value="unofficial">UNOFFICIAL SCRIMS</option>
+          </select>
+        </div>
 
-        <form id="score-form" onsubmit="handleScoreSubmit(event)" class="space-y-4">
-          
-          <!-- Category Select (Official vs Unofficial) -->
-          <div>
-            <label class="block text-xs font-semibold text-slate-300 mb-1">Target Category</label>
-            <select id="form-category" class="w-full bg-slate-900 border border-slate-700 rounded-xl p-2.5 text-xs text-white focus:outline-none focus:border-orange-500 font-bold">
-              <option value="official">OFFICIAL TOURNAMENT</option>
-              <option value="unofficial">UNOFFICIAL SCRIMS</option>
-            </select>
-          </div>
+        <!-- SECTION 1: MEDIA, PHOTOS & BANNER (INDEPENDENT SAVE BUTTON) -->
+        <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-3">
+          <h4 class="text-xs font-bold text-orange-400 uppercase tracking-wider flex items-center gap-1.5">
+            <i class="fa-solid fa-image"></i> Photos, Banner & Stream Info
+          </h4>
 
-          <!-- Banner Background Image URL Input -->
           <div>
             <label class="block text-xs font-semibold text-slate-300 mb-1">Banner Background Image URL (Team Photo)</label>
             <input type="url" id="form-bg-url" placeholder="https://example.com/team_photo.jpg" class="w-full bg-slate-900 border border-slate-700 rounded-xl p-2.5 text-xs text-white focus:outline-none focus:border-orange-500"/>
           </div>
 
-          <!-- Live Stream URL Input -->
           <div>
             <label class="block text-xs font-semibold text-slate-300 mb-1">Tournament Live Stream Link (YouTube / Live URL)</label>
             <input type="url" id="form-live-url" placeholder="https://youtube.com/live/..." class="w-full bg-slate-900 border border-slate-700 rounded-xl p-2.5 text-xs text-white focus:outline-none focus:border-orange-500"/>
           </div>
 
-          <!-- Tournament Title Input -->
           <div>
-            <label class="block text-xs font-semibold text-slate-300 mb-1">Tournament Title / Match Details Header</label>
+            <label class="block text-xs font-semibold text-slate-300 mb-1">Tournament Title / Header Name</label>
             <input type="text" id="form-title" placeholder="e.g. FFMAX INVITATIONAL 2026 - GRAND FINALS" class="w-full bg-slate-900 border border-slate-700 rounded-xl p-2.5 text-xs text-white focus:outline-none focus:border-orange-500"/>
           </div>
 
-          <hr class="border-slate-800"/>
+          <!-- Player Photo URLs -->
+          <div>
+            <label class="block text-xs font-semibold text-slate-300 mb-2">Player Square Box Photo URLs (5 Players)</label>
+            <div class="space-y-2">
+              <input type="url" id="pk-photo-0" placeholder="1. TAG-KD Photo URL" class="w-full bg-slate-900 border border-slate-800 rounded-lg p-2 text-xs text-white"/>
+              <input type="url" id="pk-photo-1" placeholder="2. TAG SAHIL Photo URL" class="w-full bg-slate-900 border border-slate-800 rounded-lg p-2 text-xs text-white"/>
+              <input type="url" id="pk-photo-2" placeholder="3. TAG SHOTO Photo URL" class="w-full bg-slate-900 border border-slate-800 rounded-lg p-2 text-xs text-white"/>
+              <input type="url" id="pk-photo-3" placeholder="4. TAG WOLVIN Photo URL" class="w-full bg-slate-900 border border-slate-800 rounded-lg p-2 text-xs text-white"/>
+              <input type="url" id="pk-photo-4" placeholder="5. TAG LOUIS Photo URL" class="w-full bg-slate-900 border border-slate-800 rounded-lg p-2 text-xs text-white"/>
+            </div>
+          </div>
 
-          <!-- Match Number & Placement Rank -->
+          <button type="button" onclick="saveMediaAndInfo()" class="w-full bg-orange-600 hover:bg-orange-500 py-2.5 rounded-xl text-white font-bold text-xs uppercase tracking-wider shadow-lg transition-all flex items-center justify-center gap-2">
+            <i class="fa-solid fa-floppy-disk"></i> SAVE PHOTOS & MEDIA INFO ONLY
+          </button>
+        </div>
+
+        <!-- SECTION 2: MATCH SCORE RESULT SUBMISSION (INDEPENDENT SAVE BUTTON) -->
+        <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-3">
+          <h4 class="text-xs font-bold text-emerald-400 uppercase tracking-wider flex items-center gap-1.5">
+            <i class="fa-solid fa-trophy"></i> Submit Match Result & Kills
+          </h4>
+
           <div class="grid grid-cols-2 gap-3">
             <div>
               <label class="block text-xs font-semibold text-slate-300 mb-1">Match Slot</label>
@@ -309,33 +328,32 @@
             </div>
             <div>
               <label class="block text-xs font-semibold text-slate-300 mb-1">Placement Rank (#1 - #12)</label>
-              <input type="number" id="form-rank" min="1" max="12" required placeholder="1 for Booyah" class="w-full bg-slate-900 border border-slate-700 rounded-xl p-2.5 text-xs text-white focus:outline-none focus:border-orange-500"/>
+              <input type="number" id="form-rank" min="1" max="12" placeholder="1 for Booyah" class="w-full bg-slate-900 border border-slate-700 rounded-xl p-2.5 text-xs text-white focus:outline-none focus:border-orange-500"/>
             </div>
           </div>
 
-          <!-- Individual Player Kills Input (All 5 Players) -->
           <div>
             <label class="block text-xs font-semibold text-slate-300 mb-2">Individual Player Kills (5 Players)</label>
-            <div class="space-y-2 bg-slate-950 p-3 rounded-xl border border-slate-800">
+            <div class="space-y-2 bg-slate-900 p-3 rounded-xl border border-slate-800">
               <div class="flex items-center justify-between gap-2">
                 <span class="text-xs text-slate-300 font-bold truncate">1. TAG-KD <span class="text-[10px] text-slate-500 font-normal">(sniper/igl)</span></span>
-                <input type="number" id="pk-0" min="0" value="0" oninput="recalcTotalKills()" class="w-20 bg-slate-900 border border-slate-700 rounded-lg p-1.5 text-xs text-center text-white"/>
+                <input type="number" id="pk-0" min="0" value="0" oninput="recalcTotalKills()" class="w-20 bg-slate-950 border border-slate-700 rounded-lg p-1.5 text-xs text-center text-white"/>
               </div>
               <div class="flex items-center justify-between gap-2">
                 <span class="text-xs text-slate-300 font-bold truncate">2. TAG SAHIL <span class="text-[10px] text-slate-500 font-normal">(rusher)</span></span>
-                <input type="number" id="pk-1" min="0" value="0" oninput="recalcTotalKills()" class="w-20 bg-slate-900 border border-slate-700 rounded-lg p-1.5 text-xs text-center text-white"/>
+                <input type="number" id="pk-1" min="0" value="0" oninput="recalcTotalKills()" class="w-20 bg-slate-950 border border-slate-700 rounded-lg p-1.5 text-xs text-center text-white"/>
               </div>
               <div class="flex items-center justify-between gap-2">
                 <span class="text-xs text-slate-300 font-bold truncate">3. TAG SHOTO <span class="text-[10px] text-slate-500 font-normal">(rusher)</span></span>
-                <input type="number" id="pk-2" min="0" value="0" oninput="recalcTotalKills()" class="w-20 bg-slate-900 border border-slate-700 rounded-lg p-1.5 text-xs text-center text-white"/>
+                <input type="number" id="pk-2" min="0" value="0" oninput="recalcTotalKills()" class="w-20 bg-slate-950 border border-slate-700 rounded-lg p-1.5 text-xs text-center text-white"/>
               </div>
               <div class="flex items-center justify-between gap-2">
                 <span class="text-xs text-slate-300 font-bold truncate">4. TAG WOLVIN <span class="text-[10px] text-slate-500 font-normal">(rusher)</span></span>
-                <input type="number" id="pk-3" min="0" value="0" oninput="recalcTotalKills()" class="w-20 bg-slate-900 border border-slate-700 rounded-lg p-1.5 text-xs text-center text-white"/>
+                <input type="number" id="pk-3" min="0" value="0" oninput="recalcTotalKills()" class="w-20 bg-slate-950 border border-slate-700 rounded-lg p-1.5 text-xs text-center text-white"/>
               </div>
               <div class="flex items-center justify-between gap-2">
                 <span class="text-xs text-slate-300 font-bold truncate">5. TAG LOUIS <span class="text-[10px] text-slate-500 font-normal">(rusher)</span></span>
-                <input type="number" id="pk-4" min="0" value="0" oninput="recalcTotalKills()" class="w-20 bg-slate-900 border border-slate-700 rounded-lg p-1.5 text-xs text-center text-white"/>
+                <input type="number" id="pk-4" min="0" value="0" oninput="recalcTotalKills()" class="w-20 bg-slate-950 border border-slate-700 rounded-lg p-1.5 text-xs text-center text-white"/>
               </div>
 
               <div class="flex justify-between items-center pt-2 border-t border-slate-800 text-xs font-bold text-orange-400">
@@ -345,22 +363,10 @@
             </div>
           </div>
 
-          <!-- Player Photo/Avatar URL Inputs -->
-          <div>
-            <label class="block text-xs font-semibold text-slate-300 mb-2">Player Square Box Photo URLs (Optional)</label>
-            <div class="space-y-2 bg-slate-950 p-3 rounded-xl border border-slate-800">
-              <input type="url" id="pk-photo-0" placeholder="1. TAG-KD Photo URL" class="w-full bg-slate-900 border border-slate-800 rounded-lg p-2 text-xs text-white"/>
-              <input type="url" id="pk-photo-1" placeholder="2. TAG SAHIL Photo URL" class="w-full bg-slate-900 border border-slate-800 rounded-lg p-2 text-xs text-white"/>
-              <input type="url" id="pk-photo-2" placeholder="3. TAG SHOTO Photo URL" class="w-full bg-slate-900 border border-slate-800 rounded-lg p-2 text-xs text-white"/>
-              <input type="url" id="pk-photo-3" placeholder="4. TAG WOLVIN Photo URL" class="w-full bg-slate-900 border border-slate-800 rounded-lg p-2 text-xs text-white"/>
-              <input type="url" id="pk-photo-4" placeholder="5. TAG LOUIS Photo URL" class="w-full bg-slate-900 border border-slate-800 rounded-lg p-2 text-xs text-white"/>
-            </div>
-          </div>
-
-          <button type="submit" class="w-full ff-gradient ff-gradient-hover py-3 rounded-xl text-white font-bold text-xs uppercase tracking-wider shadow-lg mt-4 transition-all">
-            Save & Update Tournament Stats
+          <button type="button" onclick="saveMatchScore()" class="w-full ff-gradient ff-gradient-hover py-3 rounded-xl text-white font-bold text-xs uppercase tracking-wider shadow-lg transition-all flex items-center justify-center gap-2">
+            <i class="fa-solid fa-trophy"></i> SAVE & UPDATE MATCH RESULT ONLY
           </button>
-        </form>
+        </div>
       </div>
     </div>
   </div>
@@ -384,7 +390,7 @@
     const createEmptyTournament = (title) => ({
       tournamentName: title,
       liveUrl: "",
-      bgUrl: "",
+      bgUrl: "https://i.supaimg.com/d63f2a31-187c-4f21-87d5-6d1f2c5263d4/7870d17b-5c",
       matches: [
         { matchNum: 1, map: 'Bermuda', rank: 0, playerKills: [0, 0, 0, 0, 0], played: false },
         { matchNum: 2, map: 'Kalahari', rank: 0, playerKills: [0, 0, 0, 0, 0], played: false },
@@ -407,7 +413,7 @@
       official: {
         tournamentName: "FFMAX INVITATIONAL 2026 - OFFICIAL FINALS",
         liveUrl: "",
-        bgUrl: "",
+        bgUrl: "https://i.supaimg.com/d63f2a31-187c-4f21-87d5-6d1f2c5263d4/7870d17b-5c",
         matches: [
           { matchNum: 1, map: 'Bermuda', rank: 1, playerKills: [3, 4, 2, 1, 0], played: true },
           { matchNum: 2, map: 'Kalahari', rank: 2, playerKills: [2, 2, 1, 1, 0], played: true },
@@ -427,7 +433,7 @@
       unofficial: {
         tournamentName: "COMMUNITY SCRIMS - NIGHT BATTLES #42",
         liveUrl: "",
-        bgUrl: "",
+        bgUrl: "https://i.supaimg.com/d63f2a31-187c-4f21-87d5-6d1f2c5263d4/7870d17b-5c",
         matches: [
           { matchNum: 1, map: 'Bermuda', rank: 1, playerKills: [4, 5, 3, 2, 0], played: true },
           { matchNum: 2, map: 'Kalahari', rank: 3, playerKills: [2, 3, 1, 1, 0], played: true },
@@ -477,7 +483,7 @@
       if (currentData.bgUrl && currentData.bgUrl.trim() !== "") {
         heroCard.style.background = `linear-gradient(to right, rgba(15,21,34,0.88) 20%, rgba(15,21,34,0.60) 60%, rgba(15,21,34,0.88) 100%), url('${currentData.bgUrl}') no-repeat center top / cover`;
       } else {
-        heroCard.style.background = `linear-gradient(to right, rgba(15,21,34,0.88) 20%, rgba(15,21,34,0.60) 60%, rgba(15,21,34,0.88) 100%), url('team_banner.jpg') no-repeat center top / cover`;
+        heroCard.style.background = `linear-gradient(to right, rgba(15,21,34,0.88) 20%, rgba(15,21,34,0.60) 60%, rgba(15,21,34,0.88) 100%), url('https://i.supaimg.com/d63f2a31-187c-4f21-87d5-6d1f2c5263d4/7870d17b-5c') no-repeat center top / cover`;
       }
 
       // Handle Live Stream Buttons
@@ -829,20 +835,25 @@
       document.getElementById('history-detail-modal').classList.add('hidden');
     }
 
+    // Load Admin Inputs for Current Target Category
+    function loadAdminFormForCategory() {
+      const category = document.getElementById('form-category').value;
+      document.getElementById('form-title').value = datasets[category].tournamentName || '';
+      document.getElementById('form-live-url').value = datasets[category].liveUrl || '';
+      document.getElementById('form-bg-url').value = datasets[category].bgUrl || '';
+
+      datasets[category].players.forEach((p, idx) => {
+        const photoElem = document.getElementById(`pk-photo-${idx}`);
+        if (photoElem) photoElem.value = p.photo || '';
+      });
+    }
+
     // Toggle Admin Modal
     function toggleAdminModal() {
       document.getElementById('admin-modal').classList.toggle('hidden');
       if (!document.getElementById('admin-modal').classList.contains('hidden')) {
         document.getElementById('form-category').value = activeCategory;
-        document.getElementById('form-title').value = datasets[activeCategory].tournamentName;
-        document.getElementById('form-live-url').value = datasets[activeCategory].liveUrl || '';
-        document.getElementById('form-bg-url').value = datasets[activeCategory].bgUrl || '';
-
-        // Populate photo URLs in admin inputs
-        datasets[activeCategory].players.forEach((p, idx) => {
-          const photoElem = document.getElementById(`pk-photo-${idx}`);
-          if (photoElem) photoElem.value = p.photo || '';
-        });
+        loadAdminFormForCategory();
       }
     }
 
@@ -874,47 +885,66 @@
       }
     }
 
-    // Handle Admin Score & Live Stream Update
-    function handleScoreSubmit(e) {
-      e.preventDefault();
-      const targetCategory = document.getElementById('form-category').value;
+    // SAVE SECTION 1: Photos & Media Info ONLY (No Match Input Needed!)
+    function saveMediaAndInfo() {
+      const category = document.getElementById('form-category').value;
       const title = document.getElementById('form-title').value;
       const liveUrl = document.getElementById('form-live-url').value;
       const bgUrl = document.getElementById('form-bg-url').value;
-      const matchSlot = parseInt(document.getElementById('form-match').value) - 1;
-      const rank = parseInt(document.getElementById('form-rank').value);
 
-      // Extract individual player kills & photo URLs
-      const playerKills = [];
+      if (title && title.trim() !== "") {
+        datasets[category].tournamentName = title.trim();
+      }
+      datasets[category].liveUrl = liveUrl.trim();
+      datasets[category].bgUrl = bgUrl.trim();
+
+      // Save player photo URLs
       for (let i = 0; i < 5; i++) {
-        playerKills.push(parseInt(document.getElementById(`pk-${i}`).value) || 0);
-
-        const photoVal = document.getElementById(`pk-photo-${i}`).value;
-        if (photoVal !== undefined) {
-          datasets[targetCategory].players[i].photo = photoVal.trim();
+        const photoElem = document.getElementById(`pk-photo-${i}`);
+        if (photoElem) {
+          datasets[category].players[i].photo = photoElem.value.trim();
         }
       }
 
-      // Apply updates to target dataset
-      if (title && title.trim() !== '') {
-        datasets[targetCategory].tournamentName = title;
+      saveState();
+      activeCategory = category;
+      switchCategory(category);
+      toggleAdminModal();
+      alert("Photos, Banner & Media Info updated successfully!");
+    }
+
+    // SAVE SECTION 2: Match Score Result ONLY
+    function saveMatchScore() {
+      const category = document.getElementById('form-category').value;
+      const matchSlot = parseInt(document.getElementById('form-match').value) - 1;
+      const rankVal = document.getElementById('form-rank').value;
+
+      if (!rankVal || rankVal.trim() === "") {
+        alert("Please enter Placement Rank (#1 - #12) for the match.");
+        return;
       }
-      datasets[targetCategory].liveUrl = liveUrl;
-      datasets[targetCategory].bgUrl = bgUrl;
+
+      const rank = parseInt(rankVal);
+
+      // Extract individual player kills
+      const playerKills = [];
+      for (let i = 0; i < 5; i++) {
+        playerKills.push(parseInt(document.getElementById(`pk-${i}`).value) || 0);
+      }
 
       // Update match
-      datasets[targetCategory].matches[matchSlot].rank = rank;
-      datasets[targetCategory].matches[matchSlot].playerKills = playerKills;
-      datasets[targetCategory].matches[matchSlot].played = true;
+      datasets[category].matches[matchSlot].rank = rank;
+      datasets[category].matches[matchSlot].playerKills = playerKills;
+      datasets[category].matches[matchSlot].played = true;
 
       // Auto-Check if 6 matches are complete to save to history
-      const playedCount = datasets[targetCategory].matches.filter(m => m.played === true).length;
+      const playedCount = datasets[category].matches.filter(m => m.played === true).length;
       if (playedCount === 6) {
         let totalPlacementPts = 0;
         let totalKillPts = 0;
         let booyahs = 0;
 
-        datasets[targetCategory].matches.forEach(m => {
+        datasets[category].matches.forEach(m => {
           totalPlacementPts += placementMatrix[m.rank] || 0;
           let matchKills = m.playerKills.reduce((a, b) => a + b, 0);
           totalKillPts += matchKills;
@@ -923,25 +953,25 @@
 
         const archiveEntry = {
           id: 'tourney_' + Date.now(),
-          category: targetCategory,
-          tournamentName: datasets[targetCategory].tournamentName,
+          category: category,
+          tournamentName: datasets[category].tournamentName,
           date: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
           totalPts: totalPlacementPts + totalKillPts,
           booyahs: booyahs,
-          data: JSON.parse(JSON.stringify(datasets[targetCategory]))
+          data: JSON.parse(JSON.stringify(datasets[category]))
         };
 
-        // Avoid duplicate entry if same title exists
-        const exists = tournamentHistory[targetCategory].some(h => h.tournamentName === archiveEntry.tournamentName);
+        const exists = tournamentHistory[category].some(h => h.tournamentName === archiveEntry.tournamentName);
         if (!exists) {
-          tournamentHistory[targetCategory].unshift(archiveEntry);
+          tournamentHistory[category].unshift(archiveEntry);
         }
       }
 
       saveState();
-      activeCategory = targetCategory;
-      switchCategory(targetCategory);
+      activeCategory = category;
+      switchCategory(category);
       toggleAdminModal();
+      alert(`Match ${matchSlot + 1} score saved successfully!`);
     }
 
     // Initialize Dashboard
