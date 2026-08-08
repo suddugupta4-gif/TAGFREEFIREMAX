@@ -308,7 +308,7 @@
           </button>
         </div>
 
-        <!-- SECTION 2: MATCH SCORE RESULT SUBMISSION (INDEPENDENT SAVE BUTTON) -->
+        <!-- SECTION 2: MATCH SCORE RESULT SUBMISSION -->
         <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-3">
           <h4 class="text-xs font-bold text-emerald-400 uppercase tracking-wider flex items-center gap-1.5">
             <i class="fa-solid fa-trophy"></i> Submit Match Result & Kills
@@ -364,7 +364,7 @@
           </div>
 
           <button type="button" onclick="saveMatchScore()" class="w-full ff-gradient ff-gradient-hover py-3 rounded-xl text-white font-bold text-xs uppercase tracking-wider shadow-lg transition-all flex items-center justify-center gap-2">
-            <i class="fa-solid fa-trophy"></i> SAVE & UPDATE MATCH RESULT ONLY
+            <i class="fa-solid fa-trophy"></i> SAVE & UPDATE MATCH RESULT
           </button>
         </div>
       </div>
@@ -916,6 +916,9 @@
     // SAVE SECTION 2: Match Score Result ONLY
     function saveMatchScore() {
       const category = document.getElementById('form-category').value;
+      const title = document.getElementById('form-title').value;
+      const liveUrl = document.getElementById('form-live-url').value;
+      const bgUrl = document.getElementById('form-bg-url').value;
       const matchSlot = parseInt(document.getElementById('form-match').value) - 1;
       const rankVal = document.getElementById('form-rank').value;
 
@@ -925,6 +928,17 @@
       }
 
       const rank = parseInt(rankVal);
+
+      // Also update Title, Live URL, and Banner BG URL if provided during match update!
+      if (title && title.trim() !== '') {
+        datasets[category].tournamentName = title.trim();
+      }
+      if (liveUrl !== undefined) {
+        datasets[category].liveUrl = liveUrl.trim();
+      }
+      if (bgUrl && bgUrl.trim() !== '') {
+        datasets[category].bgUrl = bgUrl.trim();
+      }
 
       // Extract individual player kills
       const playerKills = [];
@@ -971,7 +985,7 @@
       activeCategory = category;
       switchCategory(category);
       toggleAdminModal();
-      alert(`Match ${matchSlot + 1} score saved successfully!`);
+      alert(`Match ${matchSlot + 1} score & tournament info updated successfully!`);
     }
 
     // Initialize Dashboard
