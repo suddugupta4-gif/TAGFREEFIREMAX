@@ -78,7 +78,7 @@
 </head>
 <body class="min-h-screen pb-16 selection:bg-orange-500 selection:text-white">
 
-  <!-- Fixed 3D Parallax Background Container (100% Compatible with Instagram & Mobile WebViews) -->
+  <!-- Fixed 3D Parallax Background Container -->
   <div class="fixed inset-0 z-[-1] pointer-events-none overflow-hidden">
     <div id="global-bg-layer" class="absolute inset-0 bg-cover bg-center transition-transform duration-75 ease-out" style="background-image: linear-gradient(to bottom, rgba(8, 11, 17, 0.72) 0%, rgba(8, 11, 17, 0.86) 50%, rgba(8, 11, 17, 0.95) 100%), url('https://i.postimg.cc/bJfy8zS4/file-00000000838081faaadc3e75a63637bf.png');"></div>
   </div>
@@ -139,14 +139,14 @@
   <!-- Main Container -->
   <main class="max-w-7xl mx-auto px-3 sm:px-6 mt-4 sm:mt-6">
     
-    <!-- Hero Team Dashboard Card with Dual Parallax Background Cover -->
+    <!-- Hero Team Dashboard Card with Overall Cumulative Analysis -->
     <div id="hero-banner-card" class="glass-card rounded-2xl p-4 sm:p-6 mb-6 border-l-4 border-l-orange-500 relative overflow-hidden transition-all shadow-2xl w-full" style="background: linear-gradient(to right, rgba(15,21,34,0.60) 20%, rgba(15,21,34,0.40) 60%, rgba(15,21,34,0.60) 100%), url('https://i.postimg.cc/25QpQnVm/tagfreefiremax-in-14050517-235223317.jpg') no-repeat center top / cover;">
       
       <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 sm:gap-6 relative z-10">
         <div class="max-w-full">
           <div class="flex items-center gap-2 mb-2 flex-wrap">
             <span id="badge-category" class="px-2.5 py-0.5 bg-orange-500/30 text-orange-300 border border-orange-500/40 text-[10px] font-bold uppercase tracking-wider rounded-md backdrop-blur-xs">
-              OFFICIAL LEAGUE
+              OFFICIAL OVERALL ANALYSIS
             </span>
             <span id="badge-live-stream" class="hidden items-center gap-1.5 text-[10px] text-red-400 bg-red-500/20 border border-red-500/40 px-2.5 py-0.5 rounded-md font-bold backdrop-blur-xs">
               <span class="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse"></span> TOURNAMENT LIVE NOW
@@ -156,12 +156,12 @@
             </span>
           </div>
           <h2 id="tourney-title" class="text-xl sm:text-3xl font-extrabold text-white tracking-wide leading-tight drop-shadow-lg break-words">
-            TAGFREEFIREMAX - RECENT TOURNAMENT STATS
+            OFFICIAL OVERALL ANALYSIS
           </h2>
           <p class="text-[11px] sm:text-xs text-slate-200 mt-1.5 flex items-center gap-2 flex-wrap drop-shadow">
             <span><i class="fa-solid fa-shield-halved text-orange-400 mr-1"></i> Roster: TAG Esports</span>
             <span>•</span>
-            <span><i class="fa-solid fa-list-ol text-orange-400 mr-1"></i> Standard 6 Matches</span>
+            <span><i class="fa-solid fa-chart-line text-orange-400 mr-1"></i> All-Time Accumulative Team Analytics</span>
             <span id="live-stream-link-container" class="hidden">
               <span>•</span>
               <a id="banner-live-link" href="#" target="_blank" class="text-red-400 hover:text-red-300 underline font-semibold flex items-center gap-1">
@@ -171,23 +171,23 @@
           </p>
         </div>
 
-        <!-- Team Points Aggregate Grid with Glass Styling -->
+        <!-- Permanent 4 Overall Analysis Boxes (Never Erased, Adds Up Every Tournament) -->
         <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3 w-full lg:w-auto">
-          <div class="glass-box px-3 py-2 rounded-xl text-center shadow-lg">
-            <p class="text-[9px] text-slate-300 uppercase tracking-wider font-bold">Total Points (T.P)</p>
+          <div class="glass-box px-3 py-2.5 rounded-xl text-center shadow-lg">
+            <p class="text-[9px] text-slate-300 uppercase tracking-wider font-extrabold">Total Points (T.P)</p>
             <p id="stat-total-pts" class="text-xl sm:text-2xl font-bold text-orange-400 font-teko tracking-wide">0</p>
           </div>
-          <div class="glass-box px-3 py-2 rounded-xl text-center shadow-lg">
-            <p class="text-[9px] text-slate-300 uppercase tracking-wider font-bold">Placement PT (P.P)</p>
-            <p id="stat-placement-pts" class="text-xl sm:text-2xl font-bold text-yellow-400 font-teko tracking-wide">0</p>
+          <div class="glass-box px-3 py-2.5 rounded-xl text-center shadow-lg">
+            <p class="text-[9px] text-slate-300 uppercase tracking-wider font-extrabold">Matches Played</p>
+            <p id="stat-matches-played" class="text-xl sm:text-2xl font-bold text-yellow-400 font-teko tracking-wide">0</p>
           </div>
-          <div class="glass-box px-3 py-2 rounded-xl text-center shadow-lg">
-            <p class="text-[9px] text-slate-300 uppercase tracking-wider font-bold">Kill Points (K.P)</p>
+          <div class="glass-box px-3 py-2.5 rounded-xl text-center shadow-lg">
+            <p class="text-[9px] text-slate-300 uppercase tracking-wider font-extrabold">Kill Points (K.P)</p>
             <p id="stat-kill-pts" class="text-xl sm:text-2xl font-bold text-emerald-400 font-teko tracking-wide">0</p>
           </div>
-          <div class="glass-box px-3 py-2 rounded-xl text-center shadow-lg">
-            <p class="text-[9px] text-slate-300 uppercase tracking-wider font-bold">Booyahs Won</p>
-            <p id="stat-booyahs" class="text-xl sm:text-2xl font-bold text-yellow-400 font-teko tracking-wide gold-glow">0</p>
+          <div class="glass-box px-3 py-2.5 rounded-xl text-center shadow-lg">
+            <p class="text-[9px] text-slate-300 uppercase tracking-wider font-extrabold">Overall K/D Ratio</p>
+            <p id="stat-overall-kd" class="text-xl sm:text-2xl font-bold text-cyan-400 font-teko tracking-wide gold-glow">0.0</p>
           </div>
         </div>
       </div>
@@ -199,7 +199,7 @@
         <h3 class="text-base sm:text-lg font-bold text-white flex items-center gap-2 font-teko tracking-wider uppercase text-xl">
           <i class="fa-solid fa-gamepad text-orange-500"></i> Recent Match Breakdown (<span id="matches-count-label">0</span>/6 Matches)
         </h3>
-        <span class="text-[11px] text-slate-300 font-medium">Team TAGFREEFIREMAX Performance</span>
+        <span class="text-[11px] text-slate-300 font-medium">Active Tournament Matches</span>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4" id="matches-grid">
@@ -302,7 +302,7 @@
 
           <div>
             <label class="block text-xs font-semibold text-slate-300 mb-1">Tournament Title / Header Name</label>
-            <input type="text" id="form-title" placeholder="e.g. FFMAX INVITATIONAL 2026 - GRAND FINALS" class="w-full bg-slate-900 border border-slate-700 rounded-xl p-2.5 text-xs text-white focus:outline-none focus:border-orange-500"/>
+            <input type="text" id="form-title" placeholder="e.g. OFFICIAL OVERALL ANALYSIS" class="w-full bg-slate-900 border border-slate-700 rounded-xl p-2.5 text-xs text-white focus:outline-none focus:border-orange-500"/>
           </div>
 
           <div>
@@ -613,10 +613,10 @@
       };
     };
 
-    // Clean Default Datasets with Dual Team Background Photos Configured
+    // Clean Default Datasets
     const defaultDatasets = {
       official: {
-        tournamentName: "NEW FFMAX TOURNAMENT 2026",
+        tournamentName: "OFFICIAL OVERALL ANALYSIS",
         liveUrl: "",
         bgUrl: secondaryBannerPhotoUrl,
         matches: [
@@ -636,7 +636,7 @@
         ]
       },
       unofficial: {
-        tournamentName: "COMMUNITY SCRIMS - NIGHT BATTLES #42",
+        tournamentName: "UNOFFICIAL OVERALL ANALYSIS",
         liveUrl: "",
         bgUrl: secondaryBannerPhotoUrl,
         matches: [
@@ -718,7 +718,8 @@
     // Render Dashboard Stats & Progressive Matches
     function renderDashboard() {
       const currentData = datasets[activeCategory];
-      document.getElementById('tourney-title').innerText = currentData.tournamentName;
+      const defaultTitle = activeCategory === 'official' ? 'OFFICIAL OVERALL ANALYSIS' : 'UNOFFICIAL OVERALL ANALYSIS';
+      document.getElementById('tourney-title').innerText = currentData.tournamentName || defaultTitle;
 
       // Handle Hero Banner Card Background Image with Global Fallback
       const heroCard = document.getElementById('hero-banner-card');
@@ -752,11 +753,11 @@
         liveStreamLinkContainer.classList.add('hidden');
       }
 
-      // Filter only Played Matches
+      // Filter active tournament played matches
       const playedMatches = currentData.matches.filter(m => m.played === true);
       document.getElementById('matches-count-label').innerText = playedMatches.length;
 
-      // Check if all 6 matches are complete
+      // Check if active 6 matches are complete
       if (playedMatches.length === 6) {
         badgeCompleted.classList.remove('hidden');
         badgeCompleted.classList.add('flex');
@@ -764,32 +765,52 @@
         badgeCompleted.classList.add('hidden');
       }
 
-      // Calculate Aggregate Points & Individual Player Kills
-      let totalPlacementPts = 0;
-      let totalKillPts = 0;
-      let totalBooyahs = 0;
+      // Calculate ALL-TIME CUMULATIVE STATS (Past History + Active Tournament)
+      let cumulativeTotalPts = 0;
+      let cumulativeKillPts = 0;
+      let cumulativeMatchesPlayed = 0;
 
-      let accumulatedPlayerKills = [0, 0, 0, 0, 0];
-
-      playedMatches.forEach(m => {
-        totalPlacementPts += placementMatrix[m.rank] || 0;
-        
-        let matchKills = 0;
-        m.playerKills.forEach((pk, pIdx) => {
-          matchKills += pk;
-          accumulatedPlayerKills[pIdx] += pk;
-        });
-
-        totalKillPts += matchKills;
-        if (m.rank === 1) totalBooyahs++;
+      // 1. Calculate from Past History Archives
+      const historyList = tournamentHistory[activeCategory] || [];
+      historyList.forEach(item => {
+        if (item.data && item.data.matches) {
+          item.data.matches.forEach(m => {
+            if (m.played) {
+              cumulativeMatchesPlayed++;
+              const pp = placementMatrix[m.rank] || 0;
+              const kp = m.playerKills ? m.playerKills.reduce((a, b) => a + b, 0) : 0;
+              cumulativeKillPts += kp;
+              cumulativeTotalPts += (pp + kp);
+            }
+          });
+        }
       });
 
-      const grandTotalPts = totalPlacementPts + totalKillPts;
+      // 2. Add Active Tournament Matches
+      playedMatches.forEach(m => {
+        cumulativeMatchesPlayed++;
+        const pp = placementMatrix[m.rank] || 0;
+        const kp = m.playerKills.reduce((a, b) => a + b, 0);
+        cumulativeKillPts += kp;
+        cumulativeTotalPts += (pp + kp);
+      });
 
-      document.getElementById('stat-total-pts').innerText = grandTotalPts;
-      document.getElementById('stat-placement-pts').innerText = totalPlacementPts;
-      document.getElementById('stat-kill-pts').innerText = totalKillPts;
-      document.getElementById('stat-booyahs').innerText = totalBooyahs;
+      // Compute Cumulative Overall K/D
+      const cumulativeOverallKD = calculateKD(cumulativeKillPts, cumulativeMatchesPlayed);
+
+      // Render Permanent Overall Analysis 4 Boxes
+      document.getElementById('stat-total-pts').innerText = cumulativeTotalPts;
+      document.getElementById('stat-matches-played').innerText = cumulativeMatchesPlayed;
+      document.getElementById('stat-kill-pts').innerText = cumulativeKillPts;
+      document.getElementById('stat-overall-kd').innerText = cumulativeOverallKD;
+
+      // Calculate Player Contributions for Active Tournament
+      let activePlayerKills = [0, 0, 0, 0, 0];
+      playedMatches.forEach(m => {
+        m.playerKills.forEach((pk, pIdx) => {
+          activePlayerKills[pIdx] += pk;
+        });
+      });
 
       // Render Played Match Cards Only with Translucent Glass Style
       const matchesGrid = document.getElementById('matches-grid');
@@ -799,8 +820,8 @@
         matchesGrid.innerHTML = `
           <div class="col-span-full glass-card rounded-2xl p-8 text-center border border-dashed border-slate-700/60">
             <i class="fa-solid fa-gamepad text-3xl text-slate-400 mb-2"></i>
-            <p class="text-sm font-bold text-slate-200">No Matches Recorded Yet</p>
-            <p class="text-xs text-slate-400 mt-1">Match results will appear here as the Admin updates each match (1 through 6).</p>
+            <p class="text-sm font-bold text-slate-200">No Active Matches Recorded Yet</p>
+            <p class="text-xs text-slate-400 mt-1">Submit match results in Admin panel to add scores to the overall analysis.</p>
           </div>
         `;
       } else {
@@ -846,7 +867,7 @@
       playersGrid.innerHTML = '';
 
       currentData.players.forEach((p, pIdx) => {
-        const totalPlayerKills = accumulatedPlayerKills[pIdx];
+        const totalPlayerKills = activePlayerKills[pIdx];
         const dynamicKD = calculateKD(totalPlayerKills, playedMatches.length);
         const defaultPhoto = defaultPlayerPhotos[pIdx] || globalDefaultPhotoUrl;
         const avatarSrc = (p.photo && p.photo.trim() !== "") ? p.photo : defaultPhoto;
@@ -906,14 +927,14 @@
         pill.style.width = '80px';
         btnOfficial.className = 'relative z-10 w-[68px] sm:w-[80px] py-1 text-center text-white transition-colors duration-200';
         btnUnofficial.className = 'relative z-10 w-[78px] sm:w-[95px] py-1 text-center text-slate-400 hover:text-white transition-colors duration-200';
-        badgeCategory.innerText = 'OFFICIAL LEAGUE';
+        badgeCategory.innerText = 'OFFICIAL OVERALL ANALYSIS';
         badgeCategory.className = 'px-2.5 py-0.5 bg-orange-500/30 text-orange-300 border border-orange-500/40 text-[10px] font-bold uppercase tracking-wider rounded-md backdrop-blur-xs';
       } else {
         pill.style.transform = 'translateX(70px)';
         pill.style.width = '95px';
         btnOfficial.className = 'relative z-10 w-[68px] sm:w-[80px] py-1 text-center text-slate-400 hover:text-white transition-colors duration-200';
         btnUnofficial.className = 'relative z-10 w-[78px] sm:w-[95px] py-1 text-center text-white transition-colors duration-200';
-        badgeCategory.innerText = 'UNOFFICIAL SCRIMS';
+        badgeCategory.innerText = 'UNOFFICIAL OVERALL ANALYSIS';
         badgeCategory.className = 'px-2.5 py-0.5 bg-cyan-500/30 text-cyan-300 border border-cyan-500/40 text-[10px] font-bold uppercase tracking-wider rounded-md backdrop-blur-xs';
       }
 
@@ -973,7 +994,7 @@
       });
     }
 
-    // Dedicated History Detail Modal (Popup view without changing main page)
+    // Dedicated History Detail Popup Modal (Does NOT alter main site)
     function openHistoryDetailModal(item) {
       const modal = document.getElementById('history-detail-modal');
       const content = document.getElementById('history-detail-content');
@@ -1076,14 +1097,11 @@
       modal.classList.remove('hidden');
     }
 
-    function closeHistoryDetailModal() {
-      document.getElementById('history-detail-modal').classList.add('hidden');
-    }
-
     // Load Admin Inputs for Current Target Category
     function loadAdminFormForCategory() {
       const category = document.getElementById('form-category').value;
-      document.getElementById('form-title').value = datasets[category].tournamentName || '';
+      const defaultTitle = category === 'official' ? 'OFFICIAL OVERALL ANALYSIS' : 'UNOFFICIAL OVERALL ANALYSIS';
+      document.getElementById('form-title').value = datasets[category].tournamentName || defaultTitle;
       document.getElementById('form-live-url').value = datasets[category].liveUrl || '';
       document.getElementById('form-bg-url').value = datasets[category].bgUrl || '';
 
@@ -1124,7 +1142,7 @@
     // Start New Tournament / Reset Active Tournament while PRESERVING Photos & Social Links!
     function startNewTournament() {
       const category = document.getElementById('form-category').value;
-      const title = prompt("Enter Title for New Tournament:", "NEW FFMAX TOURNAMENT 2026");
+      const title = prompt("Enter Title for New Tournament:", category === 'official' ? 'OFFICIAL OVERALL ANALYSIS' : 'UNOFFICIAL OVERALL ANALYSIS');
 
       if (title !== null && title.trim() !== "") {
         // Preserve current team background photo, player photos, and YouTube/Instagram links!
@@ -1133,7 +1151,7 @@
         activeCategory = category;
         switchCategory(category);
         toggleAdminModal();
-        alert(`Started new tournament: "${title.trim()}". Match scores reset, player photos & social links preserved!`);
+        alert(`Started new tournament slot: "${title.trim()}". Active match slots reset, overall analysis stats preserved!`);
       }
     }
 
