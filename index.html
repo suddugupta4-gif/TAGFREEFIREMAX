@@ -550,7 +550,7 @@
         { name: 'TAG-KD', role: 'sniper/igl', photo: globalDefaultPhotoUrl, yt: '', ig: '' },
         { name: 'TAG SAHIL', role: 'rusher', photo: globalDefaultPhotoUrl, yt: '', ig: '' },
         { name: 'TAG SHOTO', role: 'rusher', photo: globalDefaultPhotoUrl, yt: '', ig: '' },
-        { name: 'TAG WOLVIN', role: 'rusher', photo: globalDefaultPhotoUrl, yt: '', ig: '' },
+        { name: 'TAG WOLVIN', role: 'rusher', photo: 'https://i.postimg.cc/Pqvkvx70/Document-from-Sujalll.jpg', yt: '', ig: '' },
         { name: 'TAG LOUIS', role: 'rusher', photo: globalDefaultPhotoUrl, yt: '', ig: '' }
       ];
 
@@ -566,17 +566,17 @@
           { matchNum: 5, map: 'Nexterra', rank: 0, playerKills: [0, 0, 0, 0, 0], played: false },
           { matchNum: 6, map: 'Bermuda', rank: 0, playerKills: [0, 0, 0, 0, 0], played: false }
         ],
-        players: currentPlayers.map(p => ({
+        players: currentPlayers.map((p, idx) => ({
           name: p.name,
           role: p.role,
-          photo: p.photo || globalDefaultPhotoUrl,
+          photo: p.photo || (idx === 3 ? 'https://i.postimg.cc/Pqvkvx70/Document-from-Sujalll.jpg' : globalDefaultPhotoUrl),
           yt: p.yt || '',
           ig: p.ig || ''
         }))
       };
     };
 
-    // Clean Default Datasets with Global Default Photo Fallback
+    // Clean Default Datasets with Wolvin's Photo Set directly in Code
     const defaultDatasets = {
       official: {
         tournamentName: "NEW FFMAX TOURNAMENT 2026",
@@ -594,7 +594,7 @@
           { name: 'TAG-KD', role: 'sniper/igl', photo: globalDefaultPhotoUrl, yt: '', ig: '' },
           { name: 'TAG SAHIL', role: 'rusher', photo: globalDefaultPhotoUrl, yt: '', ig: '' },
           { name: 'TAG SHOTO', role: 'rusher', photo: globalDefaultPhotoUrl, yt: '', ig: '' },
-          { name: 'TAG WOLVIN', role: 'rusher', photo: globalDefaultPhotoUrl, yt: '', ig: '' },
+          { name: 'TAG WOLVIN', role: 'rusher', photo: 'https://i.postimg.cc/Pqvkvx70/Document-from-Sujalll.jpg', yt: '', ig: '' },
           { name: 'TAG LOUIS', role: 'rusher', photo: globalDefaultPhotoUrl, yt: '', ig: '' }
         ]
       },
@@ -614,7 +614,7 @@
           { name: 'TAG-KD', role: 'sniper/igl', photo: globalDefaultPhotoUrl, yt: '', ig: '' },
           { name: 'TAG SAHIL', role: 'rusher', photo: globalDefaultPhotoUrl, yt: '', ig: '' },
           { name: 'TAG SHOTO', role: 'rusher', photo: globalDefaultPhotoUrl, yt: '', ig: '' },
-          { name: 'TAG WOLVIN', role: 'rusher', photo: globalDefaultPhotoUrl, yt: '', ig: '' },
+          { name: 'TAG WOLVIN', role: 'rusher', photo: 'https://i.postimg.cc/Pqvkvx70/Document-from-Sujalll.jpg', yt: '', ig: '' },
           { name: 'TAG LOUIS', role: 'rusher', photo: globalDefaultPhotoUrl, yt: '', ig: '' }
         ]
       }
