@@ -17,14 +17,15 @@
       font-family: 'Inter', sans-serif; 
       overflow-x: hidden;
       width: 100%;
-      /* Fixed Parallax Scrollable Team Photo Background */
+      /* 3D Motion Parallax Page Background (Orange Studio Team Photoshoot) */
       background-image: 
-        linear-gradient(to bottom, rgba(8, 11, 17, 0.72) 0%, rgba(8, 11, 17, 0.85) 50%, rgba(8, 11, 17, 0.92) 100%),
-        url('https://i.postimg.cc/Kvp4hKhc/IMG-20260808-102142.jpg');
+        linear-gradient(to bottom, rgba(8, 11, 17, 0.72) 0%, rgba(8, 11, 17, 0.86) 50%, rgba(8, 11, 17, 0.95) 100%),
+        url('https://i.postimg.cc/bJfy8zS4/file-00000000838081faaadc3e75a63637bf.png');
       background-attachment: fixed;
       background-position: center top;
       background-repeat: no-repeat;
       background-size: cover;
+      transition: background-position 0.1s ease-out;
     }
 
     .font-teko { font-family: 'Teko', sans-serif; }
@@ -32,7 +33,7 @@
     .ff-gradient { background: linear-gradient(135deg, #ff3b00 0%, #ff8800 100%); }
     .ff-gradient-hover:hover { background: linear-gradient(135deg, #e03400 0%, #e67a00 100%); }
     
-    /* Glassmorphism Styles for all cards so background photo is clearly visible */
+    /* Translucent Glassmorphism for 3D depth so background photos are visible */
     .glass-card { 
       background: rgba(15, 21, 34, 0.45) !important; 
       backdrop-filter: blur(12px) !important;
@@ -45,7 +46,7 @@
     .glass-card:hover {
       background: rgba(15, 21, 34, 0.65) !important;
       border-color: rgba(255, 136, 0, 0.45) !important;
-      transform: translateY(-3px);
+      transform: translateY(-3px) scale(1.01);
       box-shadow: 0 12px 30px -5px rgba(255, 68, 0, 0.25);
     }
 
@@ -141,8 +142,8 @@
   <!-- Main Container -->
   <main class="max-w-7xl mx-auto px-3 sm:px-6 mt-4 sm:mt-6">
     
-    <!-- Hero Team Dashboard Card with Dual Parallax Background Cover -->
-    <div id="hero-banner-card" class="glass-card rounded-2xl p-4 sm:p-6 mb-6 border-l-4 border-l-orange-500 relative overflow-hidden transition-all shadow-2xl w-full" style="background: linear-gradient(to right, rgba(15,21,34,0.55) 20%, rgba(15,21,34,0.35) 60%, rgba(15,21,34,0.55) 100%), url('https://i.postimg.cc/Pqvkvx70/Document-from-Sujalll.jpg') no-repeat center top / cover; background-attachment: fixed;">
+    <!-- Hero Team Dashboard Card with Second 3D Parallax Background Image Cover (Apex Trophy Banner) -->
+    <div id="hero-banner-card" class="glass-card rounded-2xl p-4 sm:p-6 mb-6 border-l-4 border-l-orange-500 relative overflow-hidden transition-all shadow-2xl w-full" style="background: linear-gradient(to right, rgba(15,21,34,0.55) 20%, rgba(15,21,34,0.35) 60%, rgba(15,21,34,0.55) 100%), url('https://i.postimg.cc/25QpQnVm/tagfreefiremax-in-14050517-235223317.jpg') no-repeat center top / cover; background-attachment: fixed;">
       
       <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 sm:gap-6 relative z-10">
         <div class="max-w-full">
@@ -496,8 +497,11 @@
     // Free Fire Official Placement Points Matrix (1 Kill = 1 Point)
     const placementMatrix = { 1: 12, 2: 9, 3: 8, 4: 7, 5: 6, 6: 5, 7: 4, 8: 3, 9: 2, 10: 1, 11: 0, 12: 0 };
 
-    // Default Global Postimages Direct Photo URL (TAG Esports Team Poster)
-    const globalDefaultPhotoUrl = "https://i.postimg.cc/Kvp4hKhc/IMG-20260808-102142.jpg";
+    // Default Global Postimages Direct Photo URL (TAG Esports Team Photoshoot 1)
+    const globalDefaultPhotoUrl = "https://i.postimg.cc/bJfy8zS4/file-00000000838081faaadc3e75a63637bf.png";
+
+    // Second Team Background Photo (Apex Trophy Banner)
+    const secondaryBannerPhotoUrl = "https://i.postimg.cc/25QpQnVm/tagfreefiremax-in-14050517-235223317.jpg";
 
     // Direct Postimages URLs for 5 Players
     const defaultPlayerPhotos = [
@@ -510,6 +514,16 @@
 
     // Public CORS-enabled Cloud State Sync Endpoint
     const CLOUD_SYNC_URL = "https://kvdb.io/TAGFREEFIREMAX_KV_2026/live_state";
+
+    // Dynamic 3D Motion Scroll Listener for Depth Effect
+    window.addEventListener('scroll', () => {
+      const scrolled = window.scrollY;
+      document.body.style.backgroundPositionY = `${-(scrolled * 0.15)}px`;
+      const heroCard = document.getElementById('hero-banner-card');
+      if (heroCard) {
+        heroCard.style.backgroundPositionY = `${-(scrolled * 0.08)}px`;
+      }
+    });
 
     // Helper for dynamic K/D calculation
     function calculateKD(totalKills, playedMatchesCount) {
@@ -572,7 +586,7 @@
 
     // Function to create an empty tournament while PRESERVING team photo, player photos, and social links!
     const createEmptyTournament = (title, currentData) => {
-      const bg = (currentData && currentData.bgUrl && currentData.bgUrl.trim() !== "") ? currentData.bgUrl : globalDefaultPhotoUrl;
+      const bg = (currentData && currentData.bgUrl && currentData.bgUrl.trim() !== "") ? currentData.bgUrl : secondaryBannerPhotoUrl;
       const currentPlayers = (currentData && currentData.players) ? currentData.players : [
         { name: 'TAG-KD', role: 'sniper/igl', photo: defaultPlayerPhotos[0], yt: '', ig: '' },
         { name: 'TAG SAHIL', role: 'rusher', photo: defaultPlayerPhotos[1], yt: '', ig: '' },
@@ -603,12 +617,12 @@
       };
     };
 
-    // Clean Default Datasets with All 5 Player Photos Hardcoded
+    // Clean Default Datasets with Dual Team Background Photos Configured
     const defaultDatasets = {
       official: {
         tournamentName: "NEW FFMAX TOURNAMENT 2026",
         liveUrl: "",
-        bgUrl: globalDefaultPhotoUrl,
+        bgUrl: secondaryBannerPhotoUrl,
         matches: [
           { matchNum: 1, map: 'Bermuda', rank: 0, playerKills: [0, 0, 0, 0, 0], played: false },
           { matchNum: 2, map: 'Kalahari', rank: 0, playerKills: [0, 0, 0, 0, 0], played: false },
@@ -628,7 +642,7 @@
       unofficial: {
         tournamentName: "COMMUNITY SCRIMS - NIGHT BATTLES #42",
         liveUrl: "",
-        bgUrl: globalDefaultPhotoUrl,
+        bgUrl: secondaryBannerPhotoUrl,
         matches: [
           { matchNum: 1, map: 'Bermuda', rank: 0, playerKills: [0, 0, 0, 0, 0], played: false },
           { matchNum: 2, map: 'Kalahari', rank: 0, playerKills: [0, 0, 0, 0, 0], played: false },
@@ -712,7 +726,7 @@
 
       // Handle Hero Banner Card Background Image with Global Fallback
       const heroCard = document.getElementById('hero-banner-card');
-      const activePhoto = (currentData.bgUrl && currentData.bgUrl.trim() !== "") ? currentData.bgUrl.trim() : globalDefaultPhotoUrl;
+      const activePhoto = (currentData.bgUrl && currentData.bgUrl.trim() !== "") ? currentData.bgUrl.trim() : secondaryBannerPhotoUrl;
       heroCard.style.background = `linear-gradient(to right, rgba(15,21,34,0.55) 20%, rgba(15,21,34,0.35) 60%, rgba(15,21,34,0.55) 100%), url('${activePhoto}') no-repeat center top / cover; background-attachment: fixed;`;
 
       // Handle Live Stream Buttons
@@ -846,7 +860,7 @@
         card.style.animationDelay = `${pIdx * 0.05}s`;
 
         card.innerHTML = `
-          <!-- Square Photo Box -->
+          <!-- Larger Square Photo Box -->
           <div class="w-32 h-32 sm:w-36 sm:h-36 rounded-2xl bg-slate-950/80 border-2 border-orange-500/50 overflow-hidden mb-3 relative shadow-xl group">
             <img src="${avatarSrc}" onerror="this.onerror=null; this.src='${defaultPhoto}';" alt="${p.name}" class="w-full h-full object-cover object-top group-hover:scale-110 transition-transform duration-300"/>
             <span class="absolute bottom-1 left-1 right-1 bg-slate-950/90 backdrop-blur-xs text-[10px] font-extrabold text-orange-400 py-1 rounded uppercase tracking-wider">
