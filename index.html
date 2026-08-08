@@ -115,7 +115,7 @@
   <!-- Main Container -->
   <main class="max-w-7xl mx-auto px-4 sm:px-6 mt-6">
     
-    <!-- Hero Team Dashboard Card with Global Team Background Image Cover -->
+    <!-- Hero Team Dashboard Card with Team Background Image Cover -->
     <div id="hero-banner-card" class="ff-card rounded-2xl p-6 mb-6 border-l-4 border-l-orange-500 relative overflow-hidden hover-lift transition-all shadow-2xl" style="background: linear-gradient(to right, rgba(15,21,34,0.88) 20%, rgba(15,21,34,0.60) 60%, rgba(15,21,34,0.88) 100%), url('https://i.supaimg.com/d63f2a31-187c-4f21-87d5-6d1f2c5263d4/7870d17b-5c') no-repeat center top / cover;">
       
       <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-6 relative z-10">
@@ -183,7 +183,7 @@
       </div>
     </div>
 
-    <!-- Team TAG Roster Player Performance Section (5 Larger Square Box Cards) -->
+    <!-- Team TAG Roster Player Performance Section (5 Square Box Cards) -->
     <div>
       <div class="flex items-center justify-between mb-4">
         <h3 class="text-lg font-bold text-white flex items-center gap-2 font-teko tracking-wider uppercase text-xl">
@@ -193,7 +193,7 @@
       </div>
 
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4" id="players-grid">
-        <!-- 5 Larger Square Photo Box Cards Injected Here -->
+        <!-- 5 Square Photo Box Cards Injected Here -->
       </div>
     </div>
 
@@ -342,7 +342,7 @@
 
         <hr class="border-slate-800"/>
 
-        <!-- SECTION 2: PHOTOS & BANNER INFO (Auto-Syncs Official & Unofficial) -->
+        <!-- SECTION 2: PHOTOS & BANNER INFO (AUTO-SYNCS TO OFFICIAL AND UNOFFICIAL) -->
         <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-3">
           <h4 class="text-xs font-bold text-orange-400 uppercase tracking-wider flex items-center gap-1.5">
             <i class="fa-solid fa-image"></i> Team & Player Photos (Auto-Applies to Official & Unofficial)
@@ -437,7 +437,7 @@
     // Free Fire Official Placement Points Matrix (1 Kill = 1 Point)
     const placementMatrix = { 1: 12, 2: 9, 3: 8, 4: 7, 5: 6, 6: 5, 7: 4, 8: 3, 9: 2, 10: 1, 11: 0, 12: 0 };
 
-    // Default Team Background Image URL (Global Public URL)
+    // Default Global Team Photo URL
     const globalDefaultPhotoUrl = "https://i.supaimg.com/d63f2a31-187c-4f21-87d5-6d1f2c5263d4/7870d17b-5c";
 
     // Helper for dynamic K/D calculation
@@ -451,29 +451,40 @@
       return `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200"><rect width="200" height="200" fill="%230f172a"/><circle cx="100" cy="80" r="45" fill="%23334155"/><path d="M 30 180 Q 100 120 170 180" fill="%23334155"/><text x="100" y="185" font-family="sans-serif" font-size="20" font-weight="bold" fill="%23f97316" text-anchor="middle">${initials}</text></svg>`;
     }
 
-    // Default Fresh Setup
-    const createEmptyTournament = (title) => ({
-      tournamentName: title,
-      liveUrl: "",
-      bgUrl: globalDefaultPhotoUrl,
-      matches: [
-        { matchNum: 1, map: 'Bermuda', rank: 0, playerKills: [0, 0, 0, 0, 0], played: false },
-        { matchNum: 2, map: 'Kalahari', rank: 0, playerKills: [0, 0, 0, 0, 0], played: false },
-        { matchNum: 3, map: 'Alpine', rank: 0, playerKills: [0, 0, 0, 0, 0], played: false },
-        { matchNum: 4, map: 'Purgatory', rank: 0, playerKills: [0, 0, 0, 0, 0], played: false },
-        { matchNum: 5, map: 'Nexterra', rank: 0, playerKills: [0, 0, 0, 0, 0], played: false },
-        { matchNum: 6, map: 'Bermuda', rank: 0, playerKills: [0, 0, 0, 0, 0], played: false }
-      ],
-      players: [
+    // Function to create an empty tournament while PRESERVING team photo, player photos, and social links!
+    const createEmptyTournament = (title, currentData) => {
+      const bg = (currentData && currentData.bgUrl && currentData.bgUrl.trim() !== "") ? currentData.bgUrl : globalDefaultPhotoUrl;
+      const currentPlayers = (currentData && currentData.players) ? currentData.players : [
         { name: 'TAG-KD', role: 'sniper/igl', photo: '', yt: '', ig: '' },
         { name: 'TAG SAHIL', role: 'rusher', photo: '', yt: '', ig: '' },
         { name: 'TAG SHOTO', role: 'rusher', photo: '', yt: '', ig: '' },
         { name: 'TAG WOLVIN', role: 'rusher', photo: '', yt: '', ig: '' },
         { name: 'TAG LOUIS', role: 'rusher', photo: '', yt: '', ig: '' }
-      ]
-    });
+      ];
 
-    // Sample Datasets Initialized with Global Default Team Photo
+      return {
+        tournamentName: title,
+        liveUrl: (currentData && currentData.liveUrl) ? currentData.liveUrl : "",
+        bgUrl: bg,
+        matches: [
+          { matchNum: 1, map: 'Bermuda', rank: 0, playerKills: [0, 0, 0, 0, 0], played: false },
+          { matchNum: 2, map: 'Kalahari', rank: 0, playerKills: [0, 0, 0, 0, 0], played: false },
+          { matchNum: 3, map: 'Alpine', rank: 0, playerKills: [0, 0, 0, 0, 0], played: false },
+          { matchNum: 4, map: 'Purgatory', rank: 0, playerKills: [0, 0, 0, 0, 0], played: false },
+          { matchNum: 5, map: 'Nexterra', rank: 0, playerKills: [0, 0, 0, 0, 0], played: false },
+          { matchNum: 6, map: 'Bermuda', rank: 0, playerKills: [0, 0, 0, 0, 0], played: false }
+        ],
+        players: currentPlayers.map(p => ({
+          name: p.name,
+          role: p.role,
+          photo: p.photo || '',
+          yt: p.yt || '',
+          ig: p.ig || ''
+        }))
+      };
+    };
+
+    // Sample Datasets Initialized
     const defaultDatasets = {
       official: {
         tournamentName: "FFMAX INVITATIONAL 2026 - OFFICIAL FINALS",
@@ -943,18 +954,19 @@
       }
     }
 
-    // Start New Tournament / Reset Active Tournament
+    // Start New Tournament / Reset Active Tournament while PRESERVING Photos & Social Links!
     function startNewTournament() {
       const category = document.getElementById('form-category').value;
       const title = prompt("Enter Title for New Tournament:", "NEW FFMAX TOURNAMENT 2026");
 
       if (title !== null && title.trim() !== "") {
-        datasets[category] = createEmptyTournament(title.trim());
+        // Preserve current team background photo, player photos, and YouTube/Instagram links!
+        datasets[category] = createEmptyTournament(title.trim(), datasets[category]);
         saveState();
         activeCategory = category;
         switchCategory(category);
         toggleAdminModal();
-        alert(`Started new tournament: "${title.trim()}". All match slots reset!`);
+        alert(`Started new tournament: "${title.trim()}". Match scores reset, player photos & social links preserved!`);
       }
     }
 
