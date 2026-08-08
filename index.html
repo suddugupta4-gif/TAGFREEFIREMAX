@@ -115,7 +115,7 @@
   <!-- Main Container -->
   <main class="max-w-7xl mx-auto px-4 sm:px-6 mt-6">
     
-    <!-- Hero Team Dashboard Card with Team Background Image Cover -->
+    <!-- Hero Team Dashboard Card with Global Team Background Image Cover -->
     <div id="hero-banner-card" class="ff-card rounded-2xl p-6 mb-6 border-l-4 border-l-orange-500 relative overflow-hidden hover-lift transition-all shadow-2xl" style="background: linear-gradient(to right, rgba(15,21,34,0.88) 20%, rgba(15,21,34,0.60) 60%, rgba(15,21,34,0.88) 100%), url('https://i.supaimg.com/d63f2a31-187c-4f21-87d5-6d1f2c5263d4/7870d17b-5c') no-repeat center top / cover;">
       
       <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-6 relative z-10">
@@ -342,10 +342,10 @@
 
         <hr class="border-slate-800"/>
 
-        <!-- SECTION 2: PHOTOS & BANNER INFO -->
+        <!-- SECTION 2: PHOTOS & BANNER INFO (Auto-Syncs Official & Unofficial) -->
         <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-3">
           <h4 class="text-xs font-bold text-orange-400 uppercase tracking-wider flex items-center gap-1.5">
-            <i class="fa-solid fa-image"></i> Team & Player Photos
+            <i class="fa-solid fa-image"></i> Team & Player Photos (Auto-Applies to Official & Unofficial)
           </h4>
 
           <div>
@@ -366,7 +366,7 @@
           </div>
 
           <button type="button" onclick="saveMediaAndInfo()" class="w-full bg-orange-600 hover:bg-orange-500 py-2.5 rounded-xl text-white font-bold text-xs uppercase tracking-wider shadow-lg transition-all flex items-center justify-center gap-2">
-            <i class="fa-solid fa-floppy-disk"></i> SAVE PHOTOS ONLY
+            <i class="fa-solid fa-floppy-disk"></i> SAVE PHOTOS FOR ALL CATEGORIES
           </button>
         </div>
 
@@ -426,7 +426,7 @@
           </div>
 
           <button type="button" onclick="saveSocialLinks()" class="w-full bg-red-600 hover:bg-red-500 py-2.5 rounded-xl text-white font-bold text-xs uppercase tracking-wider shadow-lg transition-all flex items-center justify-center gap-2">
-            <i class="fa-solid fa-share-nodes"></i> SAVE SOCIAL LINKS ONLY
+            <i class="fa-solid fa-share-nodes"></i> SAVE SOCIAL LINKS FOR ALL CATEGORIES
           </button>
         </div>
       </div>
@@ -436,6 +436,9 @@
   <script>
     // Free Fire Official Placement Points Matrix (1 Kill = 1 Point)
     const placementMatrix = { 1: 12, 2: 9, 3: 8, 4: 7, 5: 6, 6: 5, 7: 4, 8: 3, 9: 2, 10: 1, 11: 0, 12: 0 };
+
+    // Default Team Background Image URL (Global Public URL)
+    const globalDefaultPhotoUrl = "https://i.supaimg.com/d63f2a31-187c-4f21-87d5-6d1f2c5263d4/7870d17b-5c";
 
     // Helper for dynamic K/D calculation
     function calculateKD(totalKills, playedMatchesCount) {
@@ -452,7 +455,7 @@
     const createEmptyTournament = (title) => ({
       tournamentName: title,
       liveUrl: "",
-      bgUrl: "https://i.supaimg.com/d63f2a31-187c-4f21-87d5-6d1f2c5263d4/7870d17b-5c",
+      bgUrl: globalDefaultPhotoUrl,
       matches: [
         { matchNum: 1, map: 'Bermuda', rank: 0, playerKills: [0, 0, 0, 0, 0], played: false },
         { matchNum: 2, map: 'Kalahari', rank: 0, playerKills: [0, 0, 0, 0, 0], played: false },
@@ -470,12 +473,12 @@
       ]
     });
 
-    // Sample Datasets Initialized
+    // Sample Datasets Initialized with Global Default Team Photo
     const defaultDatasets = {
       official: {
         tournamentName: "FFMAX INVITATIONAL 2026 - OFFICIAL FINALS",
         liveUrl: "",
-        bgUrl: "https://i.supaimg.com/d63f2a31-187c-4f21-87d5-6d1f2c5263d4/7870d17b-5c",
+        bgUrl: globalDefaultPhotoUrl,
         matches: [
           { matchNum: 1, map: 'Bermuda', rank: 1, playerKills: [3, 4, 2, 1, 0], played: true },
           { matchNum: 2, map: 'Kalahari', rank: 2, playerKills: [2, 2, 1, 1, 0], played: true },
@@ -495,7 +498,7 @@
       unofficial: {
         tournamentName: "COMMUNITY SCRIMS - NIGHT BATTLES #42",
         liveUrl: "",
-        bgUrl: "https://i.supaimg.com/d63f2a31-187c-4f21-87d5-6d1f2c5263d4/7870d17b-5c",
+        bgUrl: globalDefaultPhotoUrl,
         matches: [
           { matchNum: 1, map: 'Bermuda', rank: 1, playerKills: [4, 5, 3, 2, 0], played: true },
           { matchNum: 2, map: 'Kalahari', rank: 3, playerKills: [2, 3, 1, 1, 0], played: true },
@@ -540,13 +543,10 @@
       const currentData = datasets[activeCategory];
       document.getElementById('tourney-title').innerText = currentData.tournamentName;
 
-      // Handle Hero Banner Card Background Image
+      // Handle Hero Banner Card Background Image with Global Fallback
       const heroCard = document.getElementById('hero-banner-card');
-      if (currentData.bgUrl && currentData.bgUrl.trim() !== "") {
-        heroCard.style.background = `linear-gradient(to right, rgba(15,21,34,0.88) 20%, rgba(15,21,34,0.60) 60%, rgba(15,21,34,0.88) 100%), url('${currentData.bgUrl}') no-repeat center top / cover`;
-      } else {
-        heroCard.style.background = `linear-gradient(to right, rgba(15,21,34,0.88) 20%, rgba(15,21,34,0.60) 60%, rgba(15,21,34,0.88) 100%), url('https://i.supaimg.com/d63f2a31-187c-4f21-87d5-6d1f2c5263d4/7870d17b-5c') no-repeat center top / cover`;
-      }
+      const activePhoto = (currentData.bgUrl && currentData.bgUrl.trim() !== "") ? currentData.bgUrl.trim() : globalDefaultPhotoUrl;
+      heroCard.style.background = `linear-gradient(to right, rgba(15,21,34,0.88) 20%, rgba(15,21,34,0.60) 60%, rgba(15,21,34,0.88) 100%), url('${activePhoto}') no-repeat center top / cover`;
 
       // Handle Live Stream Buttons
       const headerLiveBtn = document.getElementById('header-live-btn');
@@ -958,26 +958,28 @@
       }
     }
 
-    // SAVE SECTION 1: Photos & Banner Info ONLY
+    // SAVE SECTION 1: Photos & Banner Info (AUTO-SYNCS TO OFFICIAL AND UNOFFICIAL)
     function saveMediaAndInfo() {
-      const category = document.getElementById('form-category').value;
-      const bgUrl = document.getElementById('form-bg-url').value;
+      const bgUrl = document.getElementById('form-bg-url').value.trim();
 
-      datasets[category].bgUrl = bgUrl.trim();
+      // Apply Team Background Photo URL to BOTH official and unofficial categories
+      datasets.official.bgUrl = bgUrl;
+      datasets.unofficial.bgUrl = bgUrl;
 
-      // Save player photo URLs
+      // Save player photo URLs for BOTH categories
       for (let i = 0; i < 5; i++) {
         const photoElem = document.getElementById(`pk-photo-${i}`);
         if (photoElem) {
-          datasets[category].players[i].photo = photoElem.value.trim();
+          const photoVal = photoElem.value.trim();
+          datasets.official.players[i].photo = photoVal;
+          datasets.unofficial.players[i].photo = photoVal;
         }
       }
 
       saveState();
-      activeCategory = category;
-      switchCategory(category);
+      renderDashboard();
       toggleAdminModal();
-      alert("Photos & Banner updated successfully!");
+      alert("Team & Player Photos updated and synced across all categories!");
     }
 
     // SAVE SECTION 2: Match Score Result, Tournament Title & Live Stream
@@ -1051,23 +1053,26 @@
       alert(`Match ${matchSlot + 1} score, Tournament Title & Live Link updated successfully!`);
     }
 
-    // SAVE SECTION 3: Player Social Links ONLY (YouTube & Instagram)
+    // SAVE SECTION 3: Player Social Links (AUTO-SYNCS TO OFFICIAL AND UNOFFICIAL)
     function saveSocialLinks() {
-      const category = document.getElementById('form-category').value;
-      
       for (let i = 0; i < 5; i++) {
         const ytElem = document.getElementById(`pk-yt-${i}`);
         const igElem = document.getElementById(`pk-ig-${i}`);
         
-        if (ytElem) datasets[category].players[i].yt = ytElem.value.trim();
-        if (igElem) datasets[category].players[i].ig = igElem.value.trim();
+        const ytVal = ytElem ? ytElem.value.trim() : '';
+        const igVal = igElem ? igElem.value.trim() : '';
+
+        datasets.official.players[i].yt = ytVal;
+        datasets.unofficial.players[i].yt = ytVal;
+
+        datasets.official.players[i].ig = igVal;
+        datasets.unofficial.players[i].ig = igVal;
       }
 
       saveState();
-      activeCategory = category;
-      switchCategory(category);
+      renderDashboard();
       toggleAdminModal();
-      alert("Player YouTube & Instagram links updated successfully!");
+      alert("Player YouTube & Instagram social links updated and synced across all categories!");
     }
 
     // Initialize Dashboard
