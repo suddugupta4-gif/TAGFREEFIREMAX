@@ -159,7 +159,7 @@
           <p class="text-[11px] sm:text-xs text-slate-200 mt-1.5 flex items-center gap-2 flex-wrap drop-shadow">
             <span><i class="fa-solid fa-shield-halved text-orange-400 mr-1"></i> Roster: TAG Esports</span>
             <span>•</span>
-            <span><i class="fa-solid fa-chart-line text-orange-400 mr-1"></i> All-Time Accumulative Team Analytics</span>
+            <span><i class="fa-solid fa-chart-line text-orange-400 mr-1"></i> Permanent All-Time Accumulative Team Analytics</span>
             <span id="live-stream-link-container" class="hidden">
               <span>•</span>
               <a id="banner-live-link" href="#" target="_blank" class="text-red-400 hover:text-red-300 underline font-semibold flex items-center gap-1">
@@ -169,7 +169,7 @@
           </p>
         </div>
 
-        <!-- Permanent 4 Overall Analysis Boxes (Never Erased, Adds Up Every Tournament) -->
+        <!-- Permanent 4 Overall Analysis Boxes (Never Erased, Preserved Across Tournaments) -->
         <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3 w-full lg:w-auto">
           <div class="glass-box px-3 py-2.5 rounded-xl text-center shadow-lg">
             <p class="text-[9px] text-slate-300 uppercase tracking-wider font-extrabold">Total Points (T.P)</p>
@@ -479,10 +479,10 @@
           </button>
         </div>
 
-        <!-- SECTION 4: Reset All Visitors to Default Public Data -->
+        <!-- SECTION 4: Clear Active Tournament Slots -->
         <div class="pt-2">
-          <button type="button" onclick="resetToGlobalDefaultData()" class="w-full bg-red-600/80 hover:bg-red-500 text-white font-bold py-2.5 px-4 rounded-xl text-xs transition-all flex items-center justify-center gap-2 shadow-lg cursor-pointer">
-            <i class="fa-solid fa-rotate-left"></i> Reset All Visitors to Default Public Data & History
+          <button type="button" onclick="clearActiveMatchSlots()" class="w-full bg-red-600/80 hover:bg-red-500 text-white font-bold py-2.5 px-4 rounded-xl text-xs transition-all flex items-center justify-center gap-2 shadow-lg cursor-pointer">
+            <i class="fa-solid fa-rotate-left"></i> Reset Active Matches to Zero (Preserves Permanent All-Time Stats)
           </button>
         </div>
 
@@ -525,59 +525,25 @@
       }
     });
 
-    // Default Global Tournament History Archives (Guarantees History visibility on all visitor devices)
+    // Default Global Tournament History Archives
     const defaultHistory = {
-      official: [
-        {
-          id: 1785410001,
-          tournamentName: "FREE FIRE MAX INDIA CHAMPIONSHIP 2026",
-          date: "2026-08-08",
-          data: {
-            tournamentName: "FREE FIRE MAX INDIA CHAMPIONSHIP 2026",
-            matches: [
-              { matchNum: 1, map: 'Bermuda', rank: 1, playerKills: [4, 5, 3, 2, 0], played: true },
-              { matchNum: 2, map: 'Kalahari', rank: 2, playerKills: [3, 2, 2, 1, 0], played: true },
-              { matchNum: 3, map: 'Alpine', rank: 1, playerKills: [5, 4, 3, 1, 0], played: true },
-              { matchNum: 4, map: 'Purgatory', rank: 3, playerKills: [2, 2, 1, 1, 0], played: true },
-              { matchNum: 5, map: 'Nexterra', rank: 1, playerKills: [4, 3, 2, 2, 0], played: true },
-              { matchNum: 6, map: 'Bermuda', rank: 2, playerKills: [3, 3, 2, 1, 0], played: true }
-            ]
-          }
-        }
-      ],
-      unofficial: [
-        {
-          id: 1785410002,
-          tournamentName: "COMMUNITY NIGHT SCRIMS #41",
-          date: "2026-08-08",
-          data: {
-            tournamentName: "COMMUNITY NIGHT SCRIMS #41",
-            matches: [
-              { matchNum: 1, map: 'Bermuda', rank: 1, playerKills: [5, 4, 3, 2, 0], played: true },
-              { matchNum: 2, map: 'Kalahari', rank: 1, playerKills: [4, 3, 3, 1, 0], played: true },
-              { matchNum: 3, map: 'Alpine', rank: 2, playerKills: [3, 2, 2, 1, 0], played: true },
-              { matchNum: 4, map: 'Purgatory', rank: 1, playerKills: [4, 4, 2, 2, 0], played: true },
-              { matchNum: 5, map: 'Nexterra', rank: 3, playerKills: [2, 2, 1, 1, 0], played: true },
-              { matchNum: 6, map: 'Bermuda', rank: 1, playerKills: [5, 3, 2, 2, 0], played: true }
-            ]
-          }
-        }
-      ]
+      official: [],
+      unofficial: []
     };
 
-    // Clean Default Datasets with Pre-populated Active Matches
+    // Clean Default Active Datasets (ZERO Data by Default)
     const defaultDatasets = {
       official: {
-        tournamentName: "OFFICIAL LEAGUE CHAMPIONSHIP 2026",
+        tournamentName: "OFFICIAL LEAGUE 2026",
         liveUrl: "",
         bgUrl: secondaryBannerPhotoUrl,
         matches: [
-          { matchNum: 1, map: 'Bermuda', rank: 1, playerKills: [4, 5, 3, 2, 0], played: true },
-          { matchNum: 2, map: 'Kalahari', rank: 2, playerKills: [3, 2, 2, 1, 0], played: true },
-          { matchNum: 3, map: 'Alpine', rank: 1, playerKills: [5, 4, 3, 1, 0], played: true },
-          { matchNum: 4, map: 'Purgatory', rank: 3, playerKills: [2, 2, 1, 1, 0], played: true },
-          { matchNum: 5, map: 'Nexterra', rank: 1, playerKills: [4, 3, 2, 2, 0], played: true },
-          { matchNum: 6, map: 'Bermuda', rank: 2, playerKills: [3, 3, 2, 1, 0], played: true }
+          { matchNum: 1, map: 'Bermuda', rank: 0, playerKills: [0, 0, 0, 0, 0], played: false },
+          { matchNum: 2, map: 'Kalahari', rank: 0, playerKills: [0, 0, 0, 0, 0], played: false },
+          { matchNum: 3, map: 'Alpine', rank: 0, playerKills: [0, 0, 0, 0, 0], played: false },
+          { matchNum: 4, map: 'Purgatory', rank: 0, playerKills: [0, 0, 0, 0, 0], played: false },
+          { matchNum: 5, map: 'Nexterra', rank: 0, playerKills: [0, 0, 0, 0, 0], played: false },
+          { matchNum: 6, map: 'Bermuda', rank: 0, playerKills: [0, 0, 0, 0, 0], played: false }
         ],
         players: [
           { name: 'TAG-KD', role: 'sniper/igl', photo: defaultPlayerPhotos[0], yt: 'https://youtube.com/@tagesports', ig: 'https://instagram.com/tagesports' },
@@ -592,12 +558,12 @@
         liveUrl: "",
         bgUrl: secondaryBannerPhotoUrl,
         matches: [
-          { matchNum: 1, map: 'Bermuda', rank: 1, playerKills: [5, 4, 3, 2, 0], played: true },
-          { matchNum: 2, map: 'Kalahari', rank: 1, playerKills: [4, 3, 3, 1, 0], played: true },
-          { matchNum: 3, map: 'Alpine', rank: 2, playerKills: [3, 2, 2, 1, 0], played: true },
-          { matchNum: 4, map: 'Purgatory', rank: 1, playerKills: [4, 4, 2, 2, 0], played: true },
-          { matchNum: 5, map: 'Nexterra', rank: 3, playerKills: [2, 2, 1, 1, 0], played: true },
-          { matchNum: 6, map: 'Bermuda', rank: 1, playerKills: [5, 3, 2, 2, 0], played: true }
+          { matchNum: 1, map: 'Bermuda', rank: 0, playerKills: [0, 0, 0, 0, 0], played: false },
+          { matchNum: 2, map: 'Kalahari', rank: 0, playerKills: [0, 0, 0, 0, 0], played: false },
+          { matchNum: 3, map: 'Alpine', rank: 0, playerKills: [0, 0, 0, 0, 0], played: false },
+          { matchNum: 4, map: 'Purgatory', rank: 0, playerKills: [0, 0, 0, 0, 0], played: false },
+          { matchNum: 5, map: 'Nexterra', rank: 0, playerKills: [0, 0, 0, 0, 0], played: false },
+          { matchNum: 6, map: 'Bermuda', rank: 0, playerKills: [0, 0, 0, 0, 0], played: false }
         ],
         players: [
           { name: 'TAG-KD', role: 'sniper/igl', photo: defaultPlayerPhotos[0], yt: 'https://youtube.com/@tagesports', ig: 'https://instagram.com/tagesports' },
@@ -609,26 +575,102 @@
       }
     };
 
-    // Load State with Global Fallbacks
+    // Default All-Time Cumulative Analytics Store (PERMANENT & NEVER ERASED ON NEW TOURNAMENT)
+    const defaultAllTimeStats = {
+      official: {
+        totalPts: 0,
+        matchesPlayed: 0,
+        killPts: 0,
+        booyahs: 0,
+        playerKills: [0, 0, 0, 0, 0],
+        mapStats: {}
+      },
+      unofficial: {
+        totalPts: 0,
+        matchesPlayed: 0,
+        killPts: 0,
+        booyahs: 0,
+        playerKills: [0, 0, 0, 0, 0],
+        mapStats: {}
+      }
+    };
+
+    // Load State with Fallbacks
     let datasets = JSON.parse(localStorage.getItem('tag_datasets')) || defaultDatasets;
     let tournamentHistory = JSON.parse(localStorage.getItem('tag_history')) || defaultHistory;
-
-    if (!tournamentHistory || !tournamentHistory.official || tournamentHistory.official.length === 0) {
-      tournamentHistory = JSON.parse(JSON.stringify(defaultHistory));
-    }
+    let allTimeStats = JSON.parse(localStorage.getItem('tag_all_time_stats')) || defaultAllTimeStats;
 
     let activeCategory = 'official';
+
+    // Recalculate Permanent All-Time Stats across History and Active Matches
+    function recalculateAllTimeStats() {
+      ['official', 'unofficial'].forEach(cat => {
+        let totalPts = 0;
+        let killPts = 0;
+        let matchesPlayed = 0;
+        let booyahs = 0;
+        let playerKills = [0, 0, 0, 0, 0];
+        let mapStats = {};
+
+        const addMatch = (m) => {
+          if (!m || !m.played) return;
+          matchesPlayed++;
+          const pp = placementMatrix[m.rank] || 0;
+          const kp = m.playerKills ? m.playerKills.reduce((a, b) => a + b, 0) : 0;
+          killPts += kp;
+          totalPts += (pp + kp);
+          if (m.rank === 1) booyahs++;
+
+          if (m.playerKills) {
+            m.playerKills.forEach((pk, idx) => {
+              playerKills[idx] += (pk || 0);
+            });
+          }
+
+          const mapName = (m.map && m.map.trim() !== "") ? m.map.trim() : "Bermuda";
+          if (!mapStats[mapName]) {
+            mapStats[mapName] = { matchesPlayed: 0, totalKills: 0, totalPts: 0 };
+          }
+          mapStats[mapName].matchesPlayed += 1;
+          mapStats[mapName].totalKills += kp;
+          mapStats[mapName].totalPts += (pp + kp);
+        };
+
+        // 1. Add all archived past tournaments from history
+        const historyList = tournamentHistory[cat] || [];
+        historyList.forEach(item => {
+          if (item.data && item.data.matches) {
+            item.data.matches.forEach(m => addMatch(m));
+          }
+        });
+
+        // 2. Add current active tournament matches
+        if (datasets[cat] && datasets[cat].matches) {
+          datasets[cat].matches.forEach(m => addMatch(m));
+        }
+
+        allTimeStats[cat] = {
+          totalPts,
+          matchesPlayed,
+          killPts,
+          booyahs,
+          playerKills,
+          mapStats
+        };
+      });
+    }
 
     // Cloud Sync Function - Pushes State Globally Across Devices
     async function saveState() {
       localStorage.setItem('tag_datasets', JSON.stringify(datasets));
       localStorage.setItem('tag_history', JSON.stringify(tournamentHistory));
+      localStorage.setItem('tag_all_time_stats', JSON.stringify(allTimeStats));
 
       try {
         await fetch(CLOUD_SYNC_URL, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ datasets, tournamentHistory })
+          body: JSON.stringify({ datasets, tournamentHistory, allTimeStats })
         });
       } catch (e) {
         console.log("Local state saved");
@@ -644,14 +686,16 @@
           if (cloudData && cloudData.datasets) {
             datasets = cloudData.datasets;
             tournamentHistory = cloudData.tournamentHistory || tournamentHistory;
+            if (cloudData.allTimeStats) allTimeStats = cloudData.allTimeStats;
             localStorage.setItem('tag_datasets', JSON.stringify(datasets));
             localStorage.setItem('tag_history', JSON.stringify(tournamentHistory));
+            localStorage.setItem('tag_all_time_stats', JSON.stringify(allTimeStats));
             renderDashboard();
             renderHistory();
           }
         }
       } catch (e) {
-        console.log("Cloud sync fallback to default datasets and history");
+        console.log("Cloud sync fallback");
       }
     }
 
@@ -676,6 +720,8 @@
 
     // Render Dashboard Stats & Progressive Matches
     function renderDashboard() {
+      recalculateAllTimeStats();
+
       const currentData = datasets[activeCategory];
       const categoryLabel = activeCategory === 'official' ? 'OFFICIAL OVERALL ANALYSIS' : 'UNOFFICIAL OVERALL ANALYSIS';
       document.getElementById('tourney-title').innerText = categoryLabel;
@@ -684,7 +730,7 @@
       const tourneyName = (currentData.tournamentName && currentData.tournamentName.trim() !== '') ? currentData.tournamentName.trim() : 'ACTIVE TOURNAMENT';
       document.getElementById('recent-breakdown-tourney-name').innerText = tourneyName;
 
-      // Handle Hero Banner Card Background Image with Global Fallback
+      // Handle Hero Banner Card Background Image
       const heroCard = document.getElementById('hero-banner-card');
       const activeBg = (currentData.bgUrl && currentData.bgUrl.trim() !== "") ? currentData.bgUrl : secondaryBannerPhotoUrl;
       heroCard.style.background = `linear-gradient(to right, rgba(15,21,34,0.60) 20%, rgba(15,21,34,0.40) 60%, rgba(15,21,34,0.60) 100%), url('${activeBg}') no-repeat center top / cover`;
@@ -721,93 +767,29 @@
         badgeCompleted.classList.add('hidden');
       }
 
-      // ALL-TIME CUMULATIVE STATS CALCULATIONS (Past History + Active Tournament)
-      let cumulativeTotalPts = 0;
-      let cumulativeKillPts = 0;
-      let cumulativeMatchesPlayed = 0;
-      let cumulativeBooyahs = 0;
-      let cumulativePlayerKills = [0, 0, 0, 0, 0];
-
-      // Map Accumulation Map Storage (Map Name -> { matchesPlayed, totalKills, totalPts })
-      const mapStatsAcc = {};
-
-      const processMatchForMapStats = (m) => {
-        if (!m.played) return;
-        const mapName = (m.map && m.map.trim() !== "") ? m.map.trim() : "Bermuda";
-        if (!mapStatsAcc[mapName]) {
-          mapStatsAcc[mapName] = { matchesPlayed: 0, totalKills: 0, totalPts: 0 };
-        }
-        const pp = placementMatrix[m.rank] || 0;
-        const kp = m.playerKills ? m.playerKills.reduce((a, b) => a + b, 0) : 0;
-
-        mapStatsAcc[mapName].matchesPlayed += 1;
-        mapStatsAcc[mapName].totalKills += kp;
-        mapStatsAcc[mapName].totalPts += (pp + kp);
-      };
-
-      // 1. Calculate from Past History Archives
-      const historyList = tournamentHistory[activeCategory] || [];
-      historyList.forEach(item => {
-        if (item.data && item.data.matches) {
-          item.data.matches.forEach(m => {
-            if (m.played) {
-              cumulativeMatchesPlayed++;
-              const pp = placementMatrix[m.rank] || 0;
-              const kp = m.playerKills ? m.playerKills.reduce((a, b) => a + b, 0) : 0;
-              cumulativeKillPts += kp;
-              cumulativeTotalPts += (pp + kp);
-              if (m.rank === 1) cumulativeBooyahs++;
-
-              if (m.playerKills) {
-                m.playerKills.forEach((pk, pIdx) => {
-                  cumulativePlayerKills[pIdx] += (pk || 0);
-                });
-              }
-
-              processMatchForMapStats(m);
-            }
-          });
-        }
-      });
-
-      // 2. Add Active Tournament Matches
-      playedMatches.forEach(m => {
-        cumulativeMatchesPlayed++;
-        const pp = placementMatrix[m.rank] || 0;
-        const kp = m.playerKills ? m.playerKills.reduce((a, b) => a + b, 0) : 0;
-        cumulativeKillPts += kp;
-        cumulativeTotalPts += (pp + kp);
-        if (m.rank === 1) cumulativeBooyahs++;
-
-        if (m.playerKills) {
-          m.playerKills.forEach((pk, pIdx) => {
-            cumulativePlayerKills[pIdx] += (pk || 0);
-          });
-        }
-
-        processMatchForMapStats(m);
-      });
-
-      // Compute Cumulative Overall K/D
-      const cumulativeOverallKD = calculateKD(cumulativeKillPts, cumulativeMatchesPlayed);
+      // Fetch PERMANENT ALL-TIME CUMULATIVE STATS (Never Lost on New Tournament)
+      const cumulative = allTimeStats[activeCategory] || { totalPts: 0, matchesPlayed: 0, killPts: 0, booyahs: 0, playerKills: [0, 0, 0, 0, 0], mapStats: {} };
+      const cumulativeOverallKD = calculateKD(cumulative.killPts, cumulative.matchesPlayed);
 
       // Render Permanent Overall Analysis 4 Boxes
-      document.getElementById('stat-total-pts').innerText = cumulativeTotalPts;
-      document.getElementById('stat-matches-played').innerText = cumulativeMatchesPlayed;
-      document.getElementById('stat-kill-pts').innerText = cumulativeKillPts;
+      document.getElementById('stat-total-pts').innerText = cumulative.totalPts;
+      document.getElementById('stat-matches-played').innerText = cumulative.matchesPlayed;
+      document.getElementById('stat-kill-pts').innerText = cumulative.killPts;
       document.getElementById('stat-overall-kd').innerText = cumulativeOverallKD;
 
       // Render MAPS ANALYSIS SECTION
       const mapsGrid = document.getElementById('maps-analysis-grid');
       mapsGrid.innerHTML = '';
 
+      const mapStatsAcc = cumulative.mapStats || {};
       const mapNames = Object.keys(mapStatsAcc);
+
       if (mapNames.length === 0) {
         mapsGrid.innerHTML = `
           <div class="col-span-full glass-card rounded-2xl p-6 text-center border border-dashed border-slate-700/60">
             <i class="fa-solid fa-map-location-dot text-2xl text-slate-400 mb-1"></i>
             <p class="text-xs font-bold text-slate-200">No Map Data Recorded Yet</p>
-            <p class="text-[10px] text-slate-400 mt-0.5">Map performance stats will appear here automatically as matches are played!</p>
+            <p class="text-[10px] text-slate-400 mt-0.5">Map performance stats will appear here automatically as match scores are saved!</p>
           </div>
         `;
       } else {
@@ -850,7 +832,7 @@
         });
       }
 
-      // Render Played Match Cards Only with Translucent Glass Style
+      // Render Played Match Cards Only for Active Tournament
       const matchesGrid = document.getElementById('matches-grid');
       matchesGrid.innerHTML = '';
 
@@ -905,13 +887,13 @@
         });
       }
 
-      // Render 5 Player Roster Cards with ALL-TIME CUMULATIVE KILLS & K/D
+      // Render 5 Player Roster Cards with PERMANENT CUMULATIVE KILLS & OVERALL K/D RATIO
       const playersGrid = document.getElementById('players-grid');
       playersGrid.innerHTML = '';
 
       currentData.players.forEach((p, pIdx) => {
-        const totalPlayerKills = cumulativePlayerKills[pIdx];
-        const playerKD = calculateKD(totalPlayerKills, cumulativeMatchesPlayed);
+        const totalPlayerKills = cumulative.playerKills ? cumulative.playerKills[pIdx] : 0;
+        const playerKD = calculateKD(totalPlayerKills, cumulative.matchesPlayed);
         const defaultPhoto = defaultPlayerPhotos[pIdx] || globalDefaultPhotoUrl;
         const avatarSrc = (p.photo && p.photo.trim() !== "") ? p.photo : defaultPhoto;
 
@@ -938,7 +920,7 @@
             ${p.ig && p.ig.trim() !== "" ? `<a href="${p.ig}" target="_blank" class="w-9 h-9 rounded-xl bg-pink-600/30 border border-pink-500/50 text-pink-400 hover:bg-pink-600 hover:text-white flex items-center justify-center text-base transition-all shadow-md"><i class="fa-brands fa-instagram"></i></a>` : '<span class="w-9 h-9 rounded-xl glass-box text-slate-500 flex items-center justify-center text-base"><i class="fa-brands fa-instagram"></i></span>'}
           </div>
 
-          <!-- Stats Box (Cumulative Total Kills & Overall K/D Ratio) -->
+          <!-- Stats Box (Permanent Cumulative Total Kills & Overall K/D Ratio) -->
           <div class="w-full grid grid-cols-2 gap-2 glass-box p-2.5 rounded-xl">
             <div>
               <p class="text-[9px] text-slate-300 uppercase tracking-wider font-bold">Total Kills</p>
@@ -951,7 +933,7 @@
           </div>
 
           <div class="w-full mt-2 text-[10px] text-slate-300 text-center border-t border-slate-700/50 pt-2">
-            <span>Total Matches: <strong class="text-slate-100">${cumulativeMatchesPlayed}</strong></span>
+            <span>Total Matches: <strong class="text-slate-100">${cumulative.matchesPlayed}</strong></span>
           </div>
         `;
         playersGrid.appendChild(card);
@@ -1117,7 +1099,7 @@
       });
     }
 
-    // Start New Tournament / Reset Active Tournament while PRESERVING Photos & Social Links!
+    // Start New Tournament / Reset Active Tournament while PERMANENTLY PRESERVING Photos, Social Links & ALL-TIME OVERALL ANALYSIS!
     function startNewTournament() {
       const category = document.getElementById('form-category').value;
       const title = prompt("Enter Title for New Tournament:", "NEW TOURNAMENT 2026");
@@ -1135,7 +1117,7 @@
           });
         }
 
-        // Reset active match slots
+        // Reset active 6 match slots to 0/6 unplayed for the new tournament
         datasets[category].tournamentName = title.trim();
         datasets[category].liveUrl = '';
         datasets[category].matches = [
@@ -1147,11 +1129,14 @@
           { matchNum: 6, map: 'Bermuda', rank: 0, playerKills: [0, 0, 0, 0, 0], played: false }
         ];
 
+        // Recalculate permanent all-time stats so they are NEVER erased or lost!
+        recalculateAllTimeStats();
+
         saveState();
         activeCategory = category;
         switchCategory(category);
         toggleAdminModal();
-        alert(`Started new tournament: "${title.trim()}". Active match slots reset, overall analysis & player all-time stats preserved!`);
+        alert(`Started new tournament: "${title.trim()}". Active match slots reset to 0/6, while all-time overall analysis & player stats are permanently preserved!`);
       }
     }
 
@@ -1237,6 +1222,9 @@
       datasets[category].matches[matchSlot].playerKills = playerKills;
       datasets[category].matches[matchSlot].played = true;
 
+      // Recalculate permanent all-time stats automatically
+      recalculateAllTimeStats();
+
       saveState();
       activeCategory = category;
       switchCategory(category);
@@ -1266,18 +1254,24 @@
       alert("Player YouTube & Instagram social links updated and synced across all categories!");
     }
 
-    // RESET FUNCTION: Reset Local Storage to Default Public Data
-    function resetToGlobalDefaultData() {
-      if (confirm("Reset local browser storage and restore global default tournament data & history for all visitors?")) {
-        localStorage.removeItem('tag_datasets');
-        localStorage.removeItem('tag_history');
-        datasets = JSON.parse(JSON.stringify(defaultDatasets));
-        tournamentHistory = JSON.parse(JSON.stringify(defaultHistory));
+    // RESET FUNCTION: Clear Active Tournament Match Slots while Preserving All-Time Stats
+    function clearActiveMatchSlots() {
+      if (confirm("Reset active tournament match slots to 0/6 unplayed? (All-Time Overall Analysis & Player Kills are permanently preserved!)")) {
+        const category = document.getElementById('form-category').value;
+        datasets[category].matches = [
+          { matchNum: 1, map: 'Bermuda', rank: 0, playerKills: [0, 0, 0, 0, 0], played: false },
+          { matchNum: 2, map: 'Kalahari', rank: 0, playerKills: [0, 0, 0, 0, 0], played: false },
+          { matchNum: 3, map: 'Alpine', rank: 0, playerKills: [0, 0, 0, 0, 0], played: false },
+          { matchNum: 4, map: 'Purgatory', rank: 0, playerKills: [0, 0, 0, 0, 0], played: false },
+          { matchNum: 5, map: 'Nexterra', rank: 0, playerKills: [0, 0, 0, 0, 0], played: false },
+          { matchNum: 6, map: 'Bermuda', rank: 0, playerKills: [0, 0, 0, 0, 0], played: false }
+        ];
+
+        recalculateAllTimeStats();
         saveState();
         renderDashboard();
-        renderHistory();
         toggleAdminModal();
-        alert("Reset complete! Default public tournament data & history restored.");
+        alert("Active match slots reset to 0/6. Permanent all-time overall analysis & player stats preserved!");
       }
     }
 
@@ -1303,6 +1297,7 @@
     });
 
     // Initialize Dashboard & Sync Cloud State Across All Devices
+    recalculateAllTimeStats();
     renderDashboard();
     renderHistory();
     syncCloudState();
