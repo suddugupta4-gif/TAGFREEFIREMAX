@@ -491,7 +491,7 @@
 
   <script>
     // App Version Key for Automatic Device Cache Invalidation
-    const APP_VERSION = "2026_V6_MAP_SELECT";
+    const APP_VERSION = "2026_V7_SOCIAL_PRESERVE";
 
     if (localStorage.getItem('tag_app_version') !== APP_VERSION) {
       localStorage.removeItem('tag_datasets');
@@ -519,7 +519,7 @@
     // CORS-enabled Global Real-Time Synchronization Endpoints
     const CLOUD_SYNC_ENDPOINTS = [
       "https://keyvalue.xyz/v1/tagfreefiremax_live_2026",
-      "https://kvdb.io/TAGFREEFIREMAX_KV_2026_ZERO_V6/live_state"
+      "https://kvdb.io/TAGFREEFIREMAX_KV_2026_ZERO_V7/live_state"
     ];
 
     // Helper for dynamic K/D calculation
@@ -543,7 +543,7 @@
       unofficial: []
     };
 
-    // Clean Default Active Datasets (ZERO Data by Default, No Hardcoded Social Links)
+    // Clean Default Active Datasets (ZERO Data by Default)
     const defaultDatasets = {
       official: {
         tournamentName: "OFFICIAL LEAGUE 2026",
@@ -1088,10 +1088,16 @@
       document.getElementById('history-detail-modal').classList.add('hidden');
     }
 
-    // Toggle Admin Modal
+    // Toggle Admin Modal & Always Auto-Fill Saved Inputs
     function toggleAdminModal() {
       const modal = document.getElementById('admin-modal');
       modal.classList.toggle('hidden');
+      if (!modal.classList.contains('hidden')) {
+        const panel = document.getElementById('admin-panel-step');
+        if (panel && !panel.classList.contains('hidden')) {
+          loadAdminFormForCategory();
+        }
+      }
     }
 
     // Verify Admin Password
@@ -1263,16 +1269,18 @@
     // SAVE SECTION 3: Player Social Links (AUTO-SYNCS TO OFFICIAL AND UNOFFICIAL)
     function saveSocialLinks() {
       for (let i = 0; i < 5; i++) {
-        const yt = document.getElementById(`pl-yt-${i}`).value.trim();
-        const ig = document.getElementById(`pl-ig-${i}`).value.trim();
+        const ytInput = document.getElementById(`pl-yt-${i}`);
+        const igInput = document.getElementById(`pl-ig-${i}`);
 
-        if (datasets.official.players[i]) {
-          datasets.official.players[i].yt = yt;
-          datasets.official.players[i].ig = ig;
+        if (ytInput) {
+          const ytVal = ytInput.value.trim();
+          datasets.official.players[i].yt = ytVal;
+          datasets.unofficial.players[i].yt = ytVal;
         }
-        if (datasets.unofficial.players[i]) {
-          datasets.unofficial.players[i].yt = yt;
-          datasets.unofficial.players[i].ig = ig;
+        if (igInput) {
+          const igVal = igInput.value.trim();
+          datasets.official.players[i].ig = igVal;
+          datasets.unofficial.players[i].ig = igVal;
         }
       }
 
