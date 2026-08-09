@@ -335,16 +335,15 @@
               </select>
             </div>
             <div>
-              <label class="block text-xs font-semibold text-slate-300 mb-1">Choose / Type Map</label>
-              <input type="text" id="form-map" list="map-options" placeholder="e.g. Bermuda, Kalahari..." class="w-full bg-slate-900 border border-slate-700 rounded-xl p-2.5 text-xs text-white focus:outline-none focus:border-orange-500 font-bold"/>
-              <datalist id="map-options">
-                <option value="Bermuda"></option>
-                <option value="Kalahari"></option>
-                <option value="Alpine"></option>
-                <option value="Purgatory"></option>
-                <option value="Nexterra"></option>
-                <option value="Solara"></option>
-              </datalist>
+              <label class="block text-xs font-semibold text-slate-300 mb-1">Select Map</label>
+              <select id="form-map" class="w-full bg-slate-900 border border-slate-700 rounded-xl p-2.5 text-xs text-white focus:outline-none focus:border-orange-500 font-bold">
+                <option value="Bermuda">Bermuda</option>
+                <option value="Kalahari">Kalahari</option>
+                <option value="Alpine">Alpine</option>
+                <option value="Purgatory">Purgatory</option>
+                <option value="Nexterra">Nexterra</option>
+                <option value="Solara">Solara</option>
+              </select>
             </div>
           </div>
 
@@ -492,7 +491,7 @@
 
   <script>
     // App Version Key for Automatic Device Cache Invalidation
-    const APP_VERSION = "2026_V5_LIVE_SYNC";
+    const APP_VERSION = "2026_V6_MAP_SELECT";
 
     if (localStorage.getItem('tag_app_version') !== APP_VERSION) {
       localStorage.removeItem('tag_datasets');
@@ -520,7 +519,7 @@
     // CORS-enabled Global Real-Time Synchronization Endpoints
     const CLOUD_SYNC_ENDPOINTS = [
       "https://keyvalue.xyz/v1/tagfreefiremax_live_2026",
-      "https://kvdb.io/TAGFREEFIREMAX_KV_2026_ZERO_V5/live_state"
+      "https://kvdb.io/TAGFREEFIREMAX_KV_2026_ZERO_V6/live_state"
     ];
 
     // Helper for dynamic K/D calculation
@@ -731,13 +730,19 @@
       document.getElementById('calculated-total-kills').innerText = sum;
     }
 
-    // Load selected match slot map name in Admin Form
+    // Load selected match slot map name in Admin Form Select Dropdown
     function loadMatchMapInForm() {
       const category = document.getElementById('form-category').value;
       const matchSlot = parseInt(document.getElementById('form-match').value) - 1;
       const matchObj = datasets[category].matches[matchSlot];
-      if (matchObj && matchObj.map) {
-        document.getElementById('form-map').value = matchObj.map;
+      
+      const defaultMaps = ['Bermuda', 'Kalahari', 'Alpine', 'Purgatory', 'Nexterra', 'Bermuda'];
+      const mapSelect = document.getElementById('form-map');
+      
+      if (matchObj && matchObj.map && matchObj.map.trim() !== '') {
+        mapSelect.value = matchObj.map;
+      } else {
+        mapSelect.value = defaultMaps[matchSlot] || 'Bermuda';
       }
     }
 
@@ -1213,7 +1218,7 @@
       const title = document.getElementById('form-title').value;
       const liveUrl = document.getElementById('form-live-url').value;
       const matchSlot = parseInt(document.getElementById('form-match').value) - 1;
-      const mapName = document.getElementById('form-map').value.trim() || 'Bermuda';
+      const mapName = document.getElementById('form-map').value || 'Bermuda';
       const rankVal = document.getElementById('form-rank').value;
 
       if (!rankVal || rankVal.trim() === "") {
