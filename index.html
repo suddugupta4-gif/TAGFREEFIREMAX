@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+  <meta name="referrer" content="no-referrer"/>
   <title>TAGFREEFIREMAX | Team Performance Dashboard</title>
 
   <!-- Instant High-Speed Parallel Image Preloading for All Devices & Mobile WebViews -->
@@ -145,7 +146,7 @@
   <main class="max-w-7xl mx-auto px-3 sm:px-6 mt-4 sm:mt-6">
     
     <!-- Hero Team Dashboard Card with Overall Cumulative Analysis -->
-    <div id="hero-banner-card" class="glass-card rounded-2xl p-4 sm:p-6 mb-6 border-l-4 border-l-orange-500 relative overflow-hidden transition-all shadow-2xl w-full" style="background: linear-gradient(to right, rgba(15,21,34,0.60) 20%, rgba(15,21,34,0.40) 60%, rgba(15,21,34,0.60) 100%), url('https://i.postimg.cc/25QpQnVm/tagfreefiremax-in-14050517-235223317.jpg') no-repeat center top / cover;">
+    <div id="hero-banner-card" class="glass-card rounded-2xl p-4 sm:p-6 mb-6 border-l-4 border-l-orange-500 relative overflow-hidden transition-all shadow-2xl w-full" style="background: linear-gradient(to right, rgba(15,21,34,0.60) 20%, rgba(15,21,34,0.40) 60%, rgba(15,21,34,0.60) 100%), url('https://i.postimg.cc/bJfy8zS4/file-00000000838081faaadc3e75a63637bf.png') no-repeat center top / cover;">
       
       <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 sm:gap-6 relative z-10">
         <div class="max-w-full">
@@ -342,16 +343,15 @@
               </select>
             </div>
             <div>
-              <label class="block text-xs font-semibold text-slate-300 mb-1">Choose / Type Map</label>
-              <input type="text" id="form-map" list="map-options" placeholder="e.g. Bermuda, Kalahari..." class="w-full bg-slate-900 border border-slate-700 rounded-xl p-2.5 text-xs text-white focus:outline-none focus:border-orange-500 font-bold"/>
-              <datalist id="map-options">
-                <option value="Bermuda"></option>
-                <option value="Kalahari"></option>
-                <option value="Alpine"></option>
-                <option value="Purgatory"></option>
-                <option value="Nexterra"></option>
-                <option value="Solara"></option>
-              </datalist>
+              <label class="block text-xs font-semibold text-slate-300 mb-1">Select Map</label>
+              <select id="form-map" class="w-full bg-slate-900 border border-slate-700 rounded-xl p-2.5 text-xs text-white focus:outline-none focus:border-orange-500 font-bold">
+                <option value="Bermuda">Bermuda</option>
+                <option value="Kalahari">Kalahari</option>
+                <option value="Alpine">Alpine</option>
+                <option value="Purgatory">Purgatory</option>
+                <option value="Nexterra">Nexterra</option>
+                <option value="Solara">Solara</option>
+              </select>
             </div>
           </div>
 
@@ -503,7 +503,7 @@
 
   <script>
     // App Version Key for Automatic Device Cache Reset
-    const APP_VERSION = "2026_V15_INSTANT_HIGH_SPEED_PHOTOS";
+    const APP_VERSION = "2026_V16_NO_REFERRER_SELECT_MAP";
 
     if (localStorage.getItem('tag_app_version') !== APP_VERSION) {
       localStorage.removeItem('tag_datasets');
@@ -576,7 +576,7 @@
       official: {
         tournamentName: "OFFICIAL LEAGUE 2026",
         liveUrl: "",
-        bgUrl: secondaryBannerPhotoUrl,
+        bgUrl: globalDefaultPhotoUrl,
         matches: [
           { matchNum: 1, map: 'Bermuda', rank: 0, playerKills: [0, 0, 0, 0, 0], played: false },
           { matchNum: 2, map: 'Kalahari', rank: 0, playerKills: [0, 0, 0, 0, 0], played: false },
@@ -596,7 +596,7 @@
       unofficial: {
         tournamentName: "COMMUNITY SCRIMS #42",
         liveUrl: "",
-        bgUrl: secondaryBannerPhotoUrl,
+        bgUrl: globalDefaultPhotoUrl,
         matches: [
           { matchNum: 1, map: 'Bermuda', rank: 0, playerKills: [0, 0, 0, 0, 0], played: false },
           { matchNum: 2, map: 'Kalahari', rank: 0, playerKills: [0, 0, 0, 0, 0], played: false },
