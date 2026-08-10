@@ -211,8 +211,8 @@
         <h3 class="text-base sm:text-lg font-bold text-white flex items-center gap-2 font-teko tracking-wider uppercase text-xl">
           <i class="fa-solid fa-gamepad text-orange-500"></i> Recent Match Breakdown (<span id="matches-count-label">0</span>/6 Matches)
         </h3>
-        <span class="text-[11px] text-orange-400 font-bold flex items-center gap-1">
-          <i class="fa-solid fa-trophy text-xs"></i> <span id="recent-breakdown-tourney-name">Active Tournament</span>
+        <span class="text-xs sm:text-sm font-bold text-orange-400 flex items-center gap-1.5 font-teko tracking-wide uppercase">
+          <i class="fa-solid fa-trophy text-orange-400 text-sm"></i> <span id="recent-breakdown-tourney-name" class="text-lg sm:text-2xl font-extrabold text-orange-400 font-teko tracking-wider uppercase drop-shadow-md">Active Tournament</span>
         </span>
       </div>
 
@@ -492,7 +492,7 @@
 
   <script>
     // App Version Key for Automatic Device Cache Reset
-    const APP_VERSION = "2026_V9_CLEAN_RESET_ALL_DATA";
+    const APP_VERSION = "2026_V10_PROMINENT_TITLES_MATCH_SLOTS_PERM_YT";
 
     if (localStorage.getItem('tag_app_version') !== APP_VERSION) {
       localStorage.removeItem('tag_datasets');
@@ -574,11 +574,11 @@
           { matchNum: 6, map: 'Bermuda', rank: 0, playerKills: [0, 0, 0, 0, 0], played: false }
         ],
         players: [
-          { name: 'TAG-KD', role: 'sniper/igl', photo: defaultPlayerPhotos[0], yt: 'https://youtube.com/@tagesports', ig: 'https://instagram.com/tagesports' },
-          { name: 'TAG SAHIL', role: 'rusher', photo: defaultPlayerPhotos[1], yt: 'https://youtube.com/@tagesports', ig: 'https://instagram.com/tagesports' },
-          { name: 'TAG SHOTO', role: 'rusher', photo: defaultPlayerPhotos[2], yt: 'https://youtube.com/@tagesports', ig: 'https://instagram.com/tagesports' },
-          { name: 'TAG WOLVIN', role: 'rusher', photo: defaultPlayerPhotos[3], yt: 'https://youtube.com/@tagesports', ig: 'https://instagram.com/tagesports' },
-          { name: 'TAG LOUIS', role: 'rusher', photo: defaultPlayerPhotos[4], yt: 'https://youtube.com/@tagesports', ig: 'https://instagram.com/tagesports' }
+          { name: 'TAG-KD', role: 'sniper/igl', photo: defaultPlayerPhotos[0], yt: 'https://youtube.com/@kd_ff?si=T02m3cZlUa13tf7s', ig: 'https://instagram.com/sujal_editxss' },
+          { name: 'TAG SAHIL', role: 'rusher', photo: defaultPlayerPhotos[1], yt: 'https://youtube.com/@sahiljat7?si=U8zUJXcUleS1r0dn', ig: 'https://instagram.com/sujal_editxss' },
+          { name: 'TAG SHOTO', role: 'rusher', photo: defaultPlayerPhotos[2], yt: 'https://youtube.com/@shotoff17?si=AW3uSevWdm95ZDGC', ig: 'https://instagram.com/sujal_editxss' },
+          { name: 'TAG WOLVIN', role: 'rusher', photo: defaultPlayerPhotos[3], yt: 'https://youtube.com/@wolvinnff?si=kBpRCJq35_zjkF3R', ig: 'https://instagram.com/sujal_editxss' },
+          { name: 'TAG LOUIS', role: 'rusher', photo: defaultPlayerPhotos[4], yt: 'https://youtube.com/@louisx25?si=947y7CsFmazX7kPZ', ig: 'https://instagram.com/sujal_editxss' }
         ]
       },
       unofficial: {
@@ -594,11 +594,11 @@
           { matchNum: 6, map: 'Bermuda', rank: 0, playerKills: [0, 0, 0, 0, 0], played: false }
         ],
         players: [
-          { name: 'TAG-KD', role: 'sniper/igl', photo: defaultPlayerPhotos[0], yt: 'https://youtube.com/@tagesports', ig: 'https://instagram.com/tagesports' },
-          { name: 'TAG SAHIL', role: 'rusher', photo: defaultPlayerPhotos[1], yt: 'https://youtube.com/@tagesports', ig: 'https://instagram.com/tagesports' },
-          { name: 'TAG SHOTO', role: 'rusher', photo: defaultPlayerPhotos[2], yt: 'https://youtube.com/@tagesports', ig: 'https://instagram.com/tagesports' },
-          { name: 'TAG WOLVIN', role: 'rusher', photo: defaultPlayerPhotos[3], yt: 'https://youtube.com/@tagesports', ig: 'https://instagram.com/tagesports' },
-          { name: 'TAG LOUIS', role: 'rusher', photo: defaultPlayerPhotos[4], yt: 'https://youtube.com/@tagesports', ig: 'https://instagram.com/tagesports' }
+          { name: 'TAG-KD', role: 'sniper/igl', photo: defaultPlayerPhotos[0], yt: 'https://youtube.com/@kd_ff?si=T02m3cZlUa13tf7s', ig: 'https://instagram.com/sujal_editxss' },
+          { name: 'TAG SAHIL', role: 'rusher', photo: defaultPlayerPhotos[1], yt: 'https://youtube.com/@sahiljat7?si=U8zUJXcUleS1r0dn', ig: 'https://instagram.com/sujal_editxss' },
+          { name: 'TAG SHOTO', role: 'rusher', photo: defaultPlayerPhotos[2], yt: 'https://youtube.com/@shotoff17?si=AW3uSevWdm95ZDGC', ig: 'https://instagram.com/sujal_editxss' },
+          { name: 'TAG WOLVIN', role: 'rusher', photo: defaultPlayerPhotos[3], yt: 'https://youtube.com/@wolvinnff?si=kBpRCJq35_zjkF3R', ig: 'https://instagram.com/sujal_editxss' },
+          { name: 'TAG LOUIS', role: 'rusher', photo: defaultPlayerPhotos[4], yt: 'https://youtube.com/@louisx25?si=947y7CsFmazX7kPZ', ig: 'https://instagram.com/sujal_editxss' }
         ]
       }
     };
@@ -860,68 +860,67 @@
         mapsGrid.appendChild(card);
       });
 
-      // Render Match Breakdown Grid (6 Match Slots)
+      // Render All 6 Match Cards for Active Tournament (Match 1, Match 2, Match 3, etc.)
       const matchesGrid = document.getElementById('matches-grid');
       matchesGrid.innerHTML = '';
-      let playedCount = 0;
 
       catData.matches.forEach((m, idx) => {
-        if (m.played) playedCount++;
-        const totalMatchKills = m.playerKills ? m.playerKills.reduce((a, b) => a + b, 0) : 0;
-        const placePts = placementMatrix[m.rank] || 0;
-        const totalMatchPts = m.played ? (placePts + totalMatchKills) : 0;
+        const placementPts = m.played ? (placementMatrix[m.rank] || 0) : 0;
+        const killPts = (m.played && m.playerKills) ? m.playerKills.reduce((a, b) => a + b, 0) : 0;
+        const matchTotalPts = m.played ? (placementPts + killPts) : 0;
+        const isBooyah = m.played && m.rank === 1;
 
-        const isBooyah = m.rank === 1;
         const card = document.createElement('div');
-        card.className = `glass-card rounded-xl p-3.5 border transition-all animate-row ${isBooyah ? 'border-amber-500/50 bg-amber-950/20' : 'border-slate-800'}`;
-        card.style.animationDelay = `${idx * 0.05}s`;
+        card.className = `glass-card rounded-2xl p-4 animate-row hover-lift ${isBooyah ? 'border-yellow-500/60 bg-yellow-950/20' : 'border-slate-800'}`;
+        card.style.animationDelay = `${idx * 0.04}s`;
 
         let playerKillPills = '';
         if (catData.players) {
           catData.players.forEach((p, pIdx) => {
-            const pk = (m.playerKills && m.playerKills[pIdx]) || 0;
+            const pk = (m.played && m.playerKills && m.playerKills[pIdx] !== undefined) ? m.playerKills[pIdx] : 0;
             playerKillPills += `
-              <div class="bg-slate-900/80 px-2 py-1 rounded-md border border-slate-800 flex items-center justify-between">
-                <span class="text-[10px] text-slate-300 font-semibold truncate max-w-[70px]">${p.name}</span>
-                <span class="text-[11px] font-bold text-orange-400 font-teko">${pk}</span>
+              <div class="bg-slate-900/90 px-2 py-1 rounded-lg border border-slate-800/80 flex items-center justify-between">
+                <span class="text-xs font-bold text-slate-200 truncate max-w-[80px]">${p.name}</span>
+                <span class="text-sm font-extrabold text-orange-400 font-teko">${pk}</span>
               </div>
             `;
           });
         }
 
         card.innerHTML = `
-          <div class="flex items-center justify-between mb-2">
-            <div class="flex items-center gap-1.5">
-              <span class="w-6 h-6 rounded-lg bg-orange-500/20 text-orange-400 font-bold text-xs flex items-center justify-center border border-orange-500/30">
+          <div class="flex items-center justify-between mb-3">
+            <div class="flex items-center gap-2">
+              <span class="w-7 h-7 rounded-lg bg-orange-500/20 text-orange-400 font-extrabold text-sm flex items-center justify-center border border-orange-500/30">
                 #${m.matchNum}
               </span>
-              <span class="text-xs font-bold text-white tracking-wide uppercase font-teko text-base">${m.map || 'Bermuda'}</span>
+              <span class="text-sm sm:text-base font-extrabold text-white tracking-wide uppercase font-teko">${m.map || 'Bermuda'}</span>
             </div>
-            ${m.played ? (isBooyah ? '<span class="text-[10px] font-bold text-yellow-400 bg-yellow-500/20 px-2 py-0.5 rounded-full border border-yellow-500/40 flex items-center gap-1"><i class="fa-solid fa-crown text-xs"></i> BOOYAH</span>' : `<span class="text-[10px] font-bold text-slate-300 bg-slate-800 px-2 py-0.5 rounded-full">Rank #${m.rank}</span>`) : '<span class="text-[10px] text-slate-500 bg-slate-900 px-2 py-0.5 rounded-full font-semibold">Not Played</span>'}
+            ${m.played ? (isBooyah ? '<span class="text-[10px] font-black bg-yellow-500/20 text-yellow-400 border border-yellow-500/40 px-2.5 py-0.5 rounded-md gold-glow"><i class="fa-solid fa-crown mr-1"></i>BOOYAH!</span>' : `<span class="text-[10px] font-bold bg-slate-800/80 text-slate-200 px-2.5 py-0.5 rounded-md">Rank #${m.rank}</span>`) : '<span class="text-[10px] font-semibold bg-slate-900/90 text-slate-400 px-2.5 py-0.5 rounded-md border border-slate-800">Not Played</span>'}
           </div>
 
-          <div class="grid grid-cols-3 gap-1.5 mb-2.5 text-center bg-slate-950/70 p-2 rounded-lg border border-slate-900">
-            <div>
-              <p class="text-[8px] text-slate-400 uppercase font-semibold">Rank Pts</p>
-              <p class="text-sm font-bold text-slate-200 font-teko">${m.played ? placePts : '-'}</p>
+          <div class="grid grid-cols-3 gap-2 text-center mb-3">
+            <div class="glass-box p-2 rounded-xl">
+              <p class="text-[9px] text-slate-300 uppercase font-bold">Placement PT</p>
+              <p class="text-base font-bold text-yellow-400 font-teko">${m.played ? placementPts : '-'}</p>
             </div>
-            <div>
-              <p class="text-[8px] text-slate-400 uppercase font-semibold">Kill Pts</p>
-              <p class="text-sm font-bold text-emerald-400 font-teko">${m.played ? totalMatchKills : '-'}</p>
+            <div class="glass-box p-2 rounded-xl">
+              <p class="text-[9px] text-slate-300 uppercase font-bold">Kill PT</p>
+              <p class="text-base font-bold text-emerald-400 font-teko">${m.played ? killPts : '-'}</p>
             </div>
-            <div>
-              <p class="text-[8px] text-slate-400 uppercase font-semibold">Total Pts</p>
-              <p class="text-sm font-bold text-orange-400 font-teko">${m.played ? totalMatchPts : '-'}</p>
+            <div class="glass-box p-2 rounded-xl">
+              <p class="text-[9px] text-slate-300 uppercase font-bold">Match Total</p>
+              <p class="text-base font-bold text-orange-400 font-teko">${m.played ? matchTotalPts : '-'}</p>
             </div>
           </div>
 
-          <div class="grid grid-cols-2 sm:grid-cols-3 gap-1">
+          <div class="grid grid-cols-2 sm:grid-cols-3 gap-1.5 pt-1">
             ${playerKillPills}
           </div>
         `;
         matchesGrid.appendChild(card);
       });
 
+      let playedCount = catData.matches.filter(m => m.played).length;
       document.getElementById('matches-count-label').innerText = playedCount;
 
       // Render Player Roster Cards
