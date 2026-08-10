@@ -483,6 +483,10 @@
 
         <!-- SECTION 4: Clear Active Tournament Slots -->
         <div class="pt-2">
+          <button onclick="saveState(); alert('Live state broadcasted globally to all devices!');" class="w-full bg-orange-600 hover:bg-orange-500 text-white font-bold py-2.5 px-4 rounded-xl text-xs transition-all flex items-center justify-center gap-2 shadow-lg cursor-pointer mb-2">
+            <i class="fa-solid fa-satellite-dish animate-pulse"></i> Broadcast Live Tournament State to Everyone Now
+          </button>
+
           <button type="button" onclick="clearActiveMatchSlots()" class="w-full bg-red-600/80 hover:bg-red-500 text-white font-bold py-2.5 px-4 rounded-xl text-xs transition-all flex items-center justify-center gap-2 shadow-lg cursor-pointer">
             <i class="fa-solid fa-rotate-left"></i> Reset Active Matches to Zero (Preserves Permanent All-Time Stats)
           </button>
@@ -494,7 +498,7 @@
 
   <script>
     // App Version Key for Automatic Device Cache Reset
-    const APP_VERSION = "2026_V13_INSTANT_NONBLOCKING_SYNC";
+    const APP_VERSION = "2026_V14_GLOBAL_REALTIME_SYNC";
 
     if (localStorage.getItem('tag_app_version') !== APP_VERSION) {
       localStorage.removeItem('tag_datasets');
@@ -521,8 +525,9 @@
 
     // CORS-enabled Global Real-Time Synchronization Endpoints
     const CLOUD_SYNC_ENDPOINTS = [
-      "https://keyvalue.xyz/v1/tagfreefiremax_live_2026",
-      "https://kvdb.io/TAGFREEFIREMAX_KV_2026_ZERO_V7/live_state"
+      "https://jsonblob.com/api/jsonBlob/1322163938000000000",
+      "https://kvdb.io/TAGFREEFIREMAX_KV_2026_ZERO_V7/live_state",
+      "https://keyvalue.xyz/v1/tagfreefiremax_live_2026"
     ];
 
     // Local BroadcastChannel for instant cross-tab / cross-window sync
@@ -631,6 +636,7 @@
     let allTimeStats = JSON.parse(localStorage.getItem('tag_all_time_stats')) || defaultAllTimeStats;
 
     let activeCategory = 'official';
+    let lastLocalUpdate = Date.now();
 
     // Recalculate Permanent All-Time Stats across History and Active Matches
     function recalculateAllTimeStats() {
@@ -692,24 +698,31 @@
 
     // Save State Locally and Broadcast Globally to All Visitors
     function saveState() {
+      lastLocalUpdate = Date.now();
       recalculateAllTimeStats();
       localStorage.setItem('tag_datasets', JSON.stringify(datasets));
       localStorage.setItem('tag_history', JSON.stringify(tournamentHistory));
       localStorage.setItem('tag_all_time_stats', JSON.stringify(allTimeStats));
 
-      const payloadData = { datasets, tournamentHistory, allTimeStats, updatedAt: Date.now() };
+      const payloadData = { datasets, tournamentHistory, allTimeStats, updatedAt: lastLocalUpdate };
       if (broadcastSync) {
         try { broadcastSync.postMessage(payloadData); } catch (e) {}
       }
 
-      // Fire-and-forget background cloud sync (never blocks UI/resets)
+      // Universal PUT/POST REST cloud sync across endpoints
       const payload = JSON.stringify(payloadData);
       CLOUD_SYNC_ENDPOINTS.forEach(url => {
         fetch(url, {
-          method: "POST",
+          method: "PUT",
           headers: { "Content-Type": "application/json" },
           body: payload
-        }).catch(e => console.log("Cloud sync save error for:", url));
+        }).catch(() => {
+          fetch(url, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: payload
+          }).catch(e => console.log("Cloud sync save error for:", url));
+        });
       });
     }
 
