@@ -494,7 +494,7 @@
 
   <script>
     // App Version Key for Automatic Device Cache Reset
-    const APP_VERSION = "2026_V11_BG_GLASS_PLAYED_MATCHES_SYNC";
+    const APP_VERSION = "2026_V13_INSTANT_NONBLOCKING_SYNC";
 
     if (localStorage.getItem('tag_app_version') !== APP_VERSION) {
       localStorage.removeItem('tag_datasets');
@@ -557,57 +557,23 @@
 
     // Default Global Tournament History Archives
     const defaultHistory = {
-      official: [
-        {
-          id: 1785410001,
-          tournamentName: "FREE FIRE MAX INDIA CHAMPIONSHIP 2026",
-          date: "2026-08-08",
-          data: {
-            tournamentName: "FREE FIRE MAX INDIA CHAMPIONSHIP 2026",
-            matches: [
-              { matchNum: 1, map: 'Bermuda', rank: 1, playerKills: [4, 5, 3, 2, 0], played: true },
-              { matchNum: 2, map: 'Kalahari', rank: 2, playerKills: [3, 2, 2, 1, 0], played: true },
-              { matchNum: 3, map: 'Alpine', rank: 1, playerKills: [5, 4, 3, 1, 0], played: true },
-              { matchNum: 4, map: 'Purgatory', rank: 3, playerKills: [2, 2, 1, 1, 0], played: true },
-              { matchNum: 5, map: 'Nexterra', rank: 1, playerKills: [4, 3, 2, 2, 0], played: true },
-              { matchNum: 6, map: 'Bermuda', rank: 2, playerKills: [3, 3, 2, 1, 0], played: true }
-            ]
-          }
-        }
-      ],
-      unofficial: [
-        {
-          id: 1785410002,
-          tournamentName: "COMMUNITY NIGHT SCRIMS #41",
-          date: "2026-08-08",
-          data: {
-            tournamentName: "COMMUNITY NIGHT SCRIMS #41",
-            matches: [
-              { matchNum: 1, map: 'Bermuda', rank: 1, playerKills: [5, 4, 3, 2, 0], played: true },
-              { matchNum: 2, map: 'Kalahari', rank: 1, playerKills: [4, 3, 3, 1, 0], played: true },
-              { matchNum: 3, map: 'Alpine', rank: 2, playerKills: [3, 2, 2, 1, 0], played: true },
-              { matchNum: 4, map: 'Purgatory', rank: 1, playerKills: [4, 4, 2, 2, 0], played: true },
-              { matchNum: 5, map: 'Nexterra', rank: 3, playerKills: [2, 2, 1, 1, 0], played: true },
-              { matchNum: 6, map: 'Bermuda', rank: 1, playerKills: [5, 3, 2, 2, 0], played: true }
-            ]
-          }
-        }
-      ]
+      official: [],
+      unofficial: []
     };
 
     // Clean Default Active Datasets
     const defaultDatasets = {
       official: {
-        tournamentName: "OFFICIAL LEAGUE CHAMPIONSHIP 2026",
+        tournamentName: "OFFICIAL LEAGUE 2026",
         liveUrl: "",
         bgUrl: secondaryBannerPhotoUrl,
         matches: [
-          { matchNum: 1, map: 'Bermuda', rank: 1, playerKills: [4, 5, 3, 2, 0], played: true },
-          { matchNum: 2, map: 'Kalahari', rank: 2, playerKills: [3, 2, 2, 1, 0], played: true },
-          { matchNum: 3, map: 'Alpine', rank: 1, playerKills: [5, 4, 3, 1, 0], played: true },
-          { matchNum: 4, map: 'Purgatory', rank: 3, playerKills: [2, 2, 1, 1, 0], played: true },
-          { matchNum: 5, map: 'Nexterra', rank: 1, playerKills: [4, 3, 2, 2, 0], played: true },
-          { matchNum: 6, map: 'Bermuda', rank: 2, playerKills: [3, 3, 2, 1, 0], played: true }
+          { matchNum: 1, map: 'Bermuda', rank: 0, playerKills: [0, 0, 0, 0, 0], played: false },
+          { matchNum: 2, map: 'Kalahari', rank: 0, playerKills: [0, 0, 0, 0, 0], played: false },
+          { matchNum: 3, map: 'Alpine', rank: 0, playerKills: [0, 0, 0, 0, 0], played: false },
+          { matchNum: 4, map: 'Purgatory', rank: 0, playerKills: [0, 0, 0, 0, 0], played: false },
+          { matchNum: 5, map: 'Nexterra', rank: 0, playerKills: [0, 0, 0, 0, 0], played: false },
+          { matchNum: 6, map: 'Bermuda', rank: 0, playerKills: [0, 0, 0, 0, 0], played: false }
         ],
         players: [
           { name: 'TAG-KD', role: 'sniper/igl', photo: defaultPlayerPhotos[0], yt: 'https://youtube.com/@kd_ff?si=T02m3cZlUa13tf7s', ig: 'https://instagram.com/sujal_editxss' },
@@ -622,12 +588,12 @@
         liveUrl: "",
         bgUrl: secondaryBannerPhotoUrl,
         matches: [
-          { matchNum: 1, map: 'Bermuda', rank: 1, playerKills: [3, 4, 2, 2, 0], played: true },
-          { matchNum: 2, map: 'Kalahari', rank: 2, playerKills: [2, 3, 1, 1, 0], played: true },
-          { matchNum: 3, map: 'Alpine', rank: 1, playerKills: [4, 3, 2, 1, 0], played: true },
-          { matchNum: 4, map: 'Purgatory', rank: 2, playerKills: [3, 2, 1, 1, 0], played: true },
-          { matchNum: 5, map: 'Nexterra', rank: 1, playerKills: [4, 4, 2, 2, 0], played: true },
-          { matchNum: 6, map: 'Bermuda', rank: 3, playerKills: [2, 2, 1, 0, 0], played: true }
+          { matchNum: 1, map: 'Bermuda', rank: 0, playerKills: [0, 0, 0, 0, 0], played: false },
+          { matchNum: 2, map: 'Kalahari', rank: 0, playerKills: [0, 0, 0, 0, 0], played: false },
+          { matchNum: 3, map: 'Alpine', rank: 0, playerKills: [0, 0, 0, 0, 0], played: false },
+          { matchNum: 4, map: 'Purgatory', rank: 0, playerKills: [0, 0, 0, 0, 0], played: false },
+          { matchNum: 5, map: 'Nexterra', rank: 0, playerKills: [0, 0, 0, 0, 0], played: false },
+          { matchNum: 6, map: 'Bermuda', rank: 0, playerKills: [0, 0, 0, 0, 0], played: false }
         ],
         players: [
           { name: 'TAG-KD', role: 'sniper/igl', photo: defaultPlayerPhotos[0], yt: 'https://youtube.com/@kd_ff?si=T02m3cZlUa13tf7s', ig: 'https://instagram.com/sujal_editxss' },
@@ -725,7 +691,7 @@
     }
 
     // Save State Locally and Broadcast Globally to All Visitors
-    async function saveState() {
+    function saveState() {
       recalculateAllTimeStats();
       localStorage.setItem('tag_datasets', JSON.stringify(datasets));
       localStorage.setItem('tag_history', JSON.stringify(tournamentHistory));
@@ -736,19 +702,15 @@
         try { broadcastSync.postMessage(payloadData); } catch (e) {}
       }
 
+      // Fire-and-forget background cloud sync (never blocks UI/resets)
       const payload = JSON.stringify(payloadData);
-
-      for (const url of CLOUD_SYNC_ENDPOINTS) {
-        try {
-          await fetch(url, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: payload
-          });
-        } catch (e) {
-          console.log("Cloud sync save error for:", url);
-        }
-      }
+      CLOUD_SYNC_ENDPOINTS.forEach(url => {
+        fetch(url, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: payload
+        }).catch(e => console.log("Cloud sync save error for:", url));
+      });
     }
 
     // Fetch Latest Global State from Cloud on Load & Background Auto-Polling
@@ -1083,8 +1045,8 @@
                 <span class="text-slate-300 font-semibold">${m.played ? `Rank #${m.rank}` : 'Not Played'}</span>
               </div>
               <div class="flex items-center gap-2 font-teko text-sm">
-                <span class="text-slate-400">Rank: ${m.played ? pp : 0}</span>
-                <span class="text-emerald-400">Kills: ${m.played ? kp : 0}</span>
+                <span class="text-slate-400">Rank: ${pp}</span>
+                <span class="text-emerald-400">Kills: ${kp}</span>
                 <span class="text-orange-400 font-bold">Total: ${tp}</span>
               </div>
             </div>
@@ -1186,8 +1148,8 @@
           datasets[cat].players.forEach((p, i) => {
             const ytVal = document.getElementById(`pl-yt-${i}`).value.trim();
             const igVal = document.getElementById(`pl-ig-${i}`).value.trim();
-            p.yt = ytVal;
-            p.ig = igVal;
+            if (ytVal !== '') p.yt = ytVal;
+            if (igVal !== '') p.ig = igVal;
           });
         }
       });
@@ -1272,11 +1234,18 @@
         }
       }
 
-      const preservedPlayers = currentData.players ? JSON.parse(JSON.stringify(currentData.players)) : defaultDatasets[category].players;
+      const preservedPlayers = (currentData.players && currentData.players.length === 5) ? currentData.players.map((p, idx) => ({
+        name: p.name || defaultDatasets[category].players[idx].name,
+        role: p.role || defaultDatasets[category].players[idx].role,
+        photo: p.photo || defaultDatasets[category].players[idx].photo,
+        yt: p.yt || defaultDatasets[category].players[idx].yt,
+        ig: p.ig || defaultDatasets[category].players[idx].ig
+      })) : defaultDatasets[category].players;
+
       const preservedBgUrl = currentData.bgUrl || secondaryBannerPhotoUrl;
 
       datasets[category] = {
-        tournamentName: category === 'official' ? "NEW OFFICIAL LEAGUE" : "NEW COMMUNITY SCRIMS",
+        tournamentName: category === 'official' ? "OFFICIAL LEAGUE 2026" : "COMMUNITY SCRIMS #42",
         liveUrl: "",
         bgUrl: preservedBgUrl,
         matches: [
@@ -1293,7 +1262,7 @@
       saveState();
       renderDashboard();
       renderHistory();
-      alert("New tournament initialized! Active matches reset while preserving history and permanent overall stats.");
+      alert("New tournament initialized! Active match scores and kills reset to zero while preserving player photos and social links.");
     }
 
     function clearActiveMatchSlots() {
