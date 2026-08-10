@@ -26,18 +26,20 @@
     .ff-gradient { background: linear-gradient(135deg, #ff3b00 0%, #ff8800 100%); }
     .ff-gradient-hover:hover { background: linear-gradient(135deg, #e03400 0%, #e67a00 100%); }
     
-    /* Glassmorphism Styling */
+    /* Enhanced Glassmorphism & Translucent Styling */
     .glass-card {
-      background: rgba(15, 21, 34, 0.72);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(15, 21, 34, 0.65) !important;
+      backdrop-filter: blur(16px) !important;
+      -webkit-backdrop-filter: blur(16px) !important;
+      border: 1px solid rgba(255, 255, 255, 0.14) !important;
+      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.45);
     }
 
     .glass-box {
-      background: rgba(8, 11, 17, 0.65);
-      backdrop-filter: blur(8px);
-      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(8, 11, 17, 0.70) !important;
+      backdrop-filter: blur(10px) !important;
+      -webkit-backdrop-filter: blur(10px) !important;
+      border: 1px solid rgba(255, 255, 255, 0.10) !important;
     }
 
     .ff-card { background: #0f1522; border: 1px solid #1e293b; }
@@ -84,7 +86,7 @@
 
   <!-- Fixed 3D Parallax Background Container -->
   <div class="fixed inset-0 z-[-1] pointer-events-none overflow-hidden bg-[#080b11]">
-    <div id="global-bg-layer" class="absolute inset-0 bg-cover bg-center transition-transform duration-75 ease-out opacity-0 transition-opacity duration-500" style="background-image: linear-gradient(to bottom, rgba(8, 11, 17, 0.72) 0%, rgba(8, 11, 17, 0.86) 50%, rgba(8, 11, 17, 0.95) 100%), url('https://i.postimg.cc/bJfy8zS4/file-00000000838081faaadc3e75a63637bf.png');"></div>
+    <div id="global-bg-layer" class="absolute inset-0 bg-cover bg-center transition-transform duration-75 ease-out opacity-90 transition-opacity duration-500" style="background-image: linear-gradient(to bottom, rgba(8, 11, 17, 0.72) 0%, rgba(8, 11, 17, 0.86) 50%, rgba(8, 11, 17, 0.95) 100%), url('https://i.postimg.cc/bJfy8zS4/file-00000000838081faaadc3e75a63637bf.png');"></div>
   </div>
 
   <!-- Header / Navbar with Glass Effect -->
@@ -492,7 +494,7 @@
 
   <script>
     // App Version Key for Automatic Device Cache Reset
-    const APP_VERSION = "2026_V10_PROMINENT_TITLES_MATCH_SLOTS_PERM_YT";
+    const APP_VERSION = "2026_V11_BG_GLASS_PLAYED_MATCHES_SYNC";
 
     if (localStorage.getItem('tag_app_version') !== APP_VERSION) {
       localStorage.removeItem('tag_datasets');
@@ -555,23 +557,57 @@
 
     // Default Global Tournament History Archives
     const defaultHistory = {
-      official: [],
-      unofficial: []
+      official: [
+        {
+          id: 1785410001,
+          tournamentName: "FREE FIRE MAX INDIA CHAMPIONSHIP 2026",
+          date: "2026-08-08",
+          data: {
+            tournamentName: "FREE FIRE MAX INDIA CHAMPIONSHIP 2026",
+            matches: [
+              { matchNum: 1, map: 'Bermuda', rank: 1, playerKills: [4, 5, 3, 2, 0], played: true },
+              { matchNum: 2, map: 'Kalahari', rank: 2, playerKills: [3, 2, 2, 1, 0], played: true },
+              { matchNum: 3, map: 'Alpine', rank: 1, playerKills: [5, 4, 3, 1, 0], played: true },
+              { matchNum: 4, map: 'Purgatory', rank: 3, playerKills: [2, 2, 1, 1, 0], played: true },
+              { matchNum: 5, map: 'Nexterra', rank: 1, playerKills: [4, 3, 2, 2, 0], played: true },
+              { matchNum: 6, map: 'Bermuda', rank: 2, playerKills: [3, 3, 2, 1, 0], played: true }
+            ]
+          }
+        }
+      ],
+      unofficial: [
+        {
+          id: 1785410002,
+          tournamentName: "COMMUNITY NIGHT SCRIMS #41",
+          date: "2026-08-08",
+          data: {
+            tournamentName: "COMMUNITY NIGHT SCRIMS #41",
+            matches: [
+              { matchNum: 1, map: 'Bermuda', rank: 1, playerKills: [5, 4, 3, 2, 0], played: true },
+              { matchNum: 2, map: 'Kalahari', rank: 1, playerKills: [4, 3, 3, 1, 0], played: true },
+              { matchNum: 3, map: 'Alpine', rank: 2, playerKills: [3, 2, 2, 1, 0], played: true },
+              { matchNum: 4, map: 'Purgatory', rank: 1, playerKills: [4, 4, 2, 2, 0], played: true },
+              { matchNum: 5, map: 'Nexterra', rank: 3, playerKills: [2, 2, 1, 1, 0], played: true },
+              { matchNum: 6, map: 'Bermuda', rank: 1, playerKills: [5, 3, 2, 2, 0], played: true }
+            ]
+          }
+        }
+      ]
     };
 
     // Clean Default Active Datasets
     const defaultDatasets = {
       official: {
-        tournamentName: "OFFICIAL LEAGUE 2026",
+        tournamentName: "OFFICIAL LEAGUE CHAMPIONSHIP 2026",
         liveUrl: "",
         bgUrl: secondaryBannerPhotoUrl,
         matches: [
-          { matchNum: 1, map: 'Bermuda', rank: 0, playerKills: [0, 0, 0, 0, 0], played: false },
-          { matchNum: 2, map: 'Kalahari', rank: 0, playerKills: [0, 0, 0, 0, 0], played: false },
-          { matchNum: 3, map: 'Alpine', rank: 0, playerKills: [0, 0, 0, 0, 0], played: false },
-          { matchNum: 4, map: 'Purgatory', rank: 0, playerKills: [0, 0, 0, 0, 0], played: false },
-          { matchNum: 5, map: 'Nexterra', rank: 0, playerKills: [0, 0, 0, 0, 0], played: false },
-          { matchNum: 6, map: 'Bermuda', rank: 0, playerKills: [0, 0, 0, 0, 0], played: false }
+          { matchNum: 1, map: 'Bermuda', rank: 1, playerKills: [4, 5, 3, 2, 0], played: true },
+          { matchNum: 2, map: 'Kalahari', rank: 2, playerKills: [3, 2, 2, 1, 0], played: true },
+          { matchNum: 3, map: 'Alpine', rank: 1, playerKills: [5, 4, 3, 1, 0], played: true },
+          { matchNum: 4, map: 'Purgatory', rank: 3, playerKills: [2, 2, 1, 1, 0], played: true },
+          { matchNum: 5, map: 'Nexterra', rank: 1, playerKills: [4, 3, 2, 2, 0], played: true },
+          { matchNum: 6, map: 'Bermuda', rank: 2, playerKills: [3, 3, 2, 1, 0], played: true }
         ],
         players: [
           { name: 'TAG-KD', role: 'sniper/igl', photo: defaultPlayerPhotos[0], yt: 'https://youtube.com/@kd_ff?si=T02m3cZlUa13tf7s', ig: 'https://instagram.com/sujal_editxss' },
@@ -586,12 +622,12 @@
         liveUrl: "",
         bgUrl: secondaryBannerPhotoUrl,
         matches: [
-          { matchNum: 1, map: 'Bermuda', rank: 0, playerKills: [0, 0, 0, 0, 0], played: false },
-          { matchNum: 2, map: 'Kalahari', rank: 0, playerKills: [0, 0, 0, 0, 0], played: false },
-          { matchNum: 3, map: 'Alpine', rank: 0, playerKills: [0, 0, 0, 0, 0], played: false },
-          { matchNum: 4, map: 'Purgatory', rank: 0, playerKills: [0, 0, 0, 0, 0], played: false },
-          { matchNum: 5, map: 'Nexterra', rank: 0, playerKills: [0, 0, 0, 0, 0], played: false },
-          { matchNum: 6, map: 'Bermuda', rank: 0, playerKills: [0, 0, 0, 0, 0], played: false }
+          { matchNum: 1, map: 'Bermuda', rank: 1, playerKills: [3, 4, 2, 2, 0], played: true },
+          { matchNum: 2, map: 'Kalahari', rank: 2, playerKills: [2, 3, 1, 1, 0], played: true },
+          { matchNum: 3, map: 'Alpine', rank: 1, playerKills: [4, 3, 2, 1, 0], played: true },
+          { matchNum: 4, map: 'Purgatory', rank: 2, playerKills: [3, 2, 1, 1, 0], played: true },
+          { matchNum: 5, map: 'Nexterra', rank: 1, playerKills: [4, 4, 2, 2, 0], played: true },
+          { matchNum: 6, map: 'Bermuda', rank: 3, playerKills: [2, 2, 1, 0, 0], played: true }
         ],
         players: [
           { name: 'TAG-KD', role: 'sniper/igl', photo: defaultPlayerPhotos[0], yt: 'https://youtube.com/@kd_ff?si=T02m3cZlUa13tf7s', ig: 'https://instagram.com/sujal_editxss' },
@@ -860,67 +896,79 @@
         mapsGrid.appendChild(card);
       });
 
-      // Render All 6 Match Cards for Active Tournament (Match 1, Match 2, Match 3, etc.)
+      // Render Played Matches Only for Active Tournament (Match 1, Match 2, etc.)
       const matchesGrid = document.getElementById('matches-grid');
       matchesGrid.innerHTML = '';
 
-      catData.matches.forEach((m, idx) => {
-        const placementPts = m.played ? (placementMatrix[m.rank] || 0) : 0;
-        const killPts = (m.played && m.playerKills) ? m.playerKills.reduce((a, b) => a + b, 0) : 0;
-        const matchTotalPts = m.played ? (placementPts + killPts) : 0;
-        const isBooyah = m.played && m.rank === 1;
+      const playedMatches = catData.matches ? catData.matches.filter(m => m.played) : [];
 
-        const card = document.createElement('div');
-        card.className = `glass-card rounded-2xl p-4 animate-row hover-lift ${isBooyah ? 'border-yellow-500/60 bg-yellow-950/20' : 'border-slate-800'}`;
-        card.style.animationDelay = `${idx * 0.04}s`;
-
-        let playerKillPills = '';
-        if (catData.players) {
-          catData.players.forEach((p, pIdx) => {
-            const pk = (m.played && m.playerKills && m.playerKills[pIdx] !== undefined) ? m.playerKills[pIdx] : 0;
-            playerKillPills += `
-              <div class="bg-slate-900/90 px-2 py-1 rounded-lg border border-slate-800/80 flex items-center justify-between">
-                <span class="text-xs font-bold text-slate-200 truncate max-w-[80px]">${p.name}</span>
-                <span class="text-sm font-extrabold text-orange-400 font-teko">${pk}</span>
-              </div>
-            `;
-          });
-        }
-
-        card.innerHTML = `
-          <div class="flex items-center justify-between mb-3">
-            <div class="flex items-center gap-2">
-              <span class="w-7 h-7 rounded-lg bg-orange-500/20 text-orange-400 font-extrabold text-sm flex items-center justify-center border border-orange-500/30">
-                #${m.matchNum}
-              </span>
-              <span class="text-sm sm:text-base font-extrabold text-white tracking-wide uppercase font-teko">${m.map || 'Bermuda'}</span>
-            </div>
-            ${m.played ? (isBooyah ? '<span class="text-[10px] font-black bg-yellow-500/20 text-yellow-400 border border-yellow-500/40 px-2.5 py-0.5 rounded-md gold-glow"><i class="fa-solid fa-crown mr-1"></i>BOOYAH!</span>' : `<span class="text-[10px] font-bold bg-slate-800/80 text-slate-200 px-2.5 py-0.5 rounded-md">Rank #${m.rank}</span>`) : '<span class="text-[10px] font-semibold bg-slate-900/90 text-slate-400 px-2.5 py-0.5 rounded-md border border-slate-800">Not Played</span>'}
-          </div>
-
-          <div class="grid grid-cols-3 gap-2 text-center mb-3">
-            <div class="glass-box p-2 rounded-xl">
-              <p class="text-[9px] text-slate-300 uppercase font-bold">Placement PT</p>
-              <p class="text-base font-bold text-yellow-400 font-teko">${m.played ? placementPts : '-'}</p>
-            </div>
-            <div class="glass-box p-2 rounded-xl">
-              <p class="text-[9px] text-slate-300 uppercase font-bold">Kill PT</p>
-              <p class="text-base font-bold text-emerald-400 font-teko">${m.played ? killPts : '-'}</p>
-            </div>
-            <div class="glass-box p-2 rounded-xl">
-              <p class="text-[9px] text-slate-300 uppercase font-bold">Match Total</p>
-              <p class="text-base font-bold text-orange-400 font-teko">${m.played ? matchTotalPts : '-'}</p>
-            </div>
-          </div>
-
-          <div class="grid grid-cols-2 sm:grid-cols-3 gap-1.5 pt-1">
-            ${playerKillPills}
+      if (playedMatches.length === 0) {
+        matchesGrid.innerHTML = `
+          <div class="col-span-full glass-card rounded-2xl p-8 text-center border border-dashed border-slate-700/60">
+            <i class="fa-solid fa-gamepad text-3xl text-orange-500 mb-2"></i>
+            <p class="text-base font-bold text-slate-200">No Active Matches Recorded Yet</p>
+            <p class="text-xs text-slate-400 mt-1">Submit match results in Admin panel to add Match 1, Match 2, Match 3 scores.</p>
           </div>
         `;
-        matchesGrid.appendChild(card);
-      });
+      } else {
+        playedMatches.forEach((m, idx) => {
+          const placementPts = placementMatrix[m.rank] || 0;
+          const killPts = m.playerKills ? m.playerKills.reduce((a, b) => a + b, 0) : 0;
+          const matchTotalPts = placementPts + killPts;
+          const isBooyah = m.rank === 1;
 
-      let playedCount = catData.matches.filter(m => m.played).length;
+          const card = document.createElement('div');
+          card.className = `glass-card rounded-2xl p-4 animate-row hover-lift ${isBooyah ? 'border-amber-500/60 bg-amber-950/20' : 'border-slate-800'}`;
+          card.style.animationDelay = `${idx * 0.04}s`;
+
+          let playerKillPills = '';
+          if (catData.players) {
+            catData.players.forEach((p, pIdx) => {
+              const pk = (m.playerKills && m.playerKills[pIdx] !== undefined) ? m.playerKills[pIdx] : 0;
+              playerKillPills += `
+                <div class="bg-slate-900/90 px-2.5 py-1.5 rounded-lg border border-slate-800/80 flex items-center justify-between">
+                  <span class="text-xs font-bold text-slate-200 truncate max-w-[85px]">${p.name}</span>
+                  <span class="text-sm font-extrabold text-orange-400 font-teko">${pk}</span>
+                </div>
+              `;
+            });
+          }
+
+          card.innerHTML = `
+            <div class="flex items-center justify-between mb-3">
+              <div class="flex items-center gap-2">
+                <span class="w-7 h-7 rounded-lg bg-orange-500/20 text-orange-400 font-extrabold text-sm flex items-center justify-center border border-orange-500/30">
+                  #${m.matchNum}
+                </span>
+                <span class="text-sm sm:text-base font-extrabold text-white tracking-wide uppercase font-teko">${m.map || 'Bermuda'}</span>
+              </div>
+              ${isBooyah ? '<span class="text-[10px] font-black bg-yellow-500/20 text-yellow-400 border border-yellow-500/40 px-2.5 py-0.5 rounded-md gold-glow"><i class="fa-solid fa-crown mr-1"></i>BOOYAH!</span>' : `<span class="text-[10px] font-bold bg-slate-800/80 text-slate-200 px-2.5 py-0.5 rounded-md">Rank #${m.rank}</span>`}
+            </div>
+
+            <div class="grid grid-cols-3 gap-2 text-center mb-3">
+              <div class="glass-box p-2 rounded-xl">
+                <p class="text-[9px] text-slate-300 uppercase font-bold">Placement PT</p>
+                <p class="text-base font-bold text-yellow-400 font-teko">${placementPts}</p>
+              </div>
+              <div class="glass-box p-2 rounded-xl">
+                <p class="text-[9px] text-slate-300 uppercase font-bold">Kill PT</p>
+                <p class="text-base font-bold text-emerald-400 font-teko">${killPts}</p>
+              </div>
+              <div class="glass-box p-2 rounded-xl">
+                <p class="text-[9px] text-slate-300 uppercase font-bold">Match Total</p>
+                <p class="text-base font-bold text-orange-400 font-teko">${matchTotalPts}</p>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-2 sm:grid-cols-3 gap-1.5 pt-1">
+              ${playerKillPills}
+            </div>
+          `;
+          matchesGrid.appendChild(card);
+        });
+      }
+
+      let playedCount = playedMatches.length;
       document.getElementById('matches-count-label').innerText = playedCount;
 
       // Render Player Roster Cards
