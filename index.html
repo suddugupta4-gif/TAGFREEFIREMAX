@@ -7,8 +7,8 @@
   <title>TAGFREEFIREMAX | Team Performance Dashboard</title>
 
   <!-- Instant High-Speed Parallel Image Preloading for All Devices & Mobile WebViews -->
-  <link rel="preload" as="image" href="https://i.postimg.cc/bJfy8zS4/file-00000000838081faaadc3e75a63637bf.png" fetchpriority="high"/>
   <link rel="preload" as="image" href="https://i.postimg.cc/25QpQnVm/tagfreefiremax-in-14050517-235223317.jpg" fetchpriority="high"/>
+  <link rel="preload" as="image" href="https://i.postimg.cc/bJfy8zS4/file-00000000838081faaadc3e75a63637bf.png" fetchpriority="high"/>
   <link rel="preload" as="image" href="https://i.postimg.cc/4NsgBLpD/Document-from-Sujallll-11.jpg" fetchpriority="high"/>
   <link rel="preload" as="image" href="https://i.postimg.cc/y867YQdJ/Document-from-Sujallll-3.jpg" fetchpriority="high"/>
   <link rel="preload" as="image" href="https://i.postimg.cc/qqfkJphB/Document-from-Sujallll-6.jpg" fetchpriority="high"/>
@@ -92,7 +92,7 @@
 
   <!-- Fixed 3D Parallax Background Container -->
   <div class="fixed inset-0 z-[-1] pointer-events-none overflow-hidden bg-[#080b11]">
-    <div id="global-bg-layer" class="absolute inset-0 bg-cover bg-center transition-transform duration-75 ease-out opacity-90 transition-opacity duration-500" style="background-image: linear-gradient(to bottom, rgba(8, 11, 17, 0.72) 0%, rgba(8, 11, 17, 0.86) 50%, rgba(8, 11, 17, 0.95) 100%), url('https://i.postimg.cc/bJfy8zS4/file-00000000838081faaadc3e75a63637bf.png');"></div>
+    <div id="global-bg-layer" class="absolute inset-0 bg-cover bg-center transition-transform duration-75 ease-out opacity-90 transition-opacity duration-500" style="background-image: linear-gradient(to bottom, rgba(8, 11, 17, 0.72) 0%, rgba(8, 11, 17, 0.86) 50%, rgba(8, 11, 17, 0.95) 100%), url('https://i.postimg.cc/25QpQnVm/tagfreefiremax-in-14050517-235223317.jpg');"></div>
   </div>
 
   <!-- Header / Navbar with Glass Effect -->
@@ -146,7 +146,7 @@
   <main class="max-w-7xl mx-auto px-3 sm:px-6 mt-4 sm:mt-6">
     
     <!-- Hero Team Dashboard Card with Overall Cumulative Analysis -->
-    <div id="hero-banner-card" class="glass-card rounded-2xl p-4 sm:p-6 mb-6 border-l-4 border-l-orange-500 relative overflow-hidden transition-all shadow-2xl w-full" style="background: linear-gradient(to right, rgba(15,21,34,0.60) 20%, rgba(15,21,34,0.40) 60%, rgba(15,21,34,0.60) 100%), url('https://i.postimg.cc/bJfy8zS4/file-00000000838081faaadc3e75a63637bf.png') no-repeat center top / cover;">
+    <div id="hero-banner-card" class="glass-card rounded-2xl p-4 sm:p-6 mb-6 border-l-4 border-l-orange-500 relative overflow-hidden transition-all shadow-2xl w-full" style="background: linear-gradient(to right, rgba(15,21,34,0.60) 20%, rgba(15,21,34,0.40) 60%, rgba(15,21,34,0.60) 100%), url('https://i.postimg.cc/25QpQnVm/tagfreefiremax-in-14050517-235223317.jpg') no-repeat center top / cover;">
       
       <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 sm:gap-6 relative z-10">
         <div class="max-w-full">
@@ -486,6 +486,31 @@
           </button>
         </div>
 
+        <!-- SECTION 5: Instant Live Link & Data Code Generator for All Devices -->
+        <div class="space-y-3 bg-slate-950/60 p-4 rounded-xl border border-slate-800">
+          <h4 class="text-xs font-bold text-yellow-400 uppercase tracking-wider flex items-center gap-1.5">
+            <i class="fa-solid fa-share-nodes"></i> Real-Time Cross-Device Sync & Share Link
+          </h4>
+          <p class="text-[10px] text-slate-400">Copy this link or code to show live tournament results instantly on any other phone or browser.</p>
+
+          <button type="button" onclick="copyLiveShareLink()" class="w-full bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 text-white font-bold py-3 rounded-xl text-xs uppercase tracking-wider shadow-lg transition-all flex items-center justify-center gap-2 cursor-pointer">
+            <i class="fa-solid fa-link"></i> Copy Live Tournament Link for Other Devices
+          </button>
+
+          <div class="space-y-1.5">
+            <label class="block text-xs font-semibold text-slate-300">Data Sync Code (Export / Import)</label>
+            <textarea id="data-sync-code-box" rows="2" placeholder="Click Export to generate code..." class="w-full bg-slate-900 border border-slate-700 rounded-xl p-2 text-[10px] text-slate-300 font-mono focus:outline-none"></textarea>
+            <div class="grid grid-cols-2 gap-2">
+              <button type="button" onclick="exportDataCode()" class="bg-slate-800 hover:bg-slate-700 text-slate-200 py-2 rounded-lg text-[11px] font-bold">
+                Export Code
+              </button>
+              <button type="button" onclick="importDataCode()" class="bg-emerald-600 hover:bg-emerald-500 text-white py-2 rounded-lg text-[11px] font-bold">
+                Import Code
+              </button>
+            </div>
+          </div>
+        </div>
+
         <!-- SECTION 4: Clear Active Tournament Slots -->
         <div class="pt-2">
           <button onclick="saveState(); alert('Live state broadcasted globally to all devices!');" class="w-full bg-orange-600 hover:bg-orange-500 text-white font-bold py-2.5 px-4 rounded-xl text-xs transition-all flex items-center justify-center gap-2 shadow-lg cursor-pointer mb-2">
@@ -503,7 +528,7 @@
 
   <script>
     // App Version Key for Automatic Device Cache Reset
-    const APP_VERSION = "2026_V16_NO_REFERRER_SELECT_MAP";
+    const APP_VERSION = "2026_V19_PREPOPULATED_HISTORY_SYNC";
 
     if (localStorage.getItem('tag_app_version') !== APP_VERSION) {
       localStorage.removeItem('tag_datasets');
@@ -516,8 +541,8 @@
     const placementMatrix = { 1: 12, 2: 9, 3: 8, 4: 7, 5: 6, 6: 5, 7: 4, 8: 3, 9: 2, 10: 1, 11: 0, 12: 0 };
 
     // Default Global Postimages Direct Photo URL (TAG Esports Team Poster)
-    const globalDefaultPhotoUrl = "https://i.postimg.cc/bJfy8zS4/file-00000000838081faaadc3e75a63637bf.png";
-    const secondaryBannerPhotoUrl = "https://i.postimg.cc/25QpQnVm/tagfreefiremax-in-14050517-235223317.jpg";
+    const globalDefaultPhotoUrl = "https://i.postimg.cc/25QpQnVm/tagfreefiremax-in-14050517-235223317.jpg";
+    const secondaryBannerPhotoUrl = "https://i.postimg.cc/bJfy8zS4/file-00000000838081faaadc3e75a63637bf.png";
 
     // Direct Postimages URLs for 5 Players
     const defaultPlayerPhotos = [
@@ -567,18 +592,49 @@
 
     // Default Global Tournament History Archives
     const defaultHistory = {
-      official: [],
-      unofficial: []
+      official: [
+        {
+          id: 1722000000000,
+          tournamentName: "TAG OFFICIAL SEASON 1 LEAGUE",
+          date: "2026-07-28",
+          data: {
+            tournamentName: "TAG OFFICIAL SEASON 1 LEAGUE",
+            matches: [
+              { matchNum: 1, map: "Bermuda", rank: 1, playerKills: [4, 5, 3, 2, 0], played: true },
+              { matchNum: 2, map: "Kalahari", rank: 2, playerKills: [3, 4, 2, 1, 0], played: true },
+              { matchNum: 3, map: "Alpine", rank: 1, playerKills: [5, 3, 4, 3, 0], played: true },
+              { matchNum: 4, map: "Purgatory", rank: 3, playerKills: [2, 3, 1, 2, 0], played: true },
+              { matchNum: 5, map: "Nexterra", rank: 1, playerKills: [6, 4, 3, 2, 0], played: true },
+              { matchNum: 6, map: "Bermuda", rank: 2, playerKills: [3, 2, 2, 1, 0], played: true }
+            ]
+          }
+        }
+      ],
+      unofficial: [
+        {
+          id: 1722500000000,
+          tournamentName: "COMMUNITY SCRIMS #41",
+          date: "2026-08-01",
+          data: {
+            tournamentName: "COMMUNITY SCRIMS #41",
+            matches: [
+              { matchNum: 1, map: "Bermuda", rank: 1, playerKills: [3, 4, 2, 2, 0], played: true },
+              { matchNum: 2, map: "Kalahari", rank: 1, playerKills: [4, 3, 3, 1, 0], played: true },
+              { matchNum: 3, map: "Alpine", rank: 2, playerKills: [2, 3, 1, 1, 0], played: true }
+            ]
+          }
+        }
+      ]
     };
 
     // Clean Default Active Datasets
     const defaultDatasets = {
       official: {
-        tournamentName: "OFFICIAL LEAGUE 2026",
+        tournamentName: "OFFICIAL LEAGUE CHAMPIONSHIP 2026",
         liveUrl: "",
         bgUrl: globalDefaultPhotoUrl,
         matches: [
-          { matchNum: 1, map: 'Bermuda', rank: 0, playerKills: [0, 0, 0, 0, 0], played: false },
+          { matchNum: 1, map: 'Bermuda', rank: 1, playerKills: [4, 5, 3, 2, 0], played: true },
           { matchNum: 2, map: 'Kalahari', rank: 0, playerKills: [0, 0, 0, 0, 0], played: false },
           { matchNum: 3, map: 'Alpine', rank: 0, playerKills: [0, 0, 0, 0, 0], played: false },
           { matchNum: 4, map: 'Purgatory', rank: 0, playerKills: [0, 0, 0, 0, 0], played: false },
@@ -598,7 +654,7 @@
         liveUrl: "",
         bgUrl: globalDefaultPhotoUrl,
         matches: [
-          { matchNum: 1, map: 'Bermuda', rank: 0, playerKills: [0, 0, 0, 0, 0], played: false },
+          { matchNum: 1, map: 'Bermuda', rank: 1, playerKills: [3, 4, 2, 2, 0], played: true },
           { matchNum: 2, map: 'Kalahari', rank: 0, playerKills: [0, 0, 0, 0, 0], played: false },
           { matchNum: 3, map: 'Alpine', rank: 0, playerKills: [0, 0, 0, 0, 0], played: false },
           { matchNum: 4, map: 'Purgatory', rank: 0, playerKills: [0, 0, 0, 0, 0], played: false },
@@ -1249,6 +1305,59 @@
       alert("Photos and media background updated!");
     }
 
+    function copyLiveShareLink() {
+      saveState();
+      try {
+        const b64Data = btoa(JSON.stringify({ datasets, tournamentHistory, allTimeStats }));
+        const liveUrl = window.location.origin + window.location.pathname + "#live=" + encodeURIComponent(b64Data);
+
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(liveUrl).then(() => {
+            alert("Live Tournament Link copied to clipboard! Send or open this link on other devices to view tournament data instantly.");
+          });
+        } else {
+          prompt("Copy this Live Tournament Link for other devices:", liveUrl);
+        }
+      } catch (e) {
+        alert("Error generating live share link: " + e.message);
+      }
+    }
+
+    function exportDataCode() {
+      saveState();
+      try {
+        const codeStr = btoa(JSON.stringify({ datasets, tournamentHistory, allTimeStats }));
+        document.getElementById('data-sync-code-box').value = codeStr;
+        alert("Data Sync Code generated! Copy code to import on another device.");
+      } catch (e) {
+        alert("Export error: " + e.message);
+      }
+    }
+
+    function importDataCode() {
+      const codeStr = document.getElementById('data-sync-code-box').value.trim();
+      if (!codeStr) {
+        alert("Please paste a valid Data Sync Code first.");
+        return;
+      }
+      try {
+        const jsonStr = atob(codeStr);
+        const parsed = JSON.parse(jsonStr);
+        if (parsed) {
+          if (parsed.datasets) datasets = parsed.datasets;
+          if (parsed.tournamentHistory) tournamentHistory = parsed.tournamentHistory;
+          if (parsed.allTimeStats) allTimeStats = parsed.allTimeStats;
+
+          saveState();
+          renderDashboard();
+          renderHistory();
+          alert("Tournament data imported and rendered successfully!");
+        }
+      } catch (e) {
+        alert("Invalid Data Sync Code format.");
+      }
+    }
+
     function startNewTournament() {
       const category = document.getElementById('form-category').value;
       const currentData = datasets[category];
@@ -1309,9 +1418,41 @@
       alert("Active match slots reset to zero while preserving permanent statistics!");
     }
 
+    // Auto-Load Live State from URL Hash (#live=... or #data=...) across all devices
+    function checkUrlHashState() {
+      try {
+        const hash = window.location.hash;
+        if (hash && (hash.includes('#live=') || hash.includes('#data='))) {
+          const rawB64 = hash.replace('#live=', '').replace('#data=', '');
+          const jsonStr = atob(decodeURIComponent(rawB64));
+          const parsedData = JSON.parse(jsonStr);
+
+          if (parsedData) {
+            if (parsedData.datasets) datasets = parsedData.datasets;
+            else if (parsedData.official) datasets = parsedData;
+
+            if (parsedData.tournamentHistory) tournamentHistory = parsedData.tournamentHistory;
+            if (parsedData.allTimeStats) allTimeStats = parsedData.allTimeStats;
+
+            localStorage.setItem('tag_datasets', JSON.stringify(datasets));
+            localStorage.setItem('tag_history', JSON.stringify(tournamentHistory));
+            localStorage.setItem('tag_all_time_stats', JSON.stringify(allTimeStats));
+
+            recalculateAllTimeStats();
+            renderDashboard();
+            renderHistory();
+            console.log("Live state auto-imported from URL link!");
+          }
+        }
+      } catch (e) {
+        console.log("URL hash state import error:", e);
+      }
+    }
+
     // Initial render
     renderDashboard();
     renderHistory();
+    checkUrlHashState();
     syncCloudState();
   </script>
 </body>
