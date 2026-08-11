@@ -528,13 +528,14 @@
 
   <script>
     // App Version Key for Automatic Device Cache Reset
-    const APP_VERSION = "2026_V19_PREPOPULATED_HISTORY_SYNC";
+    const APP_VERSION = "2026_V20_NO_LOCALSTORAGE_GHOST_FREE";
 
-    if (localStorage.getItem('tag_app_version') !== APP_VERSION) {
-      localStorage.removeItem('tag_datasets');
-      localStorage.removeItem('tag_history');
-      localStorage.removeItem('tag_all_time_stats');
-      localStorage.setItem('tag_app_version', APP_VERSION);
+    // COMPLETELY WIPE LOCALSTORAGE TO PREVENT GHOST CACHING ACROSS ALL DEVICES
+    try {
+      localStorage.clear();
+      sessionStorage.clear();
+    } catch (e) {
+      console.log("Storage wipe notice:", e);
     }
 
     // Free Fire Official Scoring System (1 Kill = 1 Point)
@@ -691,10 +692,10 @@
       }
     };
 
-    // Load State with Fallbacks
-    let datasets = JSON.parse(localStorage.getItem('tag_datasets')) || defaultDatasets;
-    let tournamentHistory = JSON.parse(localStorage.getItem('tag_history')) || defaultHistory;
-    let allTimeStats = JSON.parse(localStorage.getItem('tag_all_time_stats')) || defaultAllTimeStats;
+    // Load State directly from fresh default objects (NO ghost localStorage)
+    let datasets = JSON.parse(JSON.stringify(defaultDatasets));
+    let tournamentHistory = JSON.parse(JSON.stringify(defaultHistory));
+    let allTimeStats = JSON.parse(JSON.stringify(defaultAllTimeStats));
 
     let activeCategory = 'official';
 
@@ -774,9 +775,9 @@
     function saveState() {
       lastLocalUpdate = Date.now();
       recalculateAllTimeStats();
-      localStorage.setItem('tag_datasets', JSON.stringify(datasets));
-      localStorage.setItem('tag_history', JSON.stringify(tournamentHistory));
-      localStorage.setItem('tag_all_time_stats', JSON.stringify(allTimeStats));
+      // localStorage disabled
+      // localStorage disabled
+      // localStorage disabled
 
       const payloadData = { datasets, tournamentHistory, allTimeStats, updatedAt: lastLocalUpdate };
       if (broadcastSync) {
@@ -811,9 +812,9 @@
               datasets = cloudData.datasets;
               tournamentHistory = cloudData.tournamentHistory || tournamentHistory;
               if (cloudData.allTimeStats) allTimeStats = cloudData.allTimeStats;
-              localStorage.setItem('tag_datasets', JSON.stringify(datasets));
-              localStorage.setItem('tag_history', JSON.stringify(tournamentHistory));
-              localStorage.setItem('tag_all_time_stats', JSON.stringify(allTimeStats));
+              // localStorage disabled
+              // localStorage disabled
+              // localStorage disabled
               recalculateAllTimeStats();
               renderDashboard();
               renderHistory();
@@ -1434,9 +1435,9 @@
             if (parsedData.tournamentHistory) tournamentHistory = parsedData.tournamentHistory;
             if (parsedData.allTimeStats) allTimeStats = parsedData.allTimeStats;
 
-            localStorage.setItem('tag_datasets', JSON.stringify(datasets));
-            localStorage.setItem('tag_history', JSON.stringify(tournamentHistory));
-            localStorage.setItem('tag_all_time_stats', JSON.stringify(allTimeStats));
+            // localStorage disabled
+            // localStorage disabled
+            // localStorage disabled
 
             recalculateAllTimeStats();
             renderDashboard();
