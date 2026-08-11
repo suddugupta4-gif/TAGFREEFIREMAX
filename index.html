@@ -499,15 +499,20 @@
 
   <script>
     // App Version Key for Automatic Device Cache Reset
-    const APP_VERSION = "2026_V22_CLEAN_ZERO_DEFAULT_RESET_FIX";
+    const APP_VERSION = "2026_V23_RENDER_PERSISTENT_STORAGE";
 
-    // COMPLETELY WIPE LOCALSTORAGE TO PREVENT GHOST CACHING ACROSS ALL DEVICES
-    try {
-      localStorage.clear();
-      sessionStorage.clear();
-    } catch (e) {
-      console.log("Storage wipe notice:", e);
+    // Smart Persistent Storage with Version Control
+    if (localStorage.getItem('tag_app_version') !== APP_VERSION) {
+      localStorage.removeItem('tag_datasets');
+      localStorage.removeItem('tag_history');
+      localStorage.removeItem('tag_all_time_stats');
+      localStorage.setItem('tag_app_version', APP_VERSION);
     }
+
+    // Load State from LocalStorage or Fallback to Fresh Default State
+    let datasets = JSON.parse(localStorage.getItem('tag_datasets')) || JSON.parse(JSON.stringify(defaultDatasets));
+    let tournamentHistory = JSON.parse(localStorage.getItem('tag_history')) || JSON.parse(JSON.stringify(defaultHistory));
+    let allTimeStats = JSON.parse(localStorage.getItem('tag_all_time_stats')) || JSON.parse(JSON.stringify(defaultAllTimeStats));
 
     // Free Fire Official Scoring System (1 Kill = 1 Point)
     const placementMatrix = { 1: 12, 2: 9, 3: 8, 4: 7, 5: 6, 6: 5, 7: 4, 8: 3, 9: 2, 10: 1, 11: 0, 12: 0 };
@@ -663,11 +668,6 @@
       }
     };
 
-    // Load State directly from fresh default objects (NO ghost localStorage)
-    let datasets = JSON.parse(JSON.stringify(defaultDatasets));
-    let tournamentHistory = JSON.parse(JSON.stringify(defaultHistory));
-    let allTimeStats = JSON.parse(JSON.stringify(defaultAllTimeStats));
-
     let activeCategory = 'official';
 
     // Instant Parallel Image Prefetcher Store
@@ -746,9 +746,9 @@
     function saveState() {
       lastLocalUpdate = Date.now();
       recalculateAllTimeStats();
-      // localStorage disabled
-      // localStorage disabled
-      // localStorage disabled
+      localStorage.setItem('tag_datasets', JSON.stringify(datasets));
+      localStorage.setItem('tag_history', JSON.stringify(tournamentHistory));
+      localStorage.setItem('tag_all_time_stats', JSON.stringify(allTimeStats));
 
       const payloadData = { datasets, tournamentHistory, allTimeStats, updatedAt: lastLocalUpdate };
       if (broadcastSync) {
@@ -783,9 +783,9 @@
               datasets = cloudData.datasets;
               tournamentHistory = cloudData.tournamentHistory || tournamentHistory;
               if (cloudData.allTimeStats) allTimeStats = cloudData.allTimeStats;
-              // localStorage disabled
-              // localStorage disabled
-              // localStorage disabled
+              localStorage.setItem('tag_datasets', JSON.stringify(datasets));
+              localStorage.setItem('tag_history', JSON.stringify(tournamentHistory));
+              localStorage.setItem('tag_all_time_stats', JSON.stringify(allTimeStats));
               recalculateAllTimeStats();
               renderDashboard();
               renderHistory();
